@@ -1,0 +1,10 @@
+Bundle-Name: teeth-api
+Bundle-SymbolicName: teeth.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	teeth.exception,\
+	teeth.model,\
+	teeth.service,\
+	teeth.service.persistence
+-check: EXPORTS
+-includeresource: META-INF/service.xml=../teeth-service/service.xml

@@ -1,0 +1,5 @@
+Bundle-Name: teeth-web
+Bundle-SymbolicName: teeth.web
+Bundle-Version: 1.0.0
+Export-Package: teeth.web.constants
+Web-ContextPath: /teeth-web

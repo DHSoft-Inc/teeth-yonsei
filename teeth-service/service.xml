@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_2_0.dtd">
+
+<service-builder dependency-injector="ds" package-path="teeth">
+	<namespace>Teeth</namespace>
+	<entity name="TreatmentHistory" table="treatment_history" local-service="true" remote-service="false">
+		<!-- Primary Key -->
+		<column name="treatmentID" type="long" primary="true" />
+
+		<!-- Not-null 컬럼 -->
+		<column name="patientID" type="long" />
+		<column name="editedUserID" type="long" />
+		<column name="teethNum" type="long" />
+
+		<!-- Date 타입: java.util.Date 로 매핑 -->
+		<column name="treatmentDate" type="Date" />
+		<column name="editedDate" type="Date" />
+
+		<!-- 문자열 타입 -->
+		<column name="treatment" type="String" />
+		<column name="state" type="String" />
+
+		<finder name="Teeth_PatientID" return-type="Collection">
+			<finder-column name="patientID" />
+		</finder>
+		<finder name="Teeth_PatientID_TeethNum"
+			return-type="Collection">
+			<finder-column name="patientID" />
+			<finder-column name="teethNum" />
+		</finder>
+		<finder name="Teeth_PatientID_Date" return-type="Collection">
+			<finder-column name="patientID" />
+			<finder-column name="treatmentDate" />
+		</finder>
+
+		<finder name="Teeth_PatientID_TeethNum_Date"
+			return-type="Collection">
+			<finder-column name="patientID" />
+			<finder-column name="teethNum" />
+			<finder-column name="treatmentDate" />
+		</finder>
+
+		<finder name="Teeth_PatientID_TeethNum_Date_Treatment"
+			return-type="TreatmentHistory">
+			<finder-column name="patientID" />
+			<finder-column name="teethNum" />
+			<finder-column name="treatmentDate" />
+			<finder-column name="treatment" />
+		</finder>
+
+	</entity>
+
+	<entity name="TreatmentAudit" table="treatment_audit" local-service="true" remote-service="false">
+		<!-- Primary Key -->
+		<column name="AuditID" type="long" primary="true" />
+
+		<!-- Other -->
+		<column name="teethNum" type="long" />
+		<column name="editedDate" type="Date" />
+		<column name="editedUserID" type="long" />
+
+		<!-- Edit된 종류(Add, Edit, Delete) -->
+		<column name="editType" type="String" />
+		
+		<!-- Edit한 Treatment의 날짜(Date) -->
+		<column name="treatmentDate" type="Date" />
+
+		<!-- Edit 이전의 Data -->
+		<column name="beforeData" type="String" />
+
+		<!-- Edit 이후의 Data -->
+		<column name="afterData" type="String" />
+
+		<!-- 치식별 Display -->
+		<finder return-type="Collection" name="Audit_TeethNum">
+			<finder-column name="teethNum" />
+		</finder>
+
+		<!-- 혹시 몰라서 넣어놓는 Edit 종류별 Display -->
+		<finder return-type="Collection" name="Audit_EditType">
+			<finder-column name="editType" />
+		</finder>
+
+	</entity>
+</service-builder>

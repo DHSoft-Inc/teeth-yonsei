@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="teeth.model.TreatmentAudit">
+		<field name="AuditID" type="long" />
+		<field name="teethNum" type="long" />
+		<field name="editedDate" type="Date" />
+		<field name="editedUserID" type="long" />
+		<field name="editType" type="String" />
+		<field name="treatmentDate" type="Date" />
+		<field name="beforeData" type="String" />
+		<field name="afterData" type="String" />
+	</model>
+	<model name="teeth.model.TreatmentHistory">
+		<field name="treatmentID" type="long" />
+		<field name="patientID" type="long" />
+		<field name="editedUserID" type="long" />
+		<field name="teethNum" type="long" />
+		<field name="treatmentDate" type="Date" />
+		<field name="editedDate" type="Date" />
+		<field name="treatment" type="String" />
+		<field name="state" type="String" />
+	</model>
+</model-hints>
