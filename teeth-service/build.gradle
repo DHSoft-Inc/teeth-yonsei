@@ -1,5 +1,5 @@
 dependencies {
-	compile project(":modules:teeth:teeth-api")
+	compile project(":modules:teeth-yonsei:teeth-api")
 
 	compileOnly group: "com.liferay", name: "com.liferay.petra.io"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.lang"
