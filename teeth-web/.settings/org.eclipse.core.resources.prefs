@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/main/java/teeth/web/command/resource/addTeethTreatmentResourceCommand.java=UTF-8
 encoding//src/main/resources/META-INF/resources/ajax/save_treatment_list_db.jsp=UTF-8
 encoding//src/main/resources/META-INF/resources/teeth/add/addteeth.jsp=UTF-8
 encoding//src/main/resources/META-INF/resources/teeth/view/historyPopup.jsp=UTF-8

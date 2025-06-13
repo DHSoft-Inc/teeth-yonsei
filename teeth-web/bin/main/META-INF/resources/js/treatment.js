@@ -1,7 +1,7 @@
 // treatment.js
 
 
-class PendingTreatment {
+class addTreatment {
   constructor({
     treatmentDate = '',
     selectedTeeth = '',
@@ -34,20 +34,60 @@ class PendingTreatment {
 }
 
 
+//보내기 전에 임시 저장하는 용도
+class Treatment {
+  constructor({ treatmentDate, selectedTeeth, selectedTreatment = '-', selectedState = '-', mainCategory = '', userId, authToken }) {
+    this.treatmentDate = treatmentDate;
+    this.selectedTeeth = selectedTeeth;
+    this.selectedTreatment = selectedTreatment;
+    this.selectedState = selectedState;
+    this.mainCategory = mainCategory;
+    this.userId = userId;
+    this.authToken = authToken;
+  }
+
+  isEqual(other) {
+    return (
+      this.treatmentDate === other.treatmentDate &&
+      this.selectedTeeth === other.selectedTeeth &&
+      this.selectedTreatment === other.selectedTreatment &&
+      this.selectedState === other.selectedState
+    );
+  }
+
+  toFormDataString() {
+    const params = new URLSearchParams();
+    params.set('treatmentDate', this.treatmentDate);
+    params.set('selectedTeeth', this.selectedTeeth);
+    params.set('selectedTreatment', this.selectedTreatment);
+    params.set('selectedState', this.selectedState);
+    params.set('mainCategory', this.mainCategory);
+    params.set('EditUserId', this.userId);
+    params.set('p_auth', this.authToken);
+    return params.toString();
+  }
+
+  static fromFormDataString(str) {
+    const params = new URLSearchParams(str);
+    return new Treatment({
+      treatmentDate: params.get('treatmentDate'),
+      selectedTeeth: params.get('selectedTeeth'),
+      selectedTreatment: params.get('selectedTreatment'),
+      selectedState: params.get('selectedState'),
+      mainCategory: params.get('mainCategory'),
+      userId: params.get('EditUserId'),
+      authToken: params.get('p_auth'),
+    });
+  }
+}
+
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  const pendingTreatments = [];  // 이제 이 안에는 Treatment 인스턴스가 들어감
 
-	
-	//임시 저장용 배열(add Record 버튼 입력시  save 직전에 저장되는)
-  
-	
-	const pendingTreatments = []; 
-  
-  
-  
-  
-  
   
   //받아온 선택된 치식
   const teethsParam = (window.INITIAL_TEETHS || '').trim(); 
@@ -86,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	  const isPermanentDDSelected = [...permanentDDRadios].some(input => input.checked);
 	  const isDateSelected = dateInput.value !== "";
 
-	  if ((isStatusSelected || isPermanentCSelected || isPermanentDDSelected)) {
+	  if ((isStatusSelected || isPermanentCSelected || isPermanentDDSelected) && isDateSelected) {
 	    addBtn.disabled = false;
 	  } else {
 	    addBtn.disabled = true;
@@ -227,7 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
     	  });
 
     	  // 서버 저장용 formData 생성
-    	  const treatmentObj = new PendingTreatment({
+    	  const treatmentObj = new addTreatment({
     		  treatmentDate: treatmentDate.toISOString().split('T')[0],
     		  selectedTeeth: teethsParam,
     		  selectedTreatment,
@@ -353,54 +393,44 @@ document.addEventListener('DOMContentLoaded', () => {
 	       
 	       function addPendingTreatment({ tooth, treatmentDate, treatment = '-', state = '-' }) {
 	    	   // 중복 여부 검사
-	    	   const newTreatment = new PendingTreatment({
-	    	     treatmentDate,
-	    	     selectedTeeth: tooth,
-	    	     selectedTreatment: treatment,
-	    	     selectedState: state,
-	    	     mainCategory: '',
-	    	     userId: Liferay.ThemeDisplay.getUserId(),
-	    	     authToken: Liferay.authToken
-	    	   });
+	    	   const newTreatment = new Treatment({
+	    		    treatmentDate,
+	    		    selectedTeeth: tooth,
+	    		    selectedTreatment: treatment,
+	    		    selectedState: state,
+	    		    mainCategory: '',
+	    		    userId: Liferay.ThemeDisplay.getUserId(),
+	    		    authToken: Liferay.authToken
+	    		  });
 
-	    	   const formParams = newTreatment.toFormData();
 
-	    	   const isDuplicate = 
-	    	     pendingTreatments.some(item => {
-	    	       const p = new URLSearchParams(item);
-	    	       return (
-	    	         p.get('treatmentDate') === treatmentDate &&
-	    	         p.get('selectedTeeth') === tooth &&
-	    	         p.get('selectedTreatment') === treatment &&
-	    	         p.get('selectedState') === state
-	    	       );
-	    	     }) ||
-	    	     matched.some(m =>
-	    	       m.date === treatmentDate &&
-	    	       m.region === `Teeth${tooth}` &&
-	    	       (
-	    	         (treatment !== '-' && m.treatment.split(',').includes(treatment)) ||
-	    	         (state !== '-' && m.state.split(',').includes(state))
-	    	       )
-	    	     );
+	    	   const isDuplicate =
+	    		    pendingTreatments.some(item => item.isEqual(newTreatment)) ||
+	    		    matched.some(m =>
+	    		      m.date === treatmentDate &&
+	    		      m.region === `Teeth${tooth}` &&
+	    		      (
+	    		        (treatment !== '-' && m.treatment.split(',').includes(treatment)) ||
+	    		        (state !== '-' && m.state.split(',').includes(state))
+	    		      )
+	    		    );
 
 	    	   if (isDuplicate) {
-	    	     if (treatment !== '-') anyStatusDuplicate = true;
-	    	     if (state !== '-') anyStateDuplicate = true;
+	    		    if (treatment !== '-') anyStatusDuplicate = true;
+	    		    if (state !== '-') anyStateDuplicate = true;
 
-	    	     console.log(`중복 발견 → tooth=${tooth}, treatment=${treatment}, state=${state}`);
-	    	     // alert 대신 로그 또는 UI에 띄우는 메시지 수집만
-	    	     const isTreatment = treatment !== '-';
-	    	     const type = isTreatment ? 'treatment' : 'state';
-	    	     const value = isTreatment ? treatment : state;
+	    		    const isTreatment = treatment !== '-';
+	    		    const type = isTreatment ? 'treatment' : 'state';
+	    		    const value = isTreatment ? treatment : state;
 
-	    	     const msg = `${type} 항목이 중복되었습니다. (tooth=${tooth}, ${type}=${value})`;
-	    	     msgs.push(msg);
-	    	     return;
-	    	   }
+	    		    const msg = `${type} 항목이 중복되었습니다. (tooth=${tooth}, ${type}=${value})`;
+	    		    msgs.push(msg);
+	    		    return;
+	    		  }
 
 	    	   // 중복이 아니라면 추가
-	    	   pendingTreatments.push(formParams.toString());
+	    	   pendingTreatments.push(newTreatment);
+
 	    	   newlyAddedTeeth.push({
 	    	     tooth,
 	    	     treatment: treatment !== '-' ? treatment : '-',
@@ -425,13 +455,32 @@ document.addEventListener('DOMContentLoaded', () => {
   	  const combinedList = groupAndCombineTreatments(pendingTreatments);
   	  console.log('합쳐진 Treatments:', combinedList);
 
+  	  
+  	const treatmentsData = combinedList.map((str) => {
+  	  const decodedStr = decodeURIComponent(str); // "EditUserId=20105&treatmentDate=..."
+  	  const obj = {};
+
+  	  decodedStr.split("&").forEach((pair) => {
+  	    const [key, value] = pair.split("=");
+  	    if (key && value !== undefined) {
+  	      obj[key] = value;
+  	    }
+  	  });
+
+  	  return obj;
+  	});
+  	  
+  	console.log("JSON 전송용 데이터:", JSON.stringify(treatmentsData));
+  	  
+  	  
+	/*
   	  const treatmentsData = new URLSearchParams();
   	  combinedList.forEach((str, i) => {
   	    const decoded = decodeURIComponent(str);
   	    treatmentsData.append(`treatment_${i + 1}`, decoded);
   	  });
   	  console.log('전송용 Params:', treatmentsData.toString());
-
+  	  
   	  $.ajax({
   	    type: 'POST',
   	    url: '/o/teeth-web/ajax/save_treatment_list_db.jsp',
@@ -447,21 +496,23 @@ document.addEventListener('DOMContentLoaded', () => {
   	      console.error("AJAX 실패:", error);
   	    }
   	  });
-	  
-	  
-	  // 나중에 ajax로 actioncommand(ajaxURL)로 쓸 때 수정해볼 것
-	  /*
+  	  	 */	  
+  	  
+  	const base = resourceURL;
+    let urlObj = new URL(base);
+  	    	  
 	  $.ajax({
 		    type: 'POST',
-		    url: window.ajaxURL,
-		    //url: '<%= ajaxURL %>',
-		    data: treatmentsData.toString(),  // URLSearchParams로 전송
-		    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+		    //url: '/teeth/addTreatment',
+		    //url: '<portlet:resourceURL id="<%=teethTreatmentMVCCommand.ADD_TREATMENT %>"></portlet:resourceURL>',
+		    url: urlObj,
+		    //data: treatmentsData.toString(), 
+		    data: JSON.stringify({ treatments: treatmentsData }),
+		    //contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+		    contentType: 'application/json; charset=UTF-8',
 		    success: function(response) {
 		      console.log("서버 응답:", response);
-		      // 서버 응답 후 처리할 코드 추가 (예: pendingTreatments 비우기)
 		      pendingTreatments.length = 0;
-		      
 		      Liferay.Util.getOpener().location.reload(); 
 		      Liferay.Util.getOpener().closeDialog('addTreatmentDialog');
 		    },
@@ -469,7 +520,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		      console.error("AJAX 실패:", error);
 		    }
 		  });
-	  */  
+
 	  
 	  
 	});
@@ -481,45 +532,41 @@ document.addEventListener('DOMContentLoaded', () => {
 	  function groupAndCombineTreatments(pendingList) {
 		  const grouped = {};
 
-		  pendingList.forEach(item => {
-		    const params = new URLSearchParams(item);
-		    const date  = params.get('treatmentDate');
-		    const tooth = params.get('selectedTeeth');
-		    const key   = `${date}|${tooth}`;
-
-		    if (!grouped[key]) {
+		  pendingList.forEach(t => {
+			const key = `${t.treatmentDate}|${t.selectedTeeth}`;
+		    
+			if (!grouped[key]) {
 		      grouped[key] = {
-		        treatmentDate: date,
-		        selectedTeeth: tooth,
-		        statuses: new Set(),
-		        permanents: new Set(),
-		        mainCategory: params.get('mainCategory'),
-		        userId:      params.get('EditUserId'),
-		        authToken:   params.get('p_auth')
+	    		treatmentDate: t.treatmentDate,
+    	        selectedTeeth: t.selectedTeeth,
+    	        statuses: new Set(),
+    	        permanents: new Set(),
+    	        mainCategory: t.mainCategory,
+    	        userId: t.userId,
+    	        authToken: t.authToken
 		      };
 		    }
 
-		    const st = params.get('selectedTreatment');
-		    if (st && st !== '-') grouped[key].statuses.add(st);
+			if (t.selectedTreatment && t.selectedTreatment !== '-') {
+		      grouped[key].statuses.add(t.selectedTreatment);
+		    }
 
-		    const pm = params.get('selectedState');
-		    if (pm && pm !== '-') grouped[key].permanents.add(pm);
+		    if (t.selectedState && t.selectedState !== '-') {
+		      grouped[key].permanents.add(t.selectedState);
+		    }
 		  });
 
 		  return Object.values(grouped).map(g => {
-		    const ps = [...g.statuses].join(',') || '-';
-		    const pp = [...g.permanents].join(',') || '-';
+			const params = new URLSearchParams();
+		    params.set('EditUserId', g.userId);
+		    params.set('treatmentDate', g.treatmentDate);
+		    params.set('mainCategory', g.mainCategory);
+		    params.set('selectedTreatment', [...g.statuses].join(',') || '-');
+		    params.set('selectedTeeth', g.selectedTeeth);
+		    params.set('selectedState', [...g.permanents].join(',') || '-');
+		    params.set('p_auth', g.authToken);
 
-		    const up = new URLSearchParams();
-		    up.set('EditUserId',    g.userId);
-		    up.set('treatmentDate', g.treatmentDate);
-		    up.set('mainCategory',  g.mainCategory);
-		    up.set('selectedTreatment', ps);
-		    up.set('selectedTeeth', g.selectedTeeth);
-		    up.set('selectedState', pp);
-		    up.set('p_auth',        g.authToken);
-
-		    return up.toString();
+		    return params.toString();
 		  });
   		}
 	

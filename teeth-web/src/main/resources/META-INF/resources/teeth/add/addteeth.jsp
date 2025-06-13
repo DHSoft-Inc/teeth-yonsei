@@ -590,6 +590,11 @@
 
 </div>
 
+<portlet:resourceURL id="/teeth/addTreatment" var="resourceAddURL"/>
+
+<script>
+const resourceURL = '<%=resourceAddURL.toString()%>';
+</script>
 
 <script src="/o/teeth-web/js/treatment.js"></script>
 
