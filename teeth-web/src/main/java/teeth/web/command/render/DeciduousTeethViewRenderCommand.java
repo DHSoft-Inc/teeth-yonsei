@@ -31,11 +31,11 @@ public class DeciduousTeethViewRenderCommand implements MVCRenderCommand {
 	public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
 		// TODO Auto-generated method stub
 		_log.info("Hello!");
-		long PatientID = 1001; //임시 PatientID
+		long PatientID = 1001; //�엫�떆 PatientID
 		List<TreatmentHistory> HistoryList = TreatmentHistoryLocalServiceUtil.getPatientTreatmentList(PatientID);
 		try
 		{
-			// 유치만 사용
+			// �쑀移섎쭔 �궗�슜
 			processTeethRange(renderRequest, PatientID, 51, 85);
 
 			renderRequest.setAttribute("patientID", PatientID);
@@ -57,7 +57,7 @@ public class DeciduousTeethViewRenderCommand implements MVCRenderCommand {
 		{
 			List<TreatmentHistory> HT = TreatmentHistoryLocalServiceUtil.getPatientTreatmentListByTeethNum(PatientID, i);
 			renderRequest.setAttribute("teeth" + i, HT);
-	        _log.info("teeth" + i + " : " + HT);
+	        
 			
 		}
 	}

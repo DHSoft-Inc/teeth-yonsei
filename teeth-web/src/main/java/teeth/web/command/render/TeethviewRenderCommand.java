@@ -29,15 +29,15 @@ public class TeethviewRenderCommand implements MVCRenderCommand {
 	@Override
 	public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
 		// TODO Auto-generated method stub
-		long PatientID = 1001; //임시 PatientID
+		long PatientID = 1001; //�엫�떆 PatientID
 		List<TreatmentHistory> HistoryList = TreatmentHistoryLocalServiceUtil.getPatientTreatmentList(PatientID);
 		boolean isPermanent = false;
 		try
 		{
-			// 영구치(11~18, 21~28, 31~38, 41~48)는 checkPermanent=true
+			// �쁺援ъ튂(11~18, 21~28, 31~38, 41~48)�뒗 checkPermanent=true
 			processTeethRange(renderRequest, PatientID, 11, 48, true, isPermanent);
 
-			// 유치(51~55, 61~65, 71~75, 81~85)는 검사 없이 그냥 세팅
+			// �쑀移�(51~55, 61~65, 71~75, 81~85)�뒗 寃��궗 �뾾�씠 洹몃깷 �꽭�똿
 			processTeethRange(renderRequest, PatientID, 51, 85, false, isPermanent);
 			
 			renderRequest.setAttribute("patientID", PatientID);
@@ -71,7 +71,6 @@ public class TeethviewRenderCommand implements MVCRenderCommand {
 				isPermanent = true;
 			}
 			renderRequest.setAttribute("teeth" + i, HT);
-	        _log.info("teeth" + i + " : " + HT);
 			
 		}
 	}
