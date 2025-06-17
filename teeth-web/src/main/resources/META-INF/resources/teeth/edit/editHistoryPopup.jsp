@@ -437,12 +437,11 @@
 	
 </aui:form>
 
-
+<portlet:resourceURL id="/teeth/editTreatment" var="resourceEditURL"/>
 
 
 
 <script>
-
 	/* 
 	const formData = new URLSearchParams({
       EditUserId: Liferay.ThemeDisplay.getUserId(),
@@ -510,12 +509,10 @@
         
         
         console.log('submitForm() 호출 - 전송 데이터:', requestData);
-
+		/*
         $.ajax({
             type: 'POST',
-            
-            url: '/o/teeth-web/ajax/edit_treatment_db.jsp',
-             
+            url: '/o/teeth-web/ajax/edit_treatment_db.jsp',      
             data: requestData,
             success: function(response) {
                 console.log("서버 응답:", response);
@@ -525,6 +522,27 @@
                 console.error("AJAX 실패:", error);
             }
         });
+		*/
+		const resourceURL = '<%=resourceEditURL.toString()%>';
+	  	const base = resourceURL;
+	    let urlObj = new URL(base);
+		
+        $.ajax({
+            type: 'POST',
+            //url: '/o/teeth-web/ajax/edit_treatment_db.jsp',      
+            url: urlObj,
+            //data: requestData,
+            data: JSON.stringify({ requests: [requestData] }),
+            contentType: 'application/json; charset=UTF-8',
+            success: function(response) {
+                console.log("서버 응답:", response);
+                window.history.back();
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX 실패:", error);
+            }
+        });
+    
     }
     
     function cancel() {
