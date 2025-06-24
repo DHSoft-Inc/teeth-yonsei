@@ -14,12 +14,12 @@
 </style>
 
 <%
-	Long patientID = (Long) request.getAttribute("patientID");
-	if(patientID == null) { patientID = 1001L; }
+	Long patientID = (Long) request.getAttribute("patientID"); //patientId 
+	if(patientID == null) { patientID = 1001L; } // patientId는 현재 1001로 임시 설정
 	
-	List<TreatmentHistory> historyList = (List<TreatmentHistory>) request.getAttribute("HistoryList");
+	List<TreatmentHistory> historyList = (List<TreatmentHistory>) request.getAttribute("HistoryList"); //history list를 받아오기
 	
-	List<TreatmentHistory>[] RL = new List[86];
+	List<TreatmentHistory>[] RL = new List[86]; //각 teeth에 대한 정보 받아오기
 	for(int i = 11; i <= 85; i++)
 	{
 		RL[i] = (List<TreatmentHistory>) request.getAttribute("teeth" + i);

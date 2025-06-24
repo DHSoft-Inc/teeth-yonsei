@@ -1,6 +1,6 @@
 // treatment.js
 
-
+//중복되는 변수 선언 클래스로 대체(추후 treatment 와 합칠 필요있음)
 class addTreatment {
   constructor({
     treatmentDate = '',
@@ -34,7 +34,7 @@ class addTreatment {
 }
 
 
-//보내기 전에 임시 저장하는 용도
+//보내기 전에 임시 저장하는 용도의 클래스
 class Treatment {
   constructor({ treatmentDate, selectedTeeth, selectedTreatment = '-', selectedState = '-', mainCategory = '', userId, authToken }) {
     this.treatmentDate = treatmentDate;
@@ -120,6 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
   //나머지 버튼들에 대해 jsp의 버튼 이름과 연결
 
   
+  //add 버튼의 활성화를 조정하기 위한 함수
   function checkIfCanEnableAddButton() {
 	  const isStatusSelected = [...statusRadios].some(input => input.checked);
 	  const isPermanentCSelected = [...permanentCRadios].some(input => input.checked);
@@ -208,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	
 	
   
-    // 취소하고 창 닫기
+    // cancel버튼 클릭시 부모 창 새로고침
   	cancelBtn.addEventListener('click', () => {
 	  	  console.log('Cancel 버튼 클릭됨');
 	  	  console.log('Opener:', Liferay.Util.getOpener());
@@ -216,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
   	});
 	
 	
-	
+    // add record 버튼 클릭시 임시 저장하는 함수
   	addBtn.addEventListener('click', () => {
   		
     	  //C는 radioButton, D는 selectbox
@@ -288,10 +289,6 @@ document.addEventListener('DOMContentLoaded', () => {
     	  .map(tooth => tooth.trim());  // ← 여기서 trim()
     			
     		
-    		
-    		
-    		
-    		
     		treatmentDate = formData.get('treatmentDate');
 
     		// 치아 × 상태
@@ -308,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
     		  });
     		});
 
-    		// 중복 알림부분 만들어야 함
+    		
 
 
     	  }
@@ -325,11 +322,11 @@ document.addEventListener('DOMContentLoaded', () => {
     	if (newlyAddedTeeth.length) {
     	  const tbody = document.querySelector('#treatmentTable tbody');
     	  
-    	  newlyAddedTeeth.forEach(({ tooth, treatment, permanent }) => {
+    	  newlyAddedTeeth.forEach(({ tooth, treatment, permanent, treatmentDisplay }) => {
     	    const tr = document.createElement('tr');
     	    const teethNumberNum     = tooth.replace("Teeth", "");
     	    const permanentDisplay   = permanent || '-';
-    	    const treatmentDisplay      = treatment    || '-';
+    	    //const treatmentDisplay      = `-${treatment}`   || '-';
 
     	    tr.innerHTML =
     	    	 createTd(teethNumberNum) +
@@ -389,8 +386,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	         const [year, month, day] = dateString.split('.').map(s => s.trim());
 	         return `${year}-${month.padStart(2,'0')}-${day.padStart(2,'0')}`;
 	       }  
-	       
-	       
+	        
+	       //입력받은 항목 중복 검사하는 function
 	       function addPendingTreatment({ tooth, treatmentDate, treatment = '-', state = '-' }) {
 	    	   // 중복 여부 검사
 	    	   const newTreatment = new Treatment({
@@ -403,7 +400,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	    		    authToken: Liferay.authToken
 	    		  });
 
-
+	    	   //중복이 될 일이 없으므로 주석처리
+	    	   	/*
 	    	   const isDuplicate =
 	    		    pendingTreatments.some(item => item.isEqual(newTreatment)) ||
 	    		    matched.some(m =>
@@ -427,27 +425,32 @@ document.addEventListener('DOMContentLoaded', () => {
 	    		    msgs.push(msg);
 	    		    return;
 	    		  }
-
+ 				*/
 	    	   // 중복이 아니라면 추가
 	    	   pendingTreatments.push(newTreatment);
 
 	    	   newlyAddedTeeth.push({
 	    	     tooth,
 	    	     treatment: treatment !== '-' ? treatment : '-',
-	    	     permanent: state !== '-' ? state : '-'
+	    	     permanent: state !== '-' ? state : '-',
+	    	     treatmentDisplay: treatment !== '-' ? `${getCategoryByValue(treatment)}-${treatment}` : '-', 
 	    	   });
 
 	    	   console.log('추가', treatment !== '-' ? treatment : state);
 	    	 }
 
-    	  
+	       //value로 category 가져오기
+	       	function getCategoryByValue(value) {
+	    	   const input = document.querySelector(`input[value="${value}"]`);
+	    	   return input ? (input.dataset.category || '') : '';
+	    	 }
     	});
   	
  
   	
   	
   	
-    //save 버튼을 클릭했을 경우 DB에 추가하는 
+    //save 버튼을 클릭했을 경우 DB에 추가하는 이벤트 리스너
   	addDBBtn.addEventListener('click', () => {
   	console.log('원본 Pending Treatments:', pendingTreatments);
 
@@ -471,44 +474,17 @@ document.addEventListener('DOMContentLoaded', () => {
   	});
   	  
   	console.log("JSON 전송용 데이터:", JSON.stringify(treatmentsData));
-  	  
-  	  
-	/*
-  	  const treatmentsData = new URLSearchParams();
-  	  combinedList.forEach((str, i) => {
-  	    const decoded = decodeURIComponent(str);
-  	    treatmentsData.append(`treatment_${i + 1}`, decoded);
-  	  });
-  	  console.log('전송용 Params:', treatmentsData.toString());
-  	  
-  	  $.ajax({
-  	    type: 'POST',
-  	    url: '/o/teeth-web/ajax/save_treatment_list_db.jsp',
-  	    data: treatmentsData.toString(),
-  	    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-  	    success(response) {
-  	      console.log("서버 응답:", response);
-  	      pendingTreatments.length = 0;
-  	      Liferay.Util.getOpener().location.reload();
-  	      Liferay.Util.getOpener().closeDialog('addTreatmentDialog');
-  	    },
-  	    error(xhr, status, error) {
-  	      console.error("AJAX 실패:", error);
-  	    }
-  	  });
-  	  	 */	  
+  	  	  
   	  
   	const base = resourceURL;
     let urlObj = new URL(base);
   	    	  
 	  $.ajax({
 		    type: 'POST',
-		    //url: '/teeth/addTreatment',
 		    //url: '<portlet:resourceURL id="<%=teethTreatmentMVCCommand.ADD_TREATMENT %>"></portlet:resourceURL>',
 		    url: urlObj,
-		    //data: treatmentsData.toString(), 
+		    //data: <portlet:namespace/>JSON.stringify({ treatments: treatmentsData }),
 		    data: JSON.stringify({ treatments: treatmentsData }),
-		    //contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 		    contentType: 'application/json; charset=UTF-8',
 		    success: function(response) {
 		      console.log("서버 응답:", response);
@@ -528,7 +504,7 @@ document.addEventListener('DOMContentLoaded', () => {
   	
   	
   	
-  	
+  	//입력받은 설문항목을 전처리하는 함수
 	  function groupAndCombineTreatments(pendingList) {
 		  const grouped = {};
 
@@ -572,7 +548,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	
 
 
-  // 이력 표시 함수
+  // 업데이트 된 이력 표시 함수
   function updateHistoryDisplay() {
     historyContainer.innerHTML = '';
     regions.filter(r => r.isClicked).forEach(region => {
