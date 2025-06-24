@@ -90,7 +90,7 @@
     
     // functions
     
-    
+    // 치아 영역을 클릭하면 해당 치아의 선택 상태를 토글하고 화면을 다시 그림
     function handleRegionClick(e, region) {
         e.stopPropagation();
         const num = parseInt(region.name.replace('Teeth', ''), 10);
@@ -98,7 +98,7 @@
         jointNum += region.isClicked ? 1 : -1;
         drawRegions();
     }
-
+    // 마우스가 치아 영역 위에 올라가면 300ms 후 AJAX로 툴팁 데이터를 요청해 표시
     function handleRegionMouseEnter(e, region) {
         timeoutId = setTimeout(() => {
             const base = tooltipResourceURL;
@@ -123,7 +123,7 @@
             });
         }, 300);
     }
-
+    // 툴팁이 표시 중일 때 마우스 위치에 따라 툴팁 위치를 동적으로 조정
     function handleRegionMouseMove(e) { //호버링 이동
         const rect = imageWrapper.getBoundingClientRect();
 
@@ -153,12 +153,12 @@
         tooltip.style.left = `${left}px`;
         tooltip.style.top  = `${top}px`;
     }
-
+    // 마우스가 치아 영역을 벗어나면 툴팁 표시를 숨김
     function handleRegionMouseLeave() {
         clearTimeout(timeoutId);
         document.getElementById('tooltipContainer').style.display = 'none';
     }
-
+    // 이미지 영역을 클릭하면 드래그 선택 시작 지점을 저장하고 선택 박스를 생성
     function handleWrapperMouseDown(e) {
         if (e.target !== imageWrapper) return;
         e.preventDefault();
@@ -170,7 +170,7 @@
         selectionBox.classList.add('selection-box');
         imageWrapper.appendChild(selectionBox);
     }
-
+    // 드래그 중일 때 선택 박스의 크기와 위치를 마우스 움직임에 따라 조정
     function handleWindowMouseMove(e) {
         if (!isDragging || !selectionBox) return;
         const rect = imageWrapper.getBoundingClientRect();
@@ -182,7 +182,7 @@
         const height = Math.abs(y - dragStartY);
         Object.assign(selectionBox.style, { left: `${left}px`, top: `${top}px`, width: `${width}px`, height: `${height}px` });
     }
-
+    // 드래그 종료 시 선택 박스에 포함된 치아들을 선택/해제 상태로 토글하고 다시 그림
     function handleWindowMouseUp(e) {
         if (!isDragging) return;
         isDragging = false;
@@ -212,7 +212,7 @@
         drawRegions();
     }
     
-    
+    // Ctrl + 마우스 휠 조작으로 이미지 확대/축소 비율을 조정하고 다시 그림
     function imageWrapperWheel(e) {
         if (e.ctrlKey) {                                // Ctrl+휠 줌 감지 
       	  e.preventDefault();
@@ -223,7 +223,7 @@
       	  drawRegions();
         }
     }
-
+    // 모든 치아 영역의 상태를 기반으로 스타일과 라벨을 렌더링하고, 선택 상태를 UI에 반영
     function drawRegions() {
         clearLabels();
         regions.forEach(region => {
@@ -236,7 +236,7 @@
         $('#' + NAMESPACE + 'addBtn').prop('disabled', jointNum <= 0);
         updateHistoryDisplay();
     }
-
+    // 치아 영역의 크기, 위치, 배경색을 이미지 크기에 맞춰 계산해 스타일 적용
     function updateRegionStyle(region, stateMatch, treatMatch) {
     	const { width: curW, height: curH } = imageWrapper.getBoundingClientRect();
         const scaleX = curW / natW;
@@ -251,11 +251,11 @@
             background: determineBackground(region, stateMatch, treatMatch)
         });
     }
-
+    // 이전에 표시된 모든 숫자/상태/이력 라벨을 제거
     function clearLabels() {
         imageWrapper.querySelectorAll('.number-label, .state-label, .history-label').forEach(el => el.remove());
     }
-
+    // 가장 최근 이력 중 우선순위가 높은 상태/치료 코드를 추출
     function findPriorityMatches(histories) {
         let stateMatch = null;
         let treatMatch = null;
@@ -270,7 +270,7 @@
         }
         return { stateMatch, treatMatch };
     }
-
+    // 가장 최근 이력 중 우선순위가 높은 상태/치료 코드를 추출
     function determineBackground(region, stateMatch, treatMatch) {
         const hasHistory = region.history && region.history.length > 0;
         if (region.isClicked) return 'red';
@@ -293,7 +293,7 @@
         }
         return `linear-gradient(to bottom, ${stateColor} 0%, ${stateColor} 50%, ${treatColor} 50%, ${treatColor} 100%)`.replace(/\s+/g, ' ').trim();
     }
-
+    // 치아 번호, 상태 코드, 치료 코드 라벨을 해당 치아 영역에 렌더링
     function renderLabels(region, stateMatch, treatMatch) {
     	const { width: curW, height: curH } = imageWrapper.getBoundingClientRect();
         const scaleX = curW / natW;
@@ -330,7 +330,7 @@
             imageWrapper.appendChild(lbl);
         }
     }
-
+    // 가장 최근 이력 중 우선순위가 높은 상태/치료 코드를 추출
     function updateHistoryDisplay() {
         historyContainer.innerHTML = '';
         regions.filter(r => r.history.length).forEach(region => {

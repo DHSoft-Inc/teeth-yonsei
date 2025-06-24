@@ -14,6 +14,8 @@
 	long userId = themeDisplay.getUserId();
 %>
 
+<script src="/o/teeth-web/js/categoryLabelMap.js"></script>
+
 <html>
 <head>
     <title>Edit Treatment</title>
@@ -439,21 +441,11 @@
 
 <portlet:resourceURL id="/teeth/editTreatment" var="resourceEditURL"/>
 
-
+<portlet:resourceURL id="/teeth/deleteTreatment" var="resourceDeleteURL"/>
 
 <script>
-	/* 
-	const formData = new URLSearchParams({
-      EditUserId: Liferay.ThemeDisplay.getUserId(),
-      treatmentDate: treatmentDate.toISOString().split('T')[0],
-      mainCategory,
-      selectedStatus,
-      selectedTeeth: teethsParam,
-      selectedPermanent, 
-      p_auth: Liferay.authToken
-    });
-    */
 
+	//edit 화면에서 선택한 진료기록을 삭제 요청하는 function
     function Delete() {
     	setFormValues();  // 숨겨진 input 값 세팅
     	
@@ -471,14 +463,16 @@
                 selectedTreatmentID: document.getElementById('treatmentIdInput').value        
             };
     	
-    	const deleteDataParams = new URLSearchParams(deleteData);
-    	console.log('deleteData 호출 - 전송 데이터:', deleteDataParams);
+    	
+		const resourceURL = '<%=resourceDeleteURL.toString()%>';
+	  	const base = resourceURL;
+	    let urlObj = new URL(base);
     	
         $.ajax({
             type: 'POST',
-            url: '/o/teeth-web/ajax/delete_treatment_db.jsp',
-            data: deleteDataParams.toString(),
-            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            url: urlObj,
+            data: JSON.stringify({ deleteData: [deleteData] }),
+            contentType: 'application/json; charset=UTF-8',
             success: function(response) {
             	window.history.back();
                 console.log("서버 응답:", response);
@@ -490,7 +484,7 @@
     
 	}
     
-    
+ 	//edit 화면에서 편집한 진료기록을 저장하는 function
     function submitForm() {
         setFormValues();  // 숨겨진 input 값 세팅
 
@@ -502,27 +496,9 @@
             selectedTeeth: document.getElementById('teethInput').value,
             selectedPermanent: document.getElementById('permanentInput').value
         };
-        
-        
-        
-        // 콘솔 출력 
-        
-        
+
         console.log('submitForm() 호출 - 전송 데이터:', requestData);
-		/*
-        $.ajax({
-            type: 'POST',
-            url: '/o/teeth-web/ajax/edit_treatment_db.jsp',      
-            data: requestData,
-            success: function(response) {
-                console.log("서버 응답:", response);
-                window.history.back();
-            },
-            error: function(xhr, status, error) {
-                console.error("AJAX 실패:", error);
-            }
-        });
-		*/
+
 		const resourceURL = '<%=resourceEditURL.toString()%>';
 	  	const base = resourceURL;
 	    let urlObj = new URL(base);
@@ -544,12 +520,13 @@
         });
     
     }
-    
+ 	
+   //edit 화면에서 선택한 진료기록을 삭제 요청하는 function
     function cancel() {
     	 window.history.back();
     }
 	
-	
+	//선택한 치식을 화면에 출력하는 function 
     function applyTreatment(treatmentInfo) {
         // 1) 문자열 → 객체로 변환
         var pairs = treatmentInfo.split(', ');
@@ -601,6 +578,7 @@
         });
     }
 
+	//edit, delete 실행전  변경사항을 적용해주는  function
     function setFormValues() {
         // 1) status 체크박스 선택값 모두 가져와서 배열 → 문자열
         var statusEls = document.querySelectorAll('input[name="status"]:checked');

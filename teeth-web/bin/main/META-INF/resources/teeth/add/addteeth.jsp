@@ -300,11 +300,11 @@
 	      console.log("일 (getDate):", days);
 	    
 	
-	    console.log("원본 차이:",years,"년",months,"개월" ,days,"일");
+	    console.log("원본 차이:",years,"년",months,"개월");
 	
 	
 	
-	    const resultText = "생후 " + years + " Y " + months + " M " + days + " D 경과";
+	    const resultText = "생후 " + years + " Y " + months + " M ";
 	    document.getElementById("ageDiff").textContent = resultText;
 	    
 	    const regions = teethsParam.split(',')
@@ -442,8 +442,8 @@
 		  <div class="inline-section">
 		    <p><strong>예방</strong></p>
 		    <div style="border-left: 1px solid #ccc; padding-left: 10px; display: flex; gap: 10px;">
-		    <label><input type="checkbox" class="mar-r-2" name="status" value="TFA"/> 불소도포 </label>
-		    <label><input type="checkbox" class="mar-r-2" name="status" value="SC" /> 스케일링 </label>
+		    <label><input type="checkbox" class="mar-r-2" name="status" value="TFA" data-category="예방"/> 불소도포 </label>
+		    <label><input type="checkbox" class="mar-r-2" name="status" value="SC" data-category="예방"/> 스케일링 </label>
 		    </div>
 		  </div>
 		
@@ -451,12 +451,12 @@
 		  <div class="inline-section with-border">
 		    <p><strong>수복</strong></p>
 		    <div style="border-left: 1px solid #ccc; padding-left: 10px; display: flex; gap: 10px;">
-		    <label><input type="checkbox" class="mar-r-2" name="status" value="Seal" /> 실란트 </label>
-		    <label><input type="checkbox" class="mar-r-2" name="status" value="AF" /> 아말감 </label>
-		    <label><input type="checkbox" class="mar-r-2" name="status" value="RF" /> 레진 </label>
-		    <label><input type="checkbox" class="mar-r-2" name="status" value="Gl" /> 글라스아이오노머 </label>
-		    <label><input type="checkbox" class="mar-r-2" name="status" value="SS" /> 기성금속관 </label>
-		    <label><input type="checkbox" class="mar-r-2" name="status" value="Zr" /> 지르코니아크라운 </label>
+		    <label><input type="checkbox" class="mar-r-2" name="status" value="Seal" data-category="수복"/> 실란트 </label>
+		    <label><input type="checkbox" class="mar-r-2" name="status" value="AF" data-category="수복"/> 아말감 </label>
+		    <label><input type="checkbox" class="mar-r-2" name="status" value="RF" data-category="수복"/> 레진 </label>
+		    <label><input type="checkbox" class="mar-r-2" name="status" value="Gl" data-category="수복"/> 글라스아이오노머 </label>
+		    <label><input type="checkbox" class="mar-r-2" name="status" value="SS" data-category="수복"/> 기성금속관 </label>
+		    <label><input type="checkbox" class="mar-r-2" name="status" value="Zr" data-category="수복"/> 지르코니아크라운 </label>
 		     </div>
 		  </div>
 	  
@@ -467,19 +467,19 @@
 	  	<div class="inline-section">
 	  	<p><strong>외과</strong></p>
 	  	<div style="border-left: 1px solid #ccc; padding-left: 10px; display: flex; gap: 10px;">
-	    <label><input type="checkbox" class="mar-r-2" name="status" value="Ext"/> 발치</label>
+	    <label><input type="checkbox" class="mar-r-2" name="status" value="Ext" data-category="외과"/> 발치</label>
 	     <!-- yes일 경우 서술 공간 필요 -->
-	    <label><input type="checkbox" class="mar-r-2" name="status" value="oral"/> 구강소수술</label>
+	    <label><input type="checkbox" class="mar-r-2" name="status" value="oral" data-category="외과"/> 구강소수술</label>
 	    </div>
 	    </div>
 	    <div class="inline-section with-border">
 	    <p><strong>치수</strong></p>
 	    <div style="border-left: 1px solid #ccc; padding-left: 10px; display: flex; gap: 10px;">
-	    <label><input type="checkbox" class="mar-r-2" name="status" value="Pulpo"/> Pulpotomy</label>
-	    <label><input type="checkbox" class="mar-r-2" name="status" value="Pulpec"/> Pulpectomy</label>
-	    <label><input type="checkbox" class="mar-r-2" name="status" value="Apexo"/> Apexogenesis</label>
-	    <label><input type="checkbox" class="mar-r-2" name="status" value="Apexi"/> Apexification</label>
-	    <label><input type="checkbox" class="mar-r-2" name="status" value="RCT"/> Root canal treatment</label>
+	    <label><input type="checkbox" class="mar-r-2" name="status" value="Pulpo" data-category="치수"/> Pulpotomy</label>
+	    <label><input type="checkbox" class="mar-r-2" name="status" value="Pulpec" data-category="치수"/> Pulpectomy</label>
+	    <label><input type="checkbox" class="mar-r-2" name="status" value="Apexo" data-category="치수"/> Apexogenesis</label>
+	    <label><input type="checkbox" class="mar-r-2" name="status" value="Apexi" data-category="치수"/> Apexification</label>
+	    <label><input type="checkbox" class="mar-r-2" name="status" value="RCT" data-category="치수"/> Root canal treatment</label>
 	    </div>
 	    </div>
 	  </div>
@@ -490,17 +490,17 @@
 	  	<div class="inline-section">
 	  	<p><strong>전신마취</strong></p>
 	  	<div style="border-left: 1px solid #ccc; padding-left: 10px; display: flex; gap: 10px;">
-	    <label><input type="checkbox" class="mar-r-2" name="status" value="DOR"/> DOR </label>
-	    <label><input type="checkbox" class="mar-r-2" name="status" value="MOR"/> MOR </label>
+	    <label><input type="checkbox" class="mar-r-2" name="status" value="DOR" data-category="전신마취"/> DOR </label>
+	    <label><input type="checkbox" class="mar-r-2" name="status" value="MOR" data-category="전신마취"/> MOR </label>
 	    </div>
 	    </div>
 	    <div class="inline-section with-border">
 	    <p><strong>교정</strong></p>
 	    <div style="border-left: 1px solid #ccc; padding-left: 10px; display: flex; gap: 10px;">
-	    <label><input type="checkbox" class="mar-r-2" name="status" value="firstStraighten"/> 1차교정</label>
-	    <label><input type="checkbox" class="mar-r-2" name="status" value="secondStraighten"/> 2차교정</label>
-	    <label><input type="checkbox" class="mar-r-2" name="status" value="partialStraighten"/> 부분교정(장치비+월비)</label>
-	    <label><input type="checkbox" class="mar-r-2" name="status" value="muscleFunction"/> 근기능장치</label>
+	    <label><input type="checkbox" class="mar-r-2" name="status" value="firstStraighten" data-category="교정"/> 1차교정</label>
+	    <label><input type="checkbox" class="mar-r-2" name="status" value="secondStraighten" data-category="교정"/> 2차교정</label>
+	    <label><input type="checkbox" class="mar-r-2" name="status" value="partialStraighten" data-category="교정"/> 부분교정(장치비+월비)</label>
+	    <label><input type="checkbox" class="mar-r-2" name="status" value="muscleFunction" data-category="교정"/> 근기능장치</label>
 	    </div>
 	    </div>
 	  </div>
@@ -510,19 +510,19 @@
 	  	<div class="inline-section">
 	    <p><strong>공간유지장치</strong></p>
 	    <div style="border-left: 1px solid #ccc; padding-left: 10px; display: flex; gap: 10px;">
-	    <label><input type="checkbox" class="mar-r-2" name="status" value="BL"/> B-L </label>
-	    <label><input type="checkbox" class="mar-r-2" name="status" value="LA"/> L-A </label>
-	    <label><input type="checkbox" class="mar-r-2" name="status" value="NHA"/> NHA </label>
-	    <label><input type="checkbox" class="mar-r-2" name="status" value="RSM"/> RSM </label>
+	    <label><input type="checkbox" class="mar-r-2" name="status" value="BL" data-category="공간유지장치"/> B-L </label>
+	    <label><input type="checkbox" class="mar-r-2" name="status" value="LA" data-category="공간유지장치"/> L-A </label>
+	    <label><input type="checkbox" class="mar-r-2" name="status" value="NHA" data-category="공간유지장치"/> NHA </label>
+	    <label><input type="checkbox" class="mar-r-2" name="status" value="RSM" data-category="공간유지장치"/> RSM </label>
 	    </div>
 	    </div>
 	    <div class="inline-section with-border">
 	    <p><strong>진정</strong></p>
 	     <div style="border-left: 1px solid #ccc; padding-left: 10px; display: flex; gap: 10px;">
-	    <label><input type="checkbox" class="mar-r-2" name="status" value="N2OSedation"/> N2O흡인진정 </label>
-	    <label><input type="checkbox" class="mar-r-2" name="status" value="LASedation"/> 경구진정 </label>
-	    <label><input type="checkbox" class="mar-r-2" name="status" value="NHASedation"/> 근육진정 </label>
-	    <label><input type="checkbox" class="mar-r-2" name="status" value="RSMSedation"/> 정주진정 </label>
+	    <label><input type="checkbox" class="mar-r-2" name="status" value="N2OSedation" data-category="진정"/> N2O흡인진정 </label>
+	    <label><input type="checkbox" class="mar-r-2" name="status" value="LASedation" data-category="진정"/> 경구진정 </label>
+	    <label><input type="checkbox" class="mar-r-2" name="status" value="NHASedation" data-category="진정"/> 근육진정 </label>
+	    <label><input type="checkbox" class="mar-r-2" name="status" value="RSMSedation" data-category="진정"/> 정주진정 </label>
 	    </div>
 	    </div>
 	  </div>
