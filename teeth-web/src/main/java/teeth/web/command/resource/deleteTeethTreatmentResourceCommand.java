@@ -7,6 +7,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -56,6 +58,8 @@ public class deleteTeethTreatmentResourceCommand extends BaseMVCResourceCommand{
 	        String selectedTeeth1 = treatment.getString("selectedTeeth");
 	        String Status = treatment.getString("selectedStatus");
 	        long selectedTreatmentID = treatment.getLong("selectedTreatmentID");
+	        ServiceContext serviceContext = ServiceContextFactory.getInstance(
+	        	    TreatmentAudit.class.getName(), resourceRequest);
 	        
 	        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  // 날짜 포맷이 "2025-04-10" 형식일 경우
 	        //Date treatmentDate = sdf.parse(treatmentDateStr);
@@ -67,7 +71,7 @@ public class deleteTeethTreatmentResourceCommand extends BaseMVCResourceCommand{
 	        TreatmentHistory treatments = TreatmentHistoryLocalServiceUtil. getPatientTreatmentByTreatmentID(selectedTreatmentID);
 	        
 	        treatments = TreatmentHistoryLocalServiceUtil.deleteTreatmentHistory(selectedTreatmentID);
-	        TreatmentAudit audit = TreatmentAuditLocalServiceUtil.AddAudit(teethNum, userId, treatments.getTreatmentDate(), "delete",  Status, "-");
+	        TreatmentAudit audit = TreatmentAuditLocalServiceUtil.AddAudit(teethNum, userId, treatments.getTreatmentDate(), "delete",  Status, "-", serviceContext);
 	        
 	      
 	    }

@@ -38,7 +38,7 @@
 						value="<%=treatment.getStatus()%>" />
 					<liferay-ui:search-container-column-text name="Treatments" 
 						cssClass="treatment-column">
-						<%=treatment.getTooltipTreatmnetStringList(themeDisplay.getLocale()) %>
+						<%=treatment.getTreatmnetString() %>
 					</liferay-ui:search-container-column-text>
 				</liferay-ui:search-container-row>
 				<liferay-ui:search-iterator paginate="false" />

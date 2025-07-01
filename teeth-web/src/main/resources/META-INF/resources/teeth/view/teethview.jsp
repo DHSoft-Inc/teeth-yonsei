@@ -25,7 +25,7 @@
     </c:when>
     <c:otherwise>
         <script type="text/javascript">
-            window.location.href='${deciduousTeethURL}';
+            window.location.href='${deciduousTeethUsRL}';
         </script>
     </c:otherwise>
 </c:choose>

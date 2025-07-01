@@ -47,11 +47,12 @@ public class TreatmentHistoryLocalServiceUtil {
 	public static TreatmentHistory AddHistory(
 		long patientID, long teethNum, java.util.Date treatmentDate,
 		String treatment, String state, java.util.Date editedDate,
-		long editedUserID) {
+		long editedUserID,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 
 		return getService().AddHistory(
 			patientID, teethNum, treatmentDate, treatment, state, editedDate,
-			editedUserID);
+			editedUserID, serviceContext);
 	}
 
 	/**
@@ -214,10 +215,32 @@ public class TreatmentHistoryLocalServiceUtil {
 		return getService().fetchTreatmentHistory(treatmentID);
 	}
 
+	/**
+	 * Returns the treatment history matching the UUID and group.
+	 *
+	 * @param uuid the treatment history's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching treatment history, or <code>null</code> if a matching treatment history could not be found
+	 */
+	public static TreatmentHistory fetchTreatmentHistoryByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return getService().fetchTreatmentHistoryByUuidAndGroupId(
+			uuid, groupId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
 		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static
@@ -304,6 +327,39 @@ public class TreatmentHistoryLocalServiceUtil {
 	}
 
 	/**
+	 * Returns all the treatment histories matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the treatment histories
+	 * @param companyId the primary key of the company
+	 * @return the matching treatment histories, or an empty list if no matches were found
+	 */
+	public static List<TreatmentHistory>
+		getTreatmentHistoriesByUuidAndCompanyId(String uuid, long companyId) {
+
+		return getService().getTreatmentHistoriesByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of treatment histories matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the treatment histories
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of treatment histories
+	 * @param end the upper bound of the range of treatment histories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching treatment histories, or an empty list if no matches were found
+	 */
+	public static List<TreatmentHistory>
+		getTreatmentHistoriesByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			OrderByComparator<TreatmentHistory> orderByComparator) {
+
+		return getService().getTreatmentHistoriesByUuidAndCompanyId(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
 	 * Returns the number of treatment histories.
 	 *
 	 * @return the number of treatment histories
@@ -325,12 +381,29 @@ public class TreatmentHistoryLocalServiceUtil {
 		return getService().getTreatmentHistory(treatmentID);
 	}
 
+	/**
+	 * Returns the treatment history matching the UUID and group.
+	 *
+	 * @param uuid the treatment history's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching treatment history
+	 * @throws PortalException if a matching treatment history could not be found
+	 */
+	public static TreatmentHistory getTreatmentHistoryByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException {
+
+		return getService().getTreatmentHistoryByUuidAndGroupId(uuid, groupId);
+	}
+
 	public static TreatmentHistory UpdateHistory(
 		long treatmentID, String treatment, String state,
-		java.util.Date editedDate, long editedUserID) {
+		java.util.Date editedDate, long editedUserID,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 
 		return getService().UpdateHistory(
-			treatmentID, treatment, state, editedDate, editedUserID);
+			treatmentID, treatment, state, editedDate, editedUserID,
+			serviceContext);
 	}
 
 	/**

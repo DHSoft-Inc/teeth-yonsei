@@ -31,6 +31,7 @@ public class TreatmentHistorySoap implements Serializable {
 	public static TreatmentHistorySoap toSoapModel(TreatmentHistory model) {
 		TreatmentHistorySoap soapModel = new TreatmentHistorySoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setTreatmentID(model.getTreatmentID());
 		soapModel.setPatientID(model.getPatientID());
 		soapModel.setEditedUserID(model.getEditedUserID());
@@ -39,6 +40,16 @@ public class TreatmentHistorySoap implements Serializable {
 		soapModel.setEditedDate(model.getEditedDate());
 		soapModel.setTreatment(model.getTreatment());
 		soapModel.setState(model.getState());
+		soapModel.setGroupId(model.getGroupId());
+		soapModel.setCompanyId(model.getCompanyId());
+		soapModel.setUserId(model.getUserId());
+		soapModel.setUserName(model.getUserName());
+		soapModel.setCreateDate(model.getCreateDate());
+		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setStatus(model.getStatus());
+		soapModel.setStatusByUserId(model.getStatusByUserId());
+		soapModel.setStatusByUserName(model.getStatusByUserName());
+		soapModel.setStatusDate(model.getStatusDate());
 
 		return soapModel;
 	}
@@ -98,6 +109,14 @@ public class TreatmentHistorySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setTreatmentID(pk);
+	}
+
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
 	}
 
 	public long getTreatmentID() {
@@ -164,6 +183,87 @@ public class TreatmentHistorySoap implements Serializable {
 		_state = state;
 	}
 
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
+	public long getUserId() {
+		return _userId;
+	}
+
+	public void setUserId(long userId) {
+		_userId = userId;
+	}
+
+	public String getUserName() {
+		return _userName;
+	}
+
+	public void setUserName(String userName) {
+		_userName = userName;
+	}
+
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
+	}
+
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
+	}
+
+	public int getStatus() {
+		return _status;
+	}
+
+	public void setStatus(int status) {
+		_status = status;
+	}
+
+	public long getStatusByUserId() {
+		return _statusByUserId;
+	}
+
+	public void setStatusByUserId(long statusByUserId) {
+		_statusByUserId = statusByUserId;
+	}
+
+	public String getStatusByUserName() {
+		return _statusByUserName;
+	}
+
+	public void setStatusByUserName(String statusByUserName) {
+		_statusByUserName = statusByUserName;
+	}
+
+	public Date getStatusDate() {
+		return _statusDate;
+	}
+
+	public void setStatusDate(Date statusDate) {
+		_statusDate = statusDate;
+	}
+
+	private String _uuid;
 	private long _treatmentID;
 	private long _patientID;
 	private long _editedUserID;
@@ -172,5 +272,15 @@ public class TreatmentHistorySoap implements Serializable {
 	private Date _editedDate;
 	private String _treatment;
 	private String _state;
+	private long _groupId;
+	private long _companyId;
+	private long _userId;
+	private String _userName;
+	private Date _createDate;
+	private Date _modifiedDate;
+	private int _status;
+	private long _statusByUserId;
+	private String _statusByUserName;
+	private Date _statusDate;
 
 }

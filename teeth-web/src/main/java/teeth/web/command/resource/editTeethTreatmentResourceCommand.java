@@ -7,6 +7,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -57,7 +59,9 @@ public class editTeethTreatmentResourceCommand extends BaseMVCResourceCommand  {
 			        String selectedStatus = treatment.getString("selectedStatus");
 			        String selectedTeethStr = treatment.getString("selectedTeeth");
 			        String selectedPermanent = treatment.getString("selectedPermanent");
-
+			        ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			        	    TreatmentAudit.class.getName(), resourceRequest);
+			        
 			        _log.info("치료 정보: " + treatment.toString());
 
 			        try {
@@ -77,7 +81,8 @@ public class editTeethTreatmentResourceCommand extends BaseMVCResourceCommand  {
 			                selectedStatus,
 			                selectedPermanent,
 			                editedDate,
-			                editUserId
+			                editUserId,
+			                serviceContext
 			            );
 
 			            // 3. 감사 로그 저장
@@ -87,7 +92,8 @@ public class editTeethTreatmentResourceCommand extends BaseMVCResourceCommand  {
 			                past.getTreatmentDate(),
 			                "Edit",
 			                pastTreatment,
-			                selectedStatus
+			                selectedStatus,
+			                serviceContext
 			            );
 
 			            if (updated != null && audit != null) {
