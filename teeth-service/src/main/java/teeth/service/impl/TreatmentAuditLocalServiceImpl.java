@@ -14,14 +14,20 @@
 
 package teeth.service.impl;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ContentTypes;
 
 import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import teeth.model.TreatmentAudit;
 import teeth.service.base.TreatmentAuditLocalServiceBaseImpl;
@@ -29,14 +35,21 @@ import teeth.service.base.TreatmentAuditLocalServiceBaseImpl;
 /**
  * @author Brian Wing Shun Chan
  */
+
 @Component(
 	property = "model.class.name=teeth.model.TreatmentAudit",
 	service = AopService.class
 )
+
 public class TreatmentAuditLocalServiceImpl
 	extends TreatmentAuditLocalServiceBaseImpl {
+	 @Reference
+	   private AssetEntryLocalService _assetEntryLocalService;
+	   
+	   @Reference
+	   private AssetLinkLocalService _assetLinkLocalService;
 	
-	public TreatmentAudit AddAudit(long teethNum, long editedUserID, Date TreatmentDate, String editType, String BeforeData, String afterData) 
+	public TreatmentAudit AddAudit(long teethNum, long editedUserID, Date TreatmentDate, String editType, String BeforeData, String afterData, ServiceContext serviceContext) 
 	{
 
 		_log.info("teethNum: " + teethNum + " editType: " + editType + " BeforeData: " + BeforeData + " afterData: "
@@ -54,6 +67,41 @@ public class TreatmentAuditLocalServiceImpl
 			newAudit.setBeforeData(BeforeData);
 			newAudit.setAfterData(afterData);
 			treatmentAuditPersistence.update(newAudit);
+			
+			
+            // → AssetEntry 추가/업데이트
+            AssetEntry assetEntry = _assetEntryLocalService.updateEntry(
+                serviceContext.getUserId(),
+                serviceContext.getScopeGroupId(),
+                newAudit.getCreateDate(),
+                newAudit.getModifiedDate(),
+                TreatmentAudit.class.getName(),
+                newAudit.getAuditID(),
+                newAudit.getUuid(),
+                0,
+                serviceContext.getAssetCategoryIds(),
+                serviceContext.getAssetTagNames(),
+                true,  // visible
+                true,  // publishDate <= now ?
+                null,  // startDate
+                null,  // endDate
+                null,  // mimeType
+                ContentTypes.TEXT_HTML,
+                "Audit: " + newAudit.getEditType(),  // title
+                null, null, null, null,
+                0, 0,  // height, width
+                serviceContext.getAssetPriority()
+            );
+
+            // → AssetLink 관계 설정
+            _assetLinkLocalService.updateLinks(
+                serviceContext.getUserId(),
+                assetEntry.getEntryId(),
+                serviceContext.getAssetLinkEntryIds(),
+                com.liferay.asset.kernel.model.AssetLinkConstants.TYPE_RELATED
+            );
+			
+			
 			return newAudit;
 		} 
 		catch (Exception e) 

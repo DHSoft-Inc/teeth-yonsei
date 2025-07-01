@@ -16,15 +16,21 @@ package teeth.model.impl;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
@@ -66,16 +72,23 @@ public class TreatmentHistoryModelImpl
 	public static final String TABLE_NAME = "treatment_history";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"treatmentID", Types.BIGINT}, {"patientID", Types.BIGINT},
-		{"editedUserID", Types.BIGINT}, {"teethNum", Types.BIGINT},
-		{"treatmentDate", Types.TIMESTAMP}, {"editedDate", Types.TIMESTAMP},
-		{"treatment", Types.VARCHAR}, {"state_", Types.VARCHAR}
+		{"uuid_", Types.VARCHAR}, {"treatmentID", Types.BIGINT},
+		{"patientID", Types.BIGINT}, {"editedUserID", Types.BIGINT},
+		{"teethNum", Types.BIGINT}, {"treatmentDate", Types.TIMESTAMP},
+		{"editedDate", Types.TIMESTAMP}, {"treatment", Types.VARCHAR},
+		{"state_", Types.VARCHAR}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
+		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
+		{"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("treatmentID", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("patientID", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("editedUserID", Types.BIGINT);
@@ -84,10 +97,20 @@ public class TreatmentHistoryModelImpl
 		TABLE_COLUMNS_MAP.put("editedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("treatment", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("state_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table treatment_history (treatmentID LONG not null primary key,patientID LONG,editedUserID LONG,teethNum LONG,treatmentDate DATE null,editedDate DATE null,treatment VARCHAR(75) null,state_ VARCHAR(75) null)";
+		"create table treatment_history (uuid_ VARCHAR(75) null,treatmentID LONG not null primary key,patientID LONG,editedUserID LONG,teethNum LONG,treatmentDate DATE null,editedDate DATE null,treatment VARCHAR(75) null,state_ VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table treatment_history";
 
@@ -103,15 +126,23 @@ public class TreatmentHistoryModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final long PATIENTID_COLUMN_BITMASK = 1L;
+	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
-	public static final long TEETHNUM_COLUMN_BITMASK = 2L;
+	public static final long GROUPID_COLUMN_BITMASK = 2L;
 
-	public static final long TREATMENT_COLUMN_BITMASK = 4L;
+	public static final long PATIENTID_COLUMN_BITMASK = 4L;
 
-	public static final long TREATMENTDATE_COLUMN_BITMASK = 8L;
+	public static final long STATUS_COLUMN_BITMASK = 8L;
 
-	public static final long TREATMENTID_COLUMN_BITMASK = 16L;
+	public static final long TEETHNUM_COLUMN_BITMASK = 16L;
+
+	public static final long TREATMENT_COLUMN_BITMASK = 32L;
+
+	public static final long TREATMENTDATE_COLUMN_BITMASK = 64L;
+
+	public static final long UUID_COLUMN_BITMASK = 128L;
+
+	public static final long TREATMENTID_COLUMN_BITMASK = 256L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -222,6 +253,10 @@ public class TreatmentHistoryModelImpl
 			attributeSetterBiConsumers =
 				new LinkedHashMap<String, BiConsumer<TreatmentHistory, ?>>();
 
+		attributeGetterFunctions.put("uuid", TreatmentHistory::getUuid);
+		attributeSetterBiConsumers.put(
+			"uuid",
+			(BiConsumer<TreatmentHistory, String>)TreatmentHistory::setUuid);
 		attributeGetterFunctions.put(
 			"treatmentID", TreatmentHistory::getTreatmentID);
 		attributeSetterBiConsumers.put(
@@ -265,11 +300,88 @@ public class TreatmentHistoryModelImpl
 		attributeSetterBiConsumers.put(
 			"state",
 			(BiConsumer<TreatmentHistory, String>)TreatmentHistory::setState);
+		attributeGetterFunctions.put("groupId", TreatmentHistory::getGroupId);
+		attributeSetterBiConsumers.put(
+			"groupId",
+			(BiConsumer<TreatmentHistory, Long>)TreatmentHistory::setGroupId);
+		attributeGetterFunctions.put(
+			"companyId", TreatmentHistory::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<TreatmentHistory, Long>)TreatmentHistory::setCompanyId);
+		attributeGetterFunctions.put("userId", TreatmentHistory::getUserId);
+		attributeSetterBiConsumers.put(
+			"userId",
+			(BiConsumer<TreatmentHistory, Long>)TreatmentHistory::setUserId);
+		attributeGetterFunctions.put("userName", TreatmentHistory::getUserName);
+		attributeSetterBiConsumers.put(
+			"userName",
+			(BiConsumer<TreatmentHistory, String>)
+				TreatmentHistory::setUserName);
+		attributeGetterFunctions.put(
+			"createDate", TreatmentHistory::getCreateDate);
+		attributeSetterBiConsumers.put(
+			"createDate",
+			(BiConsumer<TreatmentHistory, Date>)
+				TreatmentHistory::setCreateDate);
+		attributeGetterFunctions.put(
+			"modifiedDate", TreatmentHistory::getModifiedDate);
+		attributeSetterBiConsumers.put(
+			"modifiedDate",
+			(BiConsumer<TreatmentHistory, Date>)
+				TreatmentHistory::setModifiedDate);
+		attributeGetterFunctions.put("status", TreatmentHistory::getStatus);
+		attributeSetterBiConsumers.put(
+			"status",
+			(BiConsumer<TreatmentHistory, Integer>)TreatmentHistory::setStatus);
+		attributeGetterFunctions.put(
+			"statusByUserId", TreatmentHistory::getStatusByUserId);
+		attributeSetterBiConsumers.put(
+			"statusByUserId",
+			(BiConsumer<TreatmentHistory, Long>)
+				TreatmentHistory::setStatusByUserId);
+		attributeGetterFunctions.put(
+			"statusByUserName", TreatmentHistory::getStatusByUserName);
+		attributeSetterBiConsumers.put(
+			"statusByUserName",
+			(BiConsumer<TreatmentHistory, String>)
+				TreatmentHistory::setStatusByUserName);
+		attributeGetterFunctions.put(
+			"statusDate", TreatmentHistory::getStatusDate);
+		attributeSetterBiConsumers.put(
+			"statusDate",
+			(BiConsumer<TreatmentHistory, Date>)
+				TreatmentHistory::setStatusDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public String getUuid() {
+		if (_uuid == null) {
+			return "";
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		_columnBitmask |= UUID_COLUMN_BITMASK;
+
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
+		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	@Override
@@ -406,6 +518,276 @@ public class TreatmentHistoryModelImpl
 		_state = state;
 	}
 
+	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
+		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
+	@Override
+	public long getUserId() {
+		return _userId;
+	}
+
+	@Override
+	public void setUserId(long userId) {
+		_userId = userId;
+	}
+
+	@Override
+	public String getUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException portalException) {
+			return "";
+		}
+	}
+
+	@Override
+	public void setUserUuid(String userUuid) {
+	}
+
+	@Override
+	public String getUserName() {
+		if (_userName == null) {
+			return "";
+		}
+		else {
+			return _userName;
+		}
+	}
+
+	@Override
+	public void setUserName(String userName) {
+		_userName = userName;
+	}
+
+	@Override
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	@Override
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
+	}
+
+	@Override
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
+		_modifiedDate = modifiedDate;
+	}
+
+	@Override
+	public int getStatus() {
+		return _status;
+	}
+
+	@Override
+	public void setStatus(int status) {
+		_columnBitmask |= STATUS_COLUMN_BITMASK;
+
+		if (!_setOriginalStatus) {
+			_setOriginalStatus = true;
+
+			_originalStatus = _status;
+		}
+
+		_status = status;
+	}
+
+	public int getOriginalStatus() {
+		return _originalStatus;
+	}
+
+	@Override
+	public long getStatusByUserId() {
+		return _statusByUserId;
+	}
+
+	@Override
+	public void setStatusByUserId(long statusByUserId) {
+		_statusByUserId = statusByUserId;
+	}
+
+	@Override
+	public String getStatusByUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getStatusByUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException portalException) {
+			return "";
+		}
+	}
+
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid) {
+	}
+
+	@Override
+	public String getStatusByUserName() {
+		if (_statusByUserName == null) {
+			return "";
+		}
+		else {
+			return _statusByUserName;
+		}
+	}
+
+	@Override
+	public void setStatusByUserName(String statusByUserName) {
+		_statusByUserName = statusByUserName;
+	}
+
+	@Override
+	public Date getStatusDate() {
+		return _statusDate;
+	}
+
+	@Override
+	public void setStatusDate(Date statusDate) {
+		_statusDate = statusDate;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(
+			PortalUtil.getClassNameId(TreatmentHistory.class.getName()));
+	}
+
+	@Override
+	public boolean isApproved() {
+		if (getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isDenied() {
+		if (getStatus() == WorkflowConstants.STATUS_DENIED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isDraft() {
+		if (getStatus() == WorkflowConstants.STATUS_DRAFT) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isExpired() {
+		if (getStatus() == WorkflowConstants.STATUS_EXPIRED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isInactive() {
+		if (getStatus() == WorkflowConstants.STATUS_INACTIVE) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isIncomplete() {
+		if (getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isPending() {
+		if (getStatus() == WorkflowConstants.STATUS_PENDING) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isScheduled() {
+		if (getStatus() == WorkflowConstants.STATUS_SCHEDULED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -413,7 +795,7 @@ public class TreatmentHistoryModelImpl
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, TreatmentHistory.class.getName(), getPrimaryKey());
+			getCompanyId(), TreatmentHistory.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -442,6 +824,7 @@ public class TreatmentHistoryModelImpl
 	public Object clone() {
 		TreatmentHistoryImpl treatmentHistoryImpl = new TreatmentHistoryImpl();
 
+		treatmentHistoryImpl.setUuid(getUuid());
 		treatmentHistoryImpl.setTreatmentID(getTreatmentID());
 		treatmentHistoryImpl.setPatientID(getPatientID());
 		treatmentHistoryImpl.setEditedUserID(getEditedUserID());
@@ -450,6 +833,16 @@ public class TreatmentHistoryModelImpl
 		treatmentHistoryImpl.setEditedDate(getEditedDate());
 		treatmentHistoryImpl.setTreatment(getTreatment());
 		treatmentHistoryImpl.setState(getState());
+		treatmentHistoryImpl.setGroupId(getGroupId());
+		treatmentHistoryImpl.setCompanyId(getCompanyId());
+		treatmentHistoryImpl.setUserId(getUserId());
+		treatmentHistoryImpl.setUserName(getUserName());
+		treatmentHistoryImpl.setCreateDate(getCreateDate());
+		treatmentHistoryImpl.setModifiedDate(getModifiedDate());
+		treatmentHistoryImpl.setStatus(getStatus());
+		treatmentHistoryImpl.setStatusByUserId(getStatusByUserId());
+		treatmentHistoryImpl.setStatusByUserName(getStatusByUserName());
+		treatmentHistoryImpl.setStatusDate(getStatusDate());
 
 		treatmentHistoryImpl.resetOriginalValues();
 
@@ -510,6 +903,8 @@ public class TreatmentHistoryModelImpl
 
 	@Override
 	public void resetOriginalValues() {
+		_originalUuid = _uuid;
+
 		_originalPatientID = _patientID;
 
 		_setOriginalPatientID = false;
@@ -522,6 +917,19 @@ public class TreatmentHistoryModelImpl
 
 		_originalTreatment = _treatment;
 
+		_originalGroupId = _groupId;
+
+		_setOriginalGroupId = false;
+
+		_originalCompanyId = _companyId;
+
+		_setOriginalCompanyId = false;
+
+		_setModifiedDate = false;
+		_originalStatus = _status;
+
+		_setOriginalStatus = false;
+
 		_columnBitmask = 0;
 	}
 
@@ -529,6 +937,14 @@ public class TreatmentHistoryModelImpl
 	public CacheModel<TreatmentHistory> toCacheModel() {
 		TreatmentHistoryCacheModel treatmentHistoryCacheModel =
 			new TreatmentHistoryCacheModel();
+
+		treatmentHistoryCacheModel.uuid = getUuid();
+
+		String uuid = treatmentHistoryCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			treatmentHistoryCacheModel.uuid = null;
+		}
 
 		treatmentHistoryCacheModel.treatmentID = getTreatmentID();
 
@@ -570,6 +986,59 @@ public class TreatmentHistoryModelImpl
 
 		if ((state != null) && (state.length() == 0)) {
 			treatmentHistoryCacheModel.state = null;
+		}
+
+		treatmentHistoryCacheModel.groupId = getGroupId();
+
+		treatmentHistoryCacheModel.companyId = getCompanyId();
+
+		treatmentHistoryCacheModel.userId = getUserId();
+
+		treatmentHistoryCacheModel.userName = getUserName();
+
+		String userName = treatmentHistoryCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			treatmentHistoryCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			treatmentHistoryCacheModel.createDate = createDate.getTime();
+		}
+		else {
+			treatmentHistoryCacheModel.createDate = Long.MIN_VALUE;
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			treatmentHistoryCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			treatmentHistoryCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
+
+		treatmentHistoryCacheModel.status = getStatus();
+
+		treatmentHistoryCacheModel.statusByUserId = getStatusByUserId();
+
+		treatmentHistoryCacheModel.statusByUserName = getStatusByUserName();
+
+		String statusByUserName = treatmentHistoryCacheModel.statusByUserName;
+
+		if ((statusByUserName != null) && (statusByUserName.length() == 0)) {
+			treatmentHistoryCacheModel.statusByUserName = null;
+		}
+
+		Date statusDate = getStatusDate();
+
+		if (statusDate != null) {
+			treatmentHistoryCacheModel.statusDate = statusDate.getTime();
+		}
+		else {
+			treatmentHistoryCacheModel.statusDate = Long.MIN_VALUE;
 		}
 
 		return treatmentHistoryCacheModel;
@@ -668,6 +1137,8 @@ public class TreatmentHistoryModelImpl
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private String _uuid;
+	private String _originalUuid;
 	private long _treatmentID;
 	private long _patientID;
 	private long _originalPatientID;
@@ -682,6 +1153,23 @@ public class TreatmentHistoryModelImpl
 	private String _treatment;
 	private String _originalTreatment;
 	private String _state;
+	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
+	private long _userId;
+	private String _userName;
+	private Date _createDate;
+	private Date _modifiedDate;
+	private boolean _setModifiedDate;
+	private int _status;
+	private int _originalStatus;
+	private boolean _setOriginalStatus;
+	private long _statusByUserId;
+	private String _statusByUserName;
+	private Date _statusDate;
 	private long _columnBitmask;
 	private TreatmentHistory _escapedModel;
 

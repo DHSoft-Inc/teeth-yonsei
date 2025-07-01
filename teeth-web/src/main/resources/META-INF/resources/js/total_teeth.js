@@ -96,7 +96,7 @@
     
     // functions
     
-    
+    //좌클릭시 치식을 활성화 또는 비황성화 하는 function
     function handleRegionClick(e, region) { //좌클릭
         e.stopPropagation();
         const num = parseInt(region.name.replace('Teeth', ''), 10);
@@ -113,6 +113,7 @@
         drawRegions();
     }
 
+    //호버링 할경우 치식 기록을 보여주는 function
     function handleRegionMouseEnter(e, region) { //호버링 진입
         timeoutId = setTimeout(() => {
             const base = tooltipResourceURL;
@@ -138,6 +139,7 @@
         }, 300);
     }
 
+    //호버링된 채로 마우스를 이동했을 경우 행동하는 function
     function handleRegionMouseMove(e) { //호버링 이동
         const rect = imageWrapper.getBoundingClientRect();
 
@@ -168,11 +170,13 @@
         tooltip.style.top  = `${top}px`;
     }
 
+    //호버링 종료시 행동하는 function
     function handleRegionMouseLeave() { //호버링 종료
         clearTimeout(timeoutId);
         document.getElementById('tooltipContainer').style.display = 'none';
     }
 
+    //드래그 시작시 좌표 기록하는 function
     function handleWrapperMouseDown(e) { //드래그 시작
         if (e.target !== imageWrapper) return;
         e.preventDefault();
@@ -186,6 +190,7 @@
         imageWrapper.appendChild(selectionBox);
     }
 
+    //드래그 유지할 때 실행되는 function
     function handleWindowMouseMove(e) { //드래그 중
         if (!isDragging || !selectionBox) return;
         const rect = imageWrapper.getBoundingClientRect();
@@ -235,6 +240,7 @@
         drawRegions();
     }
     
+    //스크롤을 통한 이미지 zoom하는 function
     function imageWrapperWheel(e) { //이미지 Zoom 기능
         if (e.ctrlKey) {
       	  e.preventDefault();
@@ -247,7 +253,7 @@
         }
     }
     
-
+  //이미지 생성하는 function
     function drawRegions() { //이미지 생성
         clearLabels();
         regions.forEach(region => {
@@ -261,6 +267,7 @@
         updateHistoryDisplay();
     }
 
+    //치식 번호 위에 사각형 영역 맞춰서 업데이트 하는 function
     function updateRegionStyle(region, stateMatch, treatMatch) {
     	const { width: curW, height: curH } = imageWrapper.getBoundingClientRect();
         const scaleX = curW / natW;
@@ -276,10 +283,11 @@
         });
     }
 
+ // 이미지 위의 모든 숫자, 상태, 이력 라벨을 제거하는 function
     function clearLabels() {
         imageWrapper.querySelectorAll('.number-label, .state-label, .history-label').forEach(el => el.remove());
     }
-
+ // 최신 이력 중에서 우선순위가 높은 상태(state)와 치료(treatment)를 가져오는  function
     function findPriorityMatches(histories) {
         let stateMatch = null;
         let treatMatch = null;
@@ -294,7 +302,7 @@
         }
         return { stateMatch, treatMatch };
     }
-
+    // 치아 영역의 상태와 치료에 따라 배경색을 결정하는 function
     function determineBackground(region, stateMatch, treatMatch) {
         const hasHistory = region.history && region.history.length > 0;
         if (region.isClicked) return 'red';
@@ -317,7 +325,7 @@
         }
         return `linear-gradient(to bottom, ${stateColor} 0%, ${stateColor} 50%, ${treatColor} 50%, ${treatColor} 100%)`.replace(/\s+/g, ' ').trim();
     }
-
+    // 치아 번호, 상태, 치료 정보를 화면 상에 텍스트로 표시하는 function
     function renderLabels(region, stateMatch, treatMatch) {
     	const { width: curW, height: curH } = imageWrapper.getBoundingClientRect();
         const scaleX = curW / natW;
@@ -354,7 +362,7 @@
             imageWrapper.appendChild(lbl);
         }
     }
-
+    // 선택된 치아 이력을 리스트로 표시하고, 선택 치아를 서버에 저장하는 function
     function updateHistoryDisplay() {
         historyContainer.innerHTML = '';
         regions.filter(r => r.history.length).forEach(region => {

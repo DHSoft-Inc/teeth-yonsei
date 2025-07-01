@@ -38,16 +38,15 @@ public class GetTeethHistoryResourceCommand
         ResourceResponse resourceResponse)
     throws Exception {
 
-        // (1) 파라미터로 넘어온 teethNum
-        int teethNum = ParamUtil.getInteger(resourceRequest, "teethNum", -1);
-        long patientID = 1001L; // 테스트용 고정
 
-        // (2) 해당 치아번호 히스토리만 조회
+        int teethNum = ParamUtil.getInteger(resourceRequest, "teethNum", -1);
+        long patientID = 1001L; 
+
         List<TreatmentHistory> list =
             TreatmentHistoryLocalServiceUtil
                 .getPatientTreatmentListByTeethNum(patientID, teethNum);
 
-        // (3) JSON 배열 생성
+        // (3) JSON 諛곗뿴 �깮�꽦
         JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
         for (TreatmentHistory th : list) {
@@ -58,7 +57,7 @@ public class GetTeethHistoryResourceCommand
             jsonArray.put(obj);
         }
 
-        // (4) 응답
+        // (4) �쓳�떟
         resourceResponse.setContentType("application/json");
         resourceResponse.setCharacterEncoding("UTF-8");
         resourceResponse.getWriter().write(jsonArray.toString());

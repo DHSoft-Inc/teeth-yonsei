@@ -14,8 +14,10 @@
 
 package teeth.service;
 
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -25,6 +27,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -64,7 +67,7 @@ public interface TreatmentAuditLocalService
 	 */
 	public TreatmentAudit AddAudit(
 		long teethNum, long editedUserID, Date TreatmentDate, String editType,
-		String BeforeData, String afterData);
+		String BeforeData, String afterData, ServiceContext serviceContext);
 
 	/**
 	 * Adds the treatment audit to the database. Also notifies the appropriate model listeners.
@@ -192,6 +195,17 @@ public interface TreatmentAuditLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public TreatmentAudit fetchTreatmentAudit(long AuditID);
 
+	/**
+	 * Returns the treatment audit matching the UUID and group.
+	 *
+	 * @param uuid the treatment audit's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching treatment audit, or <code>null</code> if a matching treatment audit could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public TreatmentAudit fetchTreatmentAuditByUuidAndGroupId(
+		String uuid, long groupId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -200,6 +214,10 @@ public interface TreatmentAuditLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<TreatmentAudit> getAuditByTeethNum(long teethNum);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -231,6 +249,19 @@ public interface TreatmentAuditLocalService
 		throws PortalException;
 
 	/**
+	 * Returns the treatment audit matching the UUID and group.
+	 *
+	 * @param uuid the treatment audit's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching treatment audit
+	 * @throws PortalException if a matching treatment audit could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public TreatmentAudit getTreatmentAuditByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException;
+
+	/**
 	 * Returns a range of all the treatment audits.
 	 *
 	 * <p>
@@ -243,6 +274,32 @@ public interface TreatmentAuditLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<TreatmentAudit> getTreatmentAudits(int start, int end);
+
+	/**
+	 * Returns all the treatment audits matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the treatment audits
+	 * @param companyId the primary key of the company
+	 * @return the matching treatment audits, or an empty list if no matches were found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<TreatmentAudit> getTreatmentAuditsByUuidAndCompanyId(
+		String uuid, long companyId);
+
+	/**
+	 * Returns a range of treatment audits matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the treatment audits
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of treatment audits
+	 * @param end the upper bound of the range of treatment audits (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching treatment audits, or an empty list if no matches were found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<TreatmentAudit> getTreatmentAuditsByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<TreatmentAudit> orderByComparator);
 
 	/**
 	 * Returns the number of treatment audits.

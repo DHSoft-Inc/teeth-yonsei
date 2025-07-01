@@ -63,7 +63,7 @@
 <!-- View Audit Popup -->
 <portlet:renderURL var="ViewAuditURL" windowState="pop_up">
 	<portlet:param name="mvcRenderCommandName" value="/teeth/viewAuditTrail" />
-	<portlet:param name="mode" value="All" />
+	<portlet:param name="mode" value="permanent" />
 </portlet:renderURL>
 
 <portlet:renderURL var="HistoryPopUpURL" windowState="pop_up">
@@ -100,22 +100,22 @@
 
 	<!-- 조작 설명용 div -->
 	<table class="info-table">
-	  	<tr>
-	  		<td colspan="4">영구치의 진료 기록이 있는 경우, 해당 위치의 유치는 선택 불가</td>
-	  	</tr>
-	  	<tr>
-	    	<td colspan="2">치식을 좌클릭 혹은 드래그: 해당 치식을 선택(빨간색으로 표시)</td>
-	    	<td colspan="2">치식을 우클릭: 클릭한 치식의 정보 확인(팝업창으로 표시)</td>
-	  	</tr>
-	  	<tr>
-	    	<td colspan="2"><span style="color:rgba(0,0,255,1)">파란색</span>: Seal, AF, RF, GI, SS, Zr, Pulpo, Pulpec, Apexo, Apexl, RCT, Ext</td>
-	    	<td><span style="color:rgba(255,165,0,1)">노란색</span>: W, Y, B, E, D</td>
-	    	<td><span style="color:rgba(0,128,0,1)">초록색</span>: 그 외의 Treatment & State</td>
-	  	</tr>
-	  	<tr>
-	    	<td colspan="2">View Full Audit: 모든 치식의 변경 기록 조회</td>
-	    	<td colspan="2">View Permanent/Deciduous Teeth: 영구치 표시 화면 변경</td>
-	  	</tr>
+        <tr>
+           <td colspan="4"><liferay-ui:message key="info.table.prohibition" /></td>
+        </tr>
+        <tr>
+          <td colspan="2"><liferay-ui:message key="info.table.drag" /></td>
+          <td colspan="2"><liferay-ui:message key="info.table.rightclick" /></td>
+        </tr>
+        <tr>
+          <td colspan="2"><span style="color:rgba(0,0,255,1)"><liferay-ui:message key="info.table.blue.name" /></span><liferay-ui:message key="info.table.blue.description" /></td>
+          <td><span style="color:rgba(255,165,0,1)"><liferay-ui:message key="info.table.yellow.name" /></span><liferay-ui:message key="info.table.blue.description" /></td>
+          <td><span style="color:rgba(0,128,0,1)"><liferay-ui:message key="info.table.green.name" /></span><liferay-ui:message key="info.table.green.description" /></td>
+        </tr>
+        <tr>
+          <td colspan="2"><liferay-ui:message key="info.table.fullaudit" /></td>
+          <td colspan="2"><liferay-ui:message key="info.table.change" /></td>
+        </tr>
 	  	
 	</table>
 
@@ -142,10 +142,10 @@
 	<div id="addTWrapper">
 		<aui:input type="hidden" name="teeths" value="" />
 		<aui:button-row>
-			<aui:button id="addBtn" type="button" cssClass="btn btn-primary" name="addBtn" onClick="<%=addBtnOnClickStr%>" value="Add Treatment" />
-			<aui:button type="button" cssClass="btn btn-primary" value="View Full Audit" onClick="openViewAuditModal()" />
-			<aui:button type="button" cssClass="btn btn-secondary" value="View Deciduous Teeth" onClick="<%= ViewDeciduousTeeth %>" />
-			<aui:button type="button" cssClass="btn btn-secondary" value="View Every Teeth" onClick="<%= ViewTotalTeeth %>" />
+			<aui:button id="addBtn" type="button" cssClass="btn btn-primary" name="addBtn" value="<%=LanguageUtil.get(request, "teethview.button.addTreatment") %>" onClick="<%=addBtnOnClickStr%>" />
+			<aui:button type="button" cssClass="btn btn-primary" value="<%=LanguageUtil.get(request, "teethview.button.viewPermanentAudit") %>" onClick="openViewAuditModal()" />
+			<aui:button type="button" cssClass="btn btn-secondary" value="<%=LanguageUtil.get(request, "teethview.button.viewDeciduousTeeth") %>" onClick="<%= ViewDeciduousTeeth %>" />
+			<aui:button type="button" cssClass="btn btn-secondary" value="<%=LanguageUtil.get(request, "teethview.button.viewAllTeeth") %>" onClick="<%= ViewTotalTeeth.toString() %>" />
 		</aui:button-row>
 	</div>
 </div>
@@ -170,10 +170,36 @@
 		historyMap[reg] = historyMap[reg] || [];
 		historyMap[reg].push(item);
 	});
-	Object.keys(historyMap).forEach(reg => {
-		historyMap[reg].sort((a, b) => new Date(a.date) - new Date(b.date));
-		historyMap[reg] = historyMap[reg].slice(-1);
-	});
+    // (4) “YYYY-MM-DD” 날짜만 기준으로 최신 날짜 항목 하나만 남기기
+    Object.keys(historyMap).forEach(reg => {
+      const items = historyMap[reg];
+      if (!items.length) {
+        historyMap[reg] = [];
+        return;
+      }
+
+      // 4-1) 날짜별 그룹핑
+      const byDate = items.reduce((acc, item) => {
+        const day = item.date.slice(0, 10);  // “2025-06-25T…” → “2025-06-25”
+        acc[day] = acc[day] || [];
+        acc[day].push(item);
+        return acc;
+      }, {});
+
+      // 4-2) 날짜 문자열 정렬로 최신 날짜 키 꺼내기
+      const allDates  = Object.keys(byDate).sort();
+      const latestDay = allDates[allDates.length - 1];
+
+      // 4-3) 그 날짜의 항목들 중 우선순위에 따라 첫 번째 유효 항목 선택
+      const latestItems = byDate[latestDay];
+      const selected = 
+        latestItems.find(i => i.treatment && i.treatment.trim() !== '') ||
+        latestItems.find(i => i.state     && i.state.trim()     !== '') ||
+        latestItems[0];
+
+      // 4-4) historyMap[reg]에는 선택된 하나만 남기기
+      historyMap[reg] = [ selected ];
+    });
 	
 </script>
 
@@ -207,7 +233,7 @@
 				width:1200
 			},
 			id: "addTreatmentDialog",
-			title: "Add Treatment ",
+			title: Liferay.Language.get("teethview.dialog.addTreatment"),
 			uri: url.toString()
 		});
 	}, ['liferay-portlet-url'] );
@@ -266,7 +292,7 @@
 				height: 600,
 				resizable: false
 			},
-			title: 'View Full Audit',
+			title: Liferay.Language.get("teethview.dialog.viewFullAudit"),
 			uri: '<%=ViewAuditURL%>'
 		});
 	};

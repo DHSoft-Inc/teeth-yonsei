@@ -2,6 +2,7 @@
 
 <model-hints>
 	<model name="teeth.model.TreatmentAudit">
+		<field name="uuid" type="String" />
 		<field name="AuditID" type="long" />
 		<field name="teethNum" type="long" />
 		<field name="editedDate" type="Date" />
@@ -10,8 +11,19 @@
 		<field name="treatmentDate" type="Date" />
 		<field name="beforeData" type="String" />
 		<field name="afterData" type="String" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
 	</model>
 	<model name="teeth.model.TreatmentHistory">
+		<field name="uuid" type="String" />
 		<field name="treatmentID" type="long" />
 		<field name="patientID" type="long" />
 		<field name="editedUserID" type="long" />
@@ -20,5 +32,15 @@
 		<field name="editedDate" type="Date" />
 		<field name="treatment" type="String" />
 		<field name="state" type="String" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
 	</model>
 </model-hints>

@@ -7,6 +7,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -57,6 +59,8 @@ public class addTeethTreatmentResourceCommand extends BaseMVCResourceCommand {
 			        String selectedTreatment = treatment.getString("selectedTreatment");
 			        String selectedTeeth1 = treatment.getString("selectedTeeth");
 			        String State = treatment.getString("selectedState");
+			        ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			        	    TreatmentAudit.class.getName(), resourceRequest);
 
 			        _log.info("JSON Treatment 처리 중: " + treatment.toString());
 
@@ -93,8 +97,8 @@ public class addTeethTreatmentResourceCommand extends BaseMVCResourceCommand {
 		                long UserId = Long.parseLong(EditUserId);
 		                
 		                // 저장
-		                TreatmentHistory TH = TreatmentHistoryLocalServiceUtil.AddHistory(patientId, TN, treatmentDateParsed, Treatment, State, EditedDate, UserId);
-		                TreatmentAudit audit = TreatmentAuditLocalServiceUtil.AddAudit(TN, UserId, treatmentDateParsed, "Add", "-" , Treatment );
+		                TreatmentHistory TH = TreatmentHistoryLocalServiceUtil.AddHistory(patientId, TN, treatmentDateParsed, Treatment, State, EditedDate, UserId, serviceContext);
+		                TreatmentAudit audit = TreatmentAuditLocalServiceUtil.AddAudit(TN, UserId, treatmentDateParsed, "Add", "-" , Treatment, serviceContext);
 
 		                if(TH == null)
 		                {

@@ -121,6 +121,419 @@ public class TreatmentAuditUtil {
 	}
 
 	/**
+	 * Returns all the treatment audits where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching treatment audits
+	 */
+	public static List<TreatmentAudit> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the treatment audits where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentAuditModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of treatment audits
+	 * @param end the upper bound of the range of treatment audits (not inclusive)
+	 * @return the range of matching treatment audits
+	 */
+	public static List<TreatmentAudit> findByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the treatment audits where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentAuditModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of treatment audits
+	 * @param end the upper bound of the range of treatment audits (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching treatment audits
+	 */
+	public static List<TreatmentAudit> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<TreatmentAudit> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the treatment audits where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentAuditModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of treatment audits
+	 * @param end the upper bound of the range of treatment audits (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching treatment audits
+	 */
+	public static List<TreatmentAudit> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<TreatmentAudit> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByUuid(
+			uuid, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first treatment audit in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment audit
+	 * @throws NoSuchTreatmentAuditException if a matching treatment audit could not be found
+	 */
+	public static TreatmentAudit findByUuid_First(
+			String uuid, OrderByComparator<TreatmentAudit> orderByComparator)
+		throws teeth.exception.NoSuchTreatmentAuditException {
+
+		return getPersistence().findByUuid_First(uuid, orderByComparator);
+	}
+
+	/**
+	 * Returns the first treatment audit in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment audit, or <code>null</code> if a matching treatment audit could not be found
+	 */
+	public static TreatmentAudit fetchByUuid_First(
+		String uuid, OrderByComparator<TreatmentAudit> orderByComparator) {
+
+		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
+	}
+
+	/**
+	 * Returns the last treatment audit in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment audit
+	 * @throws NoSuchTreatmentAuditException if a matching treatment audit could not be found
+	 */
+	public static TreatmentAudit findByUuid_Last(
+			String uuid, OrderByComparator<TreatmentAudit> orderByComparator)
+		throws teeth.exception.NoSuchTreatmentAuditException {
+
+		return getPersistence().findByUuid_Last(uuid, orderByComparator);
+	}
+
+	/**
+	 * Returns the last treatment audit in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment audit, or <code>null</code> if a matching treatment audit could not be found
+	 */
+	public static TreatmentAudit fetchByUuid_Last(
+		String uuid, OrderByComparator<TreatmentAudit> orderByComparator) {
+
+		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
+	}
+
+	/**
+	 * Returns the treatment audits before and after the current treatment audit in the ordered set where uuid = &#63;.
+	 *
+	 * @param AuditID the primary key of the current treatment audit
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next treatment audit
+	 * @throws NoSuchTreatmentAuditException if a treatment audit with the primary key could not be found
+	 */
+	public static TreatmentAudit[] findByUuid_PrevAndNext(
+			long AuditID, String uuid,
+			OrderByComparator<TreatmentAudit> orderByComparator)
+		throws teeth.exception.NoSuchTreatmentAuditException {
+
+		return getPersistence().findByUuid_PrevAndNext(
+			AuditID, uuid, orderByComparator);
+	}
+
+	/**
+	 * Removes all the treatment audits where uuid = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 */
+	public static void removeByUuid(String uuid) {
+		getPersistence().removeByUuid(uuid);
+	}
+
+	/**
+	 * Returns the number of treatment audits where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the number of matching treatment audits
+	 */
+	public static int countByUuid(String uuid) {
+		return getPersistence().countByUuid(uuid);
+	}
+
+	/**
+	 * Returns the treatment audit where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchTreatmentAuditException</code> if it could not be found.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching treatment audit
+	 * @throws NoSuchTreatmentAuditException if a matching treatment audit could not be found
+	 */
+	public static TreatmentAudit findByUUID_G(String uuid, long groupId)
+		throws teeth.exception.NoSuchTreatmentAuditException {
+
+		return getPersistence().findByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns the treatment audit where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching treatment audit, or <code>null</code> if a matching treatment audit could not be found
+	 */
+	public static TreatmentAudit fetchByUUID_G(String uuid, long groupId) {
+		return getPersistence().fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns the treatment audit where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching treatment audit, or <code>null</code> if a matching treatment audit could not be found
+	 */
+	public static TreatmentAudit fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache) {
+
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
+	}
+
+	/**
+	 * Removes the treatment audit where uuid = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the treatment audit that was removed
+	 */
+	public static TreatmentAudit removeByUUID_G(String uuid, long groupId)
+		throws teeth.exception.NoSuchTreatmentAuditException {
+
+		return getPersistence().removeByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns the number of treatment audits where uuid = &#63; and groupId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the number of matching treatment audits
+	 */
+	public static int countByUUID_G(String uuid, long groupId) {
+		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns all the treatment audits where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching treatment audits
+	 */
+	public static List<TreatmentAudit> findByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the treatment audits where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentAuditModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of treatment audits
+	 * @param end the upper bound of the range of treatment audits (not inclusive)
+	 * @return the range of matching treatment audits
+	 */
+	public static List<TreatmentAudit> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the treatment audits where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentAuditModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of treatment audits
+	 * @param end the upper bound of the range of treatment audits (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching treatment audits
+	 */
+	public static List<TreatmentAudit> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<TreatmentAudit> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the treatment audits where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentAuditModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of treatment audits
+	 * @param end the upper bound of the range of treatment audits (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching treatment audits
+	 */
+	public static List<TreatmentAudit> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<TreatmentAudit> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first treatment audit in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment audit
+	 * @throws NoSuchTreatmentAuditException if a matching treatment audit could not be found
+	 */
+	public static TreatmentAudit findByUuid_C_First(
+			String uuid, long companyId,
+			OrderByComparator<TreatmentAudit> orderByComparator)
+		throws teeth.exception.NoSuchTreatmentAuditException {
+
+		return getPersistence().findByUuid_C_First(
+			uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first treatment audit in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment audit, or <code>null</code> if a matching treatment audit could not be found
+	 */
+	public static TreatmentAudit fetchByUuid_C_First(
+		String uuid, long companyId,
+		OrderByComparator<TreatmentAudit> orderByComparator) {
+
+		return getPersistence().fetchByUuid_C_First(
+			uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last treatment audit in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment audit
+	 * @throws NoSuchTreatmentAuditException if a matching treatment audit could not be found
+	 */
+	public static TreatmentAudit findByUuid_C_Last(
+			String uuid, long companyId,
+			OrderByComparator<TreatmentAudit> orderByComparator)
+		throws teeth.exception.NoSuchTreatmentAuditException {
+
+		return getPersistence().findByUuid_C_Last(
+			uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last treatment audit in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment audit, or <code>null</code> if a matching treatment audit could not be found
+	 */
+	public static TreatmentAudit fetchByUuid_C_Last(
+		String uuid, long companyId,
+		OrderByComparator<TreatmentAudit> orderByComparator) {
+
+		return getPersistence().fetchByUuid_C_Last(
+			uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the treatment audits before and after the current treatment audit in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param AuditID the primary key of the current treatment audit
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next treatment audit
+	 * @throws NoSuchTreatmentAuditException if a treatment audit with the primary key could not be found
+	 */
+	public static TreatmentAudit[] findByUuid_C_PrevAndNext(
+			long AuditID, String uuid, long companyId,
+			OrderByComparator<TreatmentAudit> orderByComparator)
+		throws teeth.exception.NoSuchTreatmentAuditException {
+
+		return getPersistence().findByUuid_C_PrevAndNext(
+			AuditID, uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the treatment audits where uuid = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 */
+	public static void removeByUuid_C(String uuid, long companyId) {
+		getPersistence().removeByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns the number of treatment audits where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the number of matching treatment audits
+	 */
+	public static int countByUuid_C(String uuid, long companyId) {
+		return getPersistence().countByUuid_C(uuid, companyId);
+	}
+
+	/**
 	 * Returns all the treatment audits where teethNum = &#63;.
 	 *
 	 * @param teethNum the teeth num
@@ -458,6 +871,355 @@ public class TreatmentAuditUtil {
 	 */
 	public static int countByAudit_EditType(String editType) {
 		return getPersistence().countByAudit_EditType(editType);
+	}
+
+	/**
+	 * Returns all the treatment audits where status = &#63;.
+	 *
+	 * @param status the status
+	 * @return the matching treatment audits
+	 */
+	public static List<TreatmentAudit> findByStatus(int status) {
+		return getPersistence().findByStatus(status);
+	}
+
+	/**
+	 * Returns a range of all the treatment audits where status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentAuditModelImpl</code>.
+	 * </p>
+	 *
+	 * @param status the status
+	 * @param start the lower bound of the range of treatment audits
+	 * @param end the upper bound of the range of treatment audits (not inclusive)
+	 * @return the range of matching treatment audits
+	 */
+	public static List<TreatmentAudit> findByStatus(
+		int status, int start, int end) {
+
+		return getPersistence().findByStatus(status, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the treatment audits where status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentAuditModelImpl</code>.
+	 * </p>
+	 *
+	 * @param status the status
+	 * @param start the lower bound of the range of treatment audits
+	 * @param end the upper bound of the range of treatment audits (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching treatment audits
+	 */
+	public static List<TreatmentAudit> findByStatus(
+		int status, int start, int end,
+		OrderByComparator<TreatmentAudit> orderByComparator) {
+
+		return getPersistence().findByStatus(
+			status, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the treatment audits where status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentAuditModelImpl</code>.
+	 * </p>
+	 *
+	 * @param status the status
+	 * @param start the lower bound of the range of treatment audits
+	 * @param end the upper bound of the range of treatment audits (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching treatment audits
+	 */
+	public static List<TreatmentAudit> findByStatus(
+		int status, int start, int end,
+		OrderByComparator<TreatmentAudit> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByStatus(
+			status, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first treatment audit in the ordered set where status = &#63;.
+	 *
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment audit
+	 * @throws NoSuchTreatmentAuditException if a matching treatment audit could not be found
+	 */
+	public static TreatmentAudit findByStatus_First(
+			int status, OrderByComparator<TreatmentAudit> orderByComparator)
+		throws teeth.exception.NoSuchTreatmentAuditException {
+
+		return getPersistence().findByStatus_First(status, orderByComparator);
+	}
+
+	/**
+	 * Returns the first treatment audit in the ordered set where status = &#63;.
+	 *
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment audit, or <code>null</code> if a matching treatment audit could not be found
+	 */
+	public static TreatmentAudit fetchByStatus_First(
+		int status, OrderByComparator<TreatmentAudit> orderByComparator) {
+
+		return getPersistence().fetchByStatus_First(status, orderByComparator);
+	}
+
+	/**
+	 * Returns the last treatment audit in the ordered set where status = &#63;.
+	 *
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment audit
+	 * @throws NoSuchTreatmentAuditException if a matching treatment audit could not be found
+	 */
+	public static TreatmentAudit findByStatus_Last(
+			int status, OrderByComparator<TreatmentAudit> orderByComparator)
+		throws teeth.exception.NoSuchTreatmentAuditException {
+
+		return getPersistence().findByStatus_Last(status, orderByComparator);
+	}
+
+	/**
+	 * Returns the last treatment audit in the ordered set where status = &#63;.
+	 *
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment audit, or <code>null</code> if a matching treatment audit could not be found
+	 */
+	public static TreatmentAudit fetchByStatus_Last(
+		int status, OrderByComparator<TreatmentAudit> orderByComparator) {
+
+		return getPersistence().fetchByStatus_Last(status, orderByComparator);
+	}
+
+	/**
+	 * Returns the treatment audits before and after the current treatment audit in the ordered set where status = &#63;.
+	 *
+	 * @param AuditID the primary key of the current treatment audit
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next treatment audit
+	 * @throws NoSuchTreatmentAuditException if a treatment audit with the primary key could not be found
+	 */
+	public static TreatmentAudit[] findByStatus_PrevAndNext(
+			long AuditID, int status,
+			OrderByComparator<TreatmentAudit> orderByComparator)
+		throws teeth.exception.NoSuchTreatmentAuditException {
+
+		return getPersistence().findByStatus_PrevAndNext(
+			AuditID, status, orderByComparator);
+	}
+
+	/**
+	 * Removes all the treatment audits where status = &#63; from the database.
+	 *
+	 * @param status the status
+	 */
+	public static void removeByStatus(int status) {
+		getPersistence().removeByStatus(status);
+	}
+
+	/**
+	 * Returns the number of treatment audits where status = &#63;.
+	 *
+	 * @param status the status
+	 * @return the number of matching treatment audits
+	 */
+	public static int countByStatus(int status) {
+		return getPersistence().countByStatus(status);
+	}
+
+	/**
+	 * Returns all the treatment audits where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @return the matching treatment audits
+	 */
+	public static List<TreatmentAudit> findByG_S(long groupId, int status) {
+		return getPersistence().findByG_S(groupId, status);
+	}
+
+	/**
+	 * Returns a range of all the treatment audits where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentAuditModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of treatment audits
+	 * @param end the upper bound of the range of treatment audits (not inclusive)
+	 * @return the range of matching treatment audits
+	 */
+	public static List<TreatmentAudit> findByG_S(
+		long groupId, int status, int start, int end) {
+
+		return getPersistence().findByG_S(groupId, status, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the treatment audits where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentAuditModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of treatment audits
+	 * @param end the upper bound of the range of treatment audits (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching treatment audits
+	 */
+	public static List<TreatmentAudit> findByG_S(
+		long groupId, int status, int start, int end,
+		OrderByComparator<TreatmentAudit> orderByComparator) {
+
+		return getPersistence().findByG_S(
+			groupId, status, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the treatment audits where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentAuditModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of treatment audits
+	 * @param end the upper bound of the range of treatment audits (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching treatment audits
+	 */
+	public static List<TreatmentAudit> findByG_S(
+		long groupId, int status, int start, int end,
+		OrderByComparator<TreatmentAudit> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByG_S(
+			groupId, status, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first treatment audit in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment audit
+	 * @throws NoSuchTreatmentAuditException if a matching treatment audit could not be found
+	 */
+	public static TreatmentAudit findByG_S_First(
+			long groupId, int status,
+			OrderByComparator<TreatmentAudit> orderByComparator)
+		throws teeth.exception.NoSuchTreatmentAuditException {
+
+		return getPersistence().findByG_S_First(
+			groupId, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the first treatment audit in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment audit, or <code>null</code> if a matching treatment audit could not be found
+	 */
+	public static TreatmentAudit fetchByG_S_First(
+		long groupId, int status,
+		OrderByComparator<TreatmentAudit> orderByComparator) {
+
+		return getPersistence().fetchByG_S_First(
+			groupId, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the last treatment audit in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment audit
+	 * @throws NoSuchTreatmentAuditException if a matching treatment audit could not be found
+	 */
+	public static TreatmentAudit findByG_S_Last(
+			long groupId, int status,
+			OrderByComparator<TreatmentAudit> orderByComparator)
+		throws teeth.exception.NoSuchTreatmentAuditException {
+
+		return getPersistence().findByG_S_Last(
+			groupId, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the last treatment audit in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment audit, or <code>null</code> if a matching treatment audit could not be found
+	 */
+	public static TreatmentAudit fetchByG_S_Last(
+		long groupId, int status,
+		OrderByComparator<TreatmentAudit> orderByComparator) {
+
+		return getPersistence().fetchByG_S_Last(
+			groupId, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the treatment audits before and after the current treatment audit in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param AuditID the primary key of the current treatment audit
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next treatment audit
+	 * @throws NoSuchTreatmentAuditException if a treatment audit with the primary key could not be found
+	 */
+	public static TreatmentAudit[] findByG_S_PrevAndNext(
+			long AuditID, long groupId, int status,
+			OrderByComparator<TreatmentAudit> orderByComparator)
+		throws teeth.exception.NoSuchTreatmentAuditException {
+
+		return getPersistence().findByG_S_PrevAndNext(
+			AuditID, groupId, status, orderByComparator);
+	}
+
+	/**
+	 * Removes all the treatment audits where groupId = &#63; and status = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 */
+	public static void removeByG_S(long groupId, int status) {
+		getPersistence().removeByG_S(groupId, status);
+	}
+
+	/**
+	 * Returns the number of treatment audits where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @return the number of matching treatment audits
+	 */
+	public static int countByG_S(long groupId, int status) {
+		return getPersistence().countByG_S(groupId, status);
 	}
 
 	/**

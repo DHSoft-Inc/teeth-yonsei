@@ -1,4 +1,5 @@
 create table treatment_audit (
+	uuid_ VARCHAR(75) null,
 	AuditID LONG not null primary key,
 	teethNum LONG,
 	editedDate DATE null,
@@ -6,10 +7,21 @@ create table treatment_audit (
 	editType VARCHAR(75) null,
 	treatmentDate DATE null,
 	beforeData VARCHAR(75) null,
-	afterData VARCHAR(75) null
+	afterData VARCHAR(75) null,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null
 );
 
 create table treatment_history (
+	uuid_ VARCHAR(75) null,
 	treatmentID LONG not null primary key,
 	patientID LONG,
 	editedUserID LONG,
@@ -17,5 +29,15 @@ create table treatment_history (
 	treatmentDate DATE null,
 	editedDate DATE null,
 	treatment VARCHAR(75) null,
-	state_ VARCHAR(75) null
+	state_ VARCHAR(75) null,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null
 );

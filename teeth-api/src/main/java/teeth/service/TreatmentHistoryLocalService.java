@@ -14,8 +14,10 @@
 
 package teeth.service;
 
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -25,6 +27,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -64,7 +67,8 @@ public interface TreatmentHistoryLocalService
 	 */
 	public TreatmentHistory AddHistory(
 		long patientID, long teethNum, Date treatmentDate, String treatment,
-		String state, Date editedDate, long editedUserID);
+		String state, Date editedDate, long editedUserID,
+		ServiceContext serviceContext);
 
 	/**
 	 * Adds the treatment history to the database. Also notifies the appropriate model listeners.
@@ -199,8 +203,23 @@ public interface TreatmentHistoryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public TreatmentHistory fetchTreatmentHistory(long treatmentID);
 
+	/**
+	 * Returns the treatment history matching the UUID and group.
+	 *
+	 * @param uuid the treatment history's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching treatment history, or <code>null</code> if a matching treatment history could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public TreatmentHistory fetchTreatmentHistoryByUuidAndGroupId(
+		String uuid, long groupId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -257,6 +276,32 @@ public interface TreatmentHistoryLocalService
 	public List<TreatmentHistory> getTreatmentHistories(int start, int end);
 
 	/**
+	 * Returns all the treatment histories matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the treatment histories
+	 * @param companyId the primary key of the company
+	 * @return the matching treatment histories, or an empty list if no matches were found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<TreatmentHistory> getTreatmentHistoriesByUuidAndCompanyId(
+		String uuid, long companyId);
+
+	/**
+	 * Returns a range of treatment histories matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the treatment histories
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of treatment histories
+	 * @param end the upper bound of the range of treatment histories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching treatment histories, or an empty list if no matches were found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<TreatmentHistory> getTreatmentHistoriesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<TreatmentHistory> orderByComparator);
+
+	/**
 	 * Returns the number of treatment histories.
 	 *
 	 * @return the number of treatment histories
@@ -275,9 +320,22 @@ public interface TreatmentHistoryLocalService
 	public TreatmentHistory getTreatmentHistory(long treatmentID)
 		throws PortalException;
 
+	/**
+	 * Returns the treatment history matching the UUID and group.
+	 *
+	 * @param uuid the treatment history's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching treatment history
+	 * @throws PortalException if a matching treatment history could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public TreatmentHistory getTreatmentHistoryByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException;
+
 	public TreatmentHistory UpdateHistory(
 		long treatmentID, String treatment, String state, Date editedDate,
-		long editedUserID);
+		long editedUserID, ServiceContext serviceContext);
 
 	/**
 	 * Updates the treatment history in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

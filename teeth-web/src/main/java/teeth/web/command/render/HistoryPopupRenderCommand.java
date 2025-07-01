@@ -43,12 +43,12 @@ public class HistoryPopupRenderCommand implements MVCRenderCommand {
         _log.info("teethNum:" + teethNum);
         List<TreatmentHistory> treatmenthistory = TreatmentHistoryLocalServiceUtil.getPatientTreatmentListByTeethNum(patientID, teethNum);
         _log.info("List: " + treatmenthistory);
-        //임시 생년월일
-        // 날짜 포맷터 생성
+        //�엫�떆 �깮�뀈�썡�씪
+        // �궇吏� �룷留룻꽣 �깮�꽦
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         
         Date Birth = new Date();
-        // 문자열을 파싱해서 Date로 변환
+        // 臾몄옄�뿴�쓣 �뙆�떛�빐�꽌 Date濡� 蹂��솚
         try {
          Birth = sdf.parse("2025-01-01");
       } catch (ParseException e) {
@@ -65,9 +65,9 @@ public class HistoryPopupRenderCommand implements MVCRenderCommand {
         	{
         		dh.setStatus("-");
         	}
-        	if(dh.TreatmnetStringList.isEmpty())
+        	if(dh.TreatmnetString.isEmpty())
         	{
-        		dh.setTreatmnetStringList("-");
+        		dh.setTreatmnetString("-");
         	}
         }
         

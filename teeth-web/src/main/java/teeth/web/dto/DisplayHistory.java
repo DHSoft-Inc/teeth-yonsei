@@ -14,8 +14,8 @@ import teeth.model.TreatmentHistory;
 
 public class DisplayHistory
 {
-   public String TreatmentIDList; //
-   public String TreatmnetStringList;
+   public String TreatmentID; //
+   public String TreatmnetString;
    public Date Date;
    public String Status;
    
@@ -24,21 +24,21 @@ public class DisplayHistory
    private int ageDays;
    
     // TreatmentIDList
-    public String getTreatmentIDList() {
-        return TreatmentIDList;
+    public String getTreatmentID() {
+        return TreatmentID;
     }
 
-    public void setTreatmentIDList(String treatmentIDList) {
-        this.TreatmentIDList = treatmentIDList;
+    public void setTreatmentID(String treatmentID) {
+        this.TreatmentID = treatmentID;
     }
 
     // TreatmnetStringList
-    public String getTreatmnetStringList() {
-        return TreatmnetStringList;
+    public String getTreatmnetString() {
+        return TreatmnetString;
     }
 
-    public void setTreatmnetStringList(String treatmnetStringList) {
-        this.TreatmnetStringList = treatmnetStringList;
+    public void setTreatmnetString(String treatmnetString) {
+        this.TreatmnetString = treatmnetString;
     }
 
     // Date
@@ -82,11 +82,12 @@ public class DisplayHistory
     // TreatmentHistory 리스트를 treatmentDate 기준으로 묶어서 List<DisplayHistory> 형태로 반환
     public static List<DisplayHistory> buildDisplayHistoryList(List<TreatmentHistory> histories, Date birthDate) {
         // TreeMap을 쓰면 날짜 순으로 정렬됩니다.
-        Map<Date, DisplayHistory> map = new TreeMap<>();
+        Map<Long, DisplayHistory> map = new TreeMap<>();
 
         for (TreatmentHistory h : histories) {
             Date date = h.getTreatmentDate();
-            DisplayHistory dh = map.get(date);
+            Long ID = h.getTreatmentID();
+            DisplayHistory dh = map.get(ID);
 
             if (dh == null) {
                 dh = new DisplayHistory();
@@ -120,33 +121,18 @@ public class DisplayHistory
                 dh.setAgeDays(days);
 
                 // 나머지 초기화
-                dh.setTreatmentIDList("");
-                dh.setTreatmnetStringList("");
+                dh.setTreatmentID("");
+                dh.setTreatmnetString("");
                 dh.setStatus("");
-                map.put(date, dh);
+                map.put(ID, dh);
             }
-            // 1) TreatmentIDList
-            if (dh.getTreatmentIDList().isEmpty()) {
-                dh.setTreatmentIDList(String.valueOf(h.getTreatmentID()));
-            } else {
-                dh.setTreatmentIDList(dh.getTreatmentIDList() + "," + h.getTreatmentID());
-            }
+            
+            dh.setTreatmentID(String.valueOf(h.getTreatmentID()));
 
-            // 2) TreatmnetStringList
-            if (h.getTreatment() != null && !h.getTreatment().equals("-")) {
-                if (dh.getTreatmnetStringList().isEmpty()) {
-                    dh.setTreatmnetStringList(h.getTreatment());
-                } else {
-                    dh.setTreatmnetStringList(dh.getTreatmnetStringList() + "," + h.getTreatment());
-                }
-            }
+            dh.setTreatmnetString(h.getTreatment());
 
-            // 3) Status (state 컬럼)
-            // 첫 번째 non-empty 상태만 설정
-            if ((dh.getStatus() == null || dh.getStatus().isEmpty())
-                && h.getState() != null && !h.getState().isEmpty()) {
-                dh.setStatus(h.getState());
-            }
+            dh.setStatus(h.getState());
+            
         }
 
         return new ArrayList<>(map.values());
