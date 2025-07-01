@@ -103,11 +103,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const jointNumLabel = document.getElementById('jointNumLabel');
   const selectedButtonsLabel = document.getElementById('selectedButtonsLabel');
+  const selectedButtonsLabel2 = document.getElementById('selectedButtonsLabel2');
   
   const historyContainer = document.getElementById('historyContainer');
   const patientImage = document.getElementById('patientImage');
   const treatmentDateInput = document.getElementById('treatmentDate');
   
+  
+  const deleteAllBtn = document.getElementById('deleteAllBtn'); 
   const addBtn = document.getElementById('addTreatmentBtn');  
   const addDBBtn = document.getElementById('addDBBtn');
   const cancelBtn = document.getElementById('cancelBtn');
@@ -116,6 +119,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const statusRadios = Array.from(document.querySelectorAll('input[name="status"]'));
   const permanentCRadios = Array.from(document.querySelectorAll('input[name="permanentC"]'));
   const permanentDDRadios = Array.from(document.querySelectorAll('input[name="permanentDD"]'));
+  
+  const birth = new Date("2025-01-01");
+
+  treatmentDateInput.max = new Date().toISOString().split("T")[0];
   
   //나머지 버튼들에 대해 jsp의 버튼 이름과 연결
 
@@ -207,7 +214,19 @@ document.addEventListener('DOMContentLoaded', () => {
 		  });
   
 	
-	
+	  
+	  deleteAllBtn.addEventListener('click', () => {
+		  // 1. 배열 비우기
+		  pendingTreatments.length = 0;
+
+		  // 2. 테이블 행 삭제
+		  const tbody = document.querySelector('#treatmentTable tbody');
+		  if (tbody) {
+		    tbody.innerHTML = '';  // 모든 <tr> 제거
+		  }
+
+		  console.log('💥 모든 pendingTreatments 삭제 완료');
+		}); 
   
     // cancel버튼 클릭시 부모 창 새로고침
   	cancelBtn.addEventListener('click', () => {
@@ -290,28 +309,58 @@ document.addEventListener('DOMContentLoaded', () => {
     			
     		
     		treatmentDate = formData.get('treatmentDate');
-
+    		
+    		const treatmentDateObj = new Date(treatmentDate);
+    		const treatmentDateStr = treatmentDateObj.toISOString().split('T')[0];
+    		
+    		for (let i = pendingTreatments.length - 1; i >= 0; i--) {
+    			  if (pendingTreatments[i].treatmentDate === treatmentDateStr) {
+    			    pendingTreatments.splice(i, 1);
+    			  }
+    			}
+    		
+    		const tbody = document.querySelector('#treatmentTable tbody');
+    		if (tbody) {
+    		  const rows = Array.from(tbody.querySelectorAll('tr'));
+    		  rows.forEach(row => {
+    		    // 행에 날짜 데이터가 있을 경우(또는 셀에서 날짜 텍스트 추출)
+    		    // 예: 만약 날짜가 첫 번째 셀에 있다면
+    		    const dateCell = row.cells[0]; 
+    		    if (dateCell && dateCell.textContent.trim() === treatmentDateStr) {
+    		      tbody.removeChild(row);
+    		    }
+    		  });
+    		}
+    		console.log(`중복 제거 완료: 날짜 ${treatmentDateStr} 에 해당하는 기존 항목 삭제`);
+    		
+    		
+    		addTeethListPendingTreatment(teethsParam, treatmentDate, selectedTreatment, selectedState);
+    		/*
+    		teethList.forEach(tooth => {
+    		addPendingTreatment(tooth, treatmentDate, selectedTreatment, selectedState);
+    		});
+    		*/
     		// 치아 × 상태
+    		/*
     		teethList.forEach(tooth => {
     		  selectedTreatmentArr.forEach(treatment => {
     		    addPendingTreatment({ tooth, treatmentDate, treatment, state: '-' });
     		  });
     		});
-
+    		 
     		// 치아 × 부위
     		teethList.forEach(tooth => {
     		  selectedStateArr.forEach(state => {
     		    addPendingTreatment({ tooth, treatmentDate, treatment: '-', state });
     		  });
     		});
-
+    		 */
     		
 
 
     	  }
 
     	  console.log('Pending Treatments:', pendingTreatments);
-    	  console.log('matched:', matched);
 
     	  
     	  
@@ -319,55 +368,86 @@ document.addEventListener('DOMContentLoaded', () => {
     	  
     	  
     	  // 테이블 업데이트: 새로 추가된 치아번호만 렌더링
-    	if (newlyAddedTeeth.length) {
-    	  const tbody = document.querySelector('#treatmentTable tbody');
-    	  
-    	  newlyAddedTeeth.forEach(({ tooth, treatment, permanent, treatmentDisplay }) => {
-    	    const tr = document.createElement('tr');
-    	    const teethNumberNum     = tooth.replace("Teeth", "");
-    	    const permanentDisplay   = permanent || '-';
-    	    //const treatmentDisplay      = `-${treatment}`   || '-';
+    	  if (newlyAddedTeeth.length) {
+    		  const tbody = document.querySelector('#treatmentTable tbody');
+    		  const tr = document.createElement('tr');
 
-    	    tr.innerHTML =
-    	    	 createTd(teethNumberNum) +
-    	    	 createTd(treatmentDate) +
-    	    	 createTd(permanentDisplay) +
-	   	    	 createTd(treatmentDisplay) +
-	   	    	 
-    	    	 
-    	    	  `<td style="border:1px solid #ccc; padding:6px; text-align:center;">
-    	    	     <button type="button" class="clear-btn">delete</button>
-    	    	   </td>`;
-    	      tbody.appendChild(tr);
-    	      
-    	      
-    	      function createTd(content) {
-    	    	  return `<td style="border:1px solid #ccc; padding:6px;">${content}</td>`;
-    	    	}
+    		  const teethNumberStr = teethsParam
+    		    .split(',')
+    		    .map(tooth => tooth.trim().replace('Teeth', ''))
+    		    .join(', ');
+
+    		  const permanentDisplay = selectedState || '-';
+    		  const treatmentDisplay = selectedTreatment || '-';
+
+    		  const treatmentDateStr = treatmentDate.toString().split('T')[0]; // 날짜 표준화
+    		  tr.dataset.treatmentDate = treatmentDateStr;
+
+    		  // 날짜 셀은 클릭 시 treatmentDateInput 설정
+    		  tr.appendChild(createTd(treatmentDateStr, true));
+    		  tr.appendChild(createTd(teethNumberStr));
+    		  tr.appendChild(createTd(permanentDisplay));
+    		  tr.appendChild(createTd(treatmentDisplay));
+
+    		  // 삭제 버튼 셀
+    		  const tdBtn = document.createElement('td');
+    		  tdBtn.style.border = '1px solid #ccc';
+    		  tdBtn.style.padding = '6px';
+    		  tdBtn.style.textAlign = 'center';
+    		  tdBtn.innerHTML = `<button type="button" class="clear-btn">delete</button>`;
+    		  tr.appendChild(tdBtn);
+
+    		  tbody.appendChild(tr);
+
+    		  function createTd(content, isDate = false) {
+    		    const td = document.createElement('td');
+    		    td.textContent = content;
+    		    td.style.border = '1px solid #ccc';
+    		    td.style.padding = '6px';
+
+    		    if (isDate) {
+    		      td.style.cursor = 'pointer';
+    		      td.style.color = 'blue';
+    		      td.style.textDecoration = 'underline';
+
+    		      td.addEventListener('click', () => {
+    		        treatmentDateInput.value = treatmentDateStr;
+    		        treatmentDateInput.dispatchEvent(new Event('change'));
+    		      });
+    		    }
+
+    		    return td;
+    		  }
+
 
     	      
     	      
 
-    	      tr.querySelector('.clear-btn').addEventListener('click', (e) => {
-    	    	  const btn = e.target;
-    	    	  const tr = btn.closest('tr');
-    	    	  const tbody = tr.parentElement;
-    	    	  
-    	    	  // tr이 tbody 자식 중 몇 번째인지 찾기
-    	    	  const index = Array.from(tbody.children).indexOf(tr);
+    	  tr.querySelector('.clear-btn').addEventListener('click', (e) => {
+    		  const tr = e.target.closest('tr');
+    		  const date = tr.dataset.treatmentDate;
 
-    	    	  // 테이블에서 행 제거
-    	    	  tr.remove();
+    		  // 1. 테이블에서 해당 날짜의 모든 <tr> 삭제
+    		  document.querySelectorAll('#treatmentTable tbody tr').forEach(row => {
+    		    if (row.dataset.treatmentDate === date) {
+    		      row.remove();
+    		    }
+    		  });
 
-    	    	  if (index > -1 && index < pendingTreatments.length) {
-    	    	    pendingTreatments.splice(index, 1);
-    	    	    console.log('삭제된 인덱스:', index);
-    	    	    console.log('남은 pendingTreatments:', pendingTreatments);
-    	    	  }
-    	    	});  	      
+    		  // 2. pendingTreatments에서 해당 날짜 항목 전부 삭제
+    		  for (let i = pendingTreatments.length - 1; i >= 0; i--) {
+    		    if (pendingTreatments[i].treatmentDate === date) {
+    		      pendingTreatments.splice(i, 1);
+    		    }
+    		  }
+
+    		  console.log(`날짜 ${date} 기준으로 삭제 완료`);
+    		  console.log('남은 pendingTreatments:', pendingTreatments);
+    		});
     	      
     	      
-    	    });
+    	      
+    	 
     	  }
 
     	  // 입력 리셋
@@ -386,9 +466,29 @@ document.addEventListener('DOMContentLoaded', () => {
 	         const [year, month, day] = dateString.split('.').map(s => s.trim());
 	         return `${year}-${month.padStart(2,'0')}-${day.padStart(2,'0')}`;
 	       }  
-	        
+	       
+	       function addTeethListPendingTreatment(teethsParam, treatmentDate, treatment, state){
+	    	   
+	    	
+	       		const teethList = teethsParam
+	       	  .split(',')
+	       	  .map(tooth => tooth.trim());  // ← 여기서 trim()
+	    	   
+	    	   
+	    	   teethList.forEach(tooth => {
+	       		addPendingTreatment(tooth, treatmentDate, selectedTreatment, selectedState);
+	       		});
+	    	   
+	       }
+	       
+	       
 	       //입력받은 항목 중복 검사하는 function
-	       function addPendingTreatment({ tooth, treatmentDate, treatment = '-', state = '-' }) {
+	       function addPendingTreatment(tooth, treatmentDate, treatment, state) {
+	    	   console.log('input tooth:', tooth);
+	    	   console.log('input treatmentDate:', treatmentDate);
+	    	   console.log('input treatment:', treatment);
+	    	   console.log('input state:', state);
+	    	   
 	    	   // 중복 여부 검사
 	    	   const newTreatment = new Treatment({
 	    		    treatmentDate,
@@ -433,7 +533,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	    	     tooth,
 	    	     treatment: treatment !== '-' ? treatment : '-',
 	    	     permanent: state !== '-' ? state : '-',
-	    	     treatmentDisplay: treatment !== '-' ? `${getCategoryByValue(treatment)}-${treatment}` : '-', 
+	    	    		 treatmentDisplay: treatment !== '-' 
+	    	    			  ? treatment
+	    	    			      .split(',')
+	    	    			      .map(t => `${getCategoryByValue(t.trim())}-${t.trim()}`)
+	    	    			      .join(', ')
+	    	    			  : '-', //바꾸는 부분 
 	    	   });
 
 	    	   console.log('추가', treatment !== '-' ? treatment : state);
@@ -452,7 +557,7 @@ document.addEventListener('DOMContentLoaded', () => {
   	
     //save 버튼을 클릭했을 경우 DB에 추가하는 이벤트 리스너
   	addDBBtn.addEventListener('click', () => {
-  	console.log('원본 Pending Treatments:', pendingTreatments);
+  	console.log('원본 Pending Treatments:', pendingTreatments[0]);
 
   	  // 함수에 pendingTreatments를 인자로 넘겨 호출
   	  const combinedList = groupAndCombineTreatments(pendingTreatments);
@@ -537,10 +642,11 @@ document.addEventListener('DOMContentLoaded', () => {
 		    params.set('EditUserId', g.userId);
 		    params.set('treatmentDate', g.treatmentDate);
 		    params.set('mainCategory', g.mainCategory);
-		    params.set('selectedTreatment', [...g.statuses].join(',') || '-');
+		    params.set('selectedTreatment', [...g.statuses].join(',').replace(/\s+/g, '') || '-');
 		    params.set('selectedTeeth', g.selectedTeeth);
-		    params.set('selectedState', [...g.permanents].join(',') || '-');
+		    params.set('selectedState', [...g.permanents].join(',').replace(/\s+/g, '') || '-');
 		    params.set('p_auth', g.authToken);
+		    console.log("param:", params.toString());
 
 		    return params.toString();
 		  });
@@ -586,6 +692,7 @@ document.addEventListener('DOMContentLoaded', () => {
     jointNumLabel.textContent = jointNum;
     const cleanedTeethNumbers = passedTeethNames.map(name => name.replace("Teeth", ""));
     selectedButtonsLabel.textContent = cleanedTeethNumbers.join(', ');
+    selectedButtonsLabel2.textContent = cleanedTeethNumbers.join(', ');
     updateHistoryDisplay();
   }
   
@@ -600,5 +707,140 @@ document.addEventListener('DOMContentLoaded', () => {
 	  addBtn.disabled = !(isAnyStatusChecked || isAnyPermanentCChecked || isAnyPermanentDDChecked);
 	}
 
+  
+  treatmentDateInput.addEventListener("change", function () {
+	  const dateStr = treatmentDateInput.value;
+	  const dateObj = new Date(dateStr);
 
+	  // 생후 연월 계산
+	  let years = dateObj.getFullYear() - birth.getFullYear();
+	  let months = dateObj.getMonth() - birth.getMonth();
+	  if (months < 0) {
+	    years--;
+	    months += 12;
+	  }
+	  const resultText = "생후 " + years + " Y " + months + " M ";
+	  document.getElementById("ageDiff").textContent = resultText;
+
+	  // 선택된 치아
+	  const regions = teethsParam
+	    .split(',')
+	    .map(n => n.trim())
+	    .filter(n => n)
+	    .map(n => 'Teeth' + n);
+
+	  console.log("=== 날짜 변경 이벤트 발생 ===");
+	  console.log("선택된 날짜:", dateStr);
+	  console.log("선택된 치아:", regions);
+
+	  // 과거 이력과 현재 pending 데이터 각각 필터링
+	  const matched = allHistoryData.filter(item =>
+	    item.date === dateStr && regions.includes(item.region)
+	  );
+	  const matchedPending = pendingTreatments.filter(item =>
+	  item.treatmentDate === dateStr
+	  );
+	  /*
+	  const matchedPending = pendingTreatments.filter(item =>
+	    item.treatmentDate === dateStr &&
+	    regions.includes(item.selectedTeeth)
+	  );
+	   */
+	  console.log("과거 이력 matched 개수:", matched.length);
+	  console.log("pendingTreatments matched 개수:", matchedPending.length);
+
+	  const usedStatuses = new Set();
+	  const usedPermanents = new Set();
+
+	  matchedPending.forEach(item => {
+		  
+
+		  	document.querySelectorAll('input[name="status"]').forEach(input => {
+			  input.checked = false;
+			});
+		  
+		  // selectedTreatment: 여러 개일 수 있으므로 , 로 분리
+		  if (item.selectedTreatment) {
+		    item.selectedTreatment.split(',').forEach(t => {
+		      const v = t.trim();
+		      const el = document.querySelector('input[name="status"][value="' + v + '"]');
+		      if (el) {
+		        el.checked = true;
+		        console.log("✔ status 체크됨:", v);
+		      }
+		    });
+		  }
+
+		  	document.querySelectorAll('input[name="permanentC"]').forEach(input => {
+			  input.checked = false;
+			});
+			document.querySelectorAll('input[name="permanentDD"]').forEach(input => {
+			  input.checked = false;
+			});
+		  
+		  // selectedState: 여러 개일 수 있으므로 , 로 분리
+		  if (item.selectedState) {
+		    item.selectedState.split(',').forEach(s => {
+		      const v = s.trim();
+
+		      const elC = document.querySelector('input[name="permanentC"][value="' + v + '"]');
+		      if (elC) {
+		        elC.checked = true;
+		        console.log("✔ permanentC 체크됨:", v);
+		      }
+
+		      const elDD = document.querySelector('input[name="permanentDD"][value="' + v + '"]');
+		      if (elDD) {
+		        elDD.checked = true;
+		        console.log("✔ permanentDD 체크됨:", v);
+		      }
+		    });
+		  }
+		});
+	  
+	  
+	  
+	  matched.forEach(item => {
+	    if (item.treatment) {
+	      item.treatment.split(',').forEach(t => {
+	        usedStatuses.add(t.trim());
+	      });
+	    }
+	    if (item.state) {
+	      item.state.split(',').forEach(s => {
+	        usedPermanents.add(s.trim());
+	      });
+	    }
+	  });
+
+	  console.log("사용된 treatment 값(Set):", Array.from(usedStatuses));
+	  console.log("사용된 permanent 값(Set):", Array.from(usedPermanents));
+
+	  // permanentC 전체 disable/enable
+	  const permanentCValues = ['C1', 'C2', 'C3'];
+	  const disablePermanentCGroup = permanentCValues.some(v => usedPermanents.has(v));
+	  document.querySelectorAll('input[name="permanentC"]').forEach(radio => {
+	    radio.disabled = disablePermanentCGroup;
+	  });
+
+	  // permanentDD 개별 disable/enable
+	  document.querySelectorAll('input[name="permanentDD"]').forEach(input => {
+	    input.disabled = usedPermanents.has(input.value);
+	  });
+
+	  // status 개별 disable/enable
+	  document.querySelectorAll('input[name="status"]').forEach(input => {
+	    input.disabled = usedStatuses.has(input.value);
+	  });
+	  
+	  
+	  
+
+	  console.log("=== 처리 완료 ===");
+	});
+
+
+  
+  
+  
 });

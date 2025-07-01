@@ -14,16 +14,23 @@
 
 package teeth.service.impl;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetLinkConstants;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ContentTypes;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import teeth.model.TreatmentHistory;
 import teeth.service.base.TreatmentHistoryLocalServiceBaseImpl;
@@ -34,8 +41,16 @@ import teeth.service.base.TreatmentHistoryLocalServiceBaseImpl;
 @Component(property = "model.class.name=teeth.model.TreatmentHistory", service = AopService.class)
 public class TreatmentHistoryLocalServiceImpl extends TreatmentHistoryLocalServiceBaseImpl {
 
+	   @Reference
+	   private AssetEntryLocalService _assetEntryLocalService;
+	   
+	   @Reference
+	   private AssetLinkLocalService _assetLinkLocalService;
+	
+	   
+	   
 	public TreatmentHistory AddHistory(long patientID, long teethNum, Date treatmentDate, String treatment,
-			String state, Date editedDate, long editedUserID) {
+			String state, Date editedDate, long editedUserID, ServiceContext serviceContext) {
 		_log.info(patientID + " " + teethNum + " " + treatmentDate + " " + treatment);
 		try {
 			if (getPatientTreatmentByAll(patientID, teethNum, treatmentDate, treatment) != null) {
@@ -52,6 +67,34 @@ public class TreatmentHistoryLocalServiceImpl extends TreatmentHistoryLocalServi
 				record.setEditedDate(editedDate);
 				record.setEditedUserID(editedUserID);
 				treatmentHistoryPersistence.update(record);
+				
+	             AssetEntry assetEntry = _assetEntryLocalService.updateEntry(
+	                     serviceContext.getUserId(),
+	                     serviceContext.getScopeGroupId(),
+	                     record.getCreateDate(),
+	                     record.getModifiedDate(),
+	                     TreatmentHistory.class.getName(),
+	                     record.getTreatmentID(),
+	                     record.getUuid(),
+	                     0,
+	                     serviceContext.getAssetCategoryIds(),
+	                     serviceContext.getAssetTagNames(),
+	                     true, true,
+	                     record.getCreateDate(), null, null, null,
+	                     ContentTypes.TEXT_HTML,
+	                     "Treatment: " + record.getTreatment(),
+	                     null, null, null, null,
+	                     0, 0,
+	                     serviceContext.getAssetPriority()
+	                 );
+
+	                 // 3) AssetLink 관계 설정
+	                 _assetLinkLocalService.updateLinks(
+	                     serviceContext.getUserId(),
+	                     assetEntry.getEntryId(),
+	                     serviceContext.getAssetLinkEntryIds(),
+	                     AssetLinkConstants.TYPE_RELATED
+	                 );
 				return record;
 			}
 		} catch (Exception e) {
@@ -62,7 +105,7 @@ public class TreatmentHistoryLocalServiceImpl extends TreatmentHistoryLocalServi
 	}
 
 	public TreatmentHistory UpdateHistory(long treatmentID, String treatment, String state, Date editedDate,
-			long editedUserID) {
+			long editedUserID, ServiceContext serviceContext) {
 		try {
 			TreatmentHistory record = getPatientTreatmentByTreatmentID(treatmentID);
 			record.setTreatment(treatment);
@@ -70,6 +113,33 @@ public class TreatmentHistoryLocalServiceImpl extends TreatmentHistoryLocalServi
 			record.setEditedUserID(editedUserID);
 			record.setState(state);
 			treatmentHistoryPersistence.update(record);
+	          AssetEntry assetEntry = _assetEntryLocalService.updateEntry(
+	                  serviceContext.getUserId(),
+	                  serviceContext.getScopeGroupId(),
+	                  record.getCreateDate(),
+	                  record.getModifiedDate(),
+	                  TreatmentHistory.class.getName(),
+	                  record.getTreatmentID(),
+	                  record.getUuid(),
+	                  0,
+	                  serviceContext.getAssetCategoryIds(),
+	                  serviceContext.getAssetTagNames(),
+	                  true, true,
+	                  record.getCreateDate(), null, null, null,
+	                  ContentTypes.TEXT_HTML,
+	                  "Treatment: " + record.getTreatment(),
+	                  null, null, null, null,
+	                  0, 0,
+	                  serviceContext.getAssetPriority()
+	              );
+
+	              // 3) AssetLink 관계 갱신
+	              _assetLinkLocalService.updateLinks(
+	                  serviceContext.getUserId(),
+	                  assetEntry.getEntryId(),
+	                  serviceContext.getAssetLinkEntryIds(),
+	                  AssetLinkConstants.TYPE_RELATED
+	              );
 			_log.info("Record Updated!");
 			return record;
 		} catch (Exception e) {
@@ -87,6 +157,13 @@ public class TreatmentHistoryLocalServiceImpl extends TreatmentHistoryLocalServi
 	public TreatmentHistory deleteHistory(long treatmentID) throws PortalException {
 		try {
 			TreatmentHistory record = treatmentHistoryPersistence.findByPrimaryKey(treatmentID);
+	         // 2) AssetLink 삭제
+	          AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+	              TreatmentHistory.class.getName(), treatmentID);
+	          _assetLinkLocalService.deleteLinks(assetEntry.getEntryId());
+
+	          // 3) AssetEntry 삭제
+	          _assetEntryLocalService.deleteEntry(assetEntry);
 			return deleteHistory(record);
 		} catch (Exception e) {
 			_log.info("Error during Delete Record!");
@@ -148,5 +225,7 @@ public class TreatmentHistoryLocalServiceImpl extends TreatmentHistoryLocalServi
 	}
 
 	Log _log = LogFactoryUtil.getLog(TreatmentHistoryLocalServiceImpl.class);
+
+
 
 }

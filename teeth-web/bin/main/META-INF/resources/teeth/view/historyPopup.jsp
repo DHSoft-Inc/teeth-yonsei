@@ -72,12 +72,12 @@
 					<liferay-ui:search-container-column-text name="State"
 						value="<%=treatment.getStatus()%>" />
 					<liferay-ui:search-container-column-text name="Treatments"
-						value="<%=treatment.getTreatmnetStringList()%>" 
+						value="<%=treatment.getTreatmnetString()%>" 
  						cssClass="treatment-column" />
 					<liferay-ui:search-container-column-text name="Edit">
 						<portlet:renderURL var="HistoryPopUpURL" windowState="pop_up">
 							<portlet:param name="mvcRenderCommandName" value="/teeth/editHistoryPopup" />
-							<portlet:param name="TreatmentID" value="<%=treatment.getTreatmentIDList()%>" />
+							<portlet:param name="TreatmentID" value="<%=treatment.getTreatmentID()%>" />
 						</portlet:renderURL>
 						<aui:button-row>
 							<aui:button type="button" cssClass="btn btn-primary" value="Edit" onClick="<%=HistoryPopUpURL%>" />

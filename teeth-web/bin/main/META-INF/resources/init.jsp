@@ -23,6 +23,7 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="javax.portlet.PortletSession"%>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil"%>
+<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 
 <liferay-theme:defineObjects />
 

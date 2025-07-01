@@ -99,7 +99,7 @@
       flex-direction: column;    /* <- 추가 */
       align-items: flex-start;   /* 왼쪽 정렬 */
       gap: 20px;                 /* 박스 사이 간격 */
-      margin-top: 20px;
+      margin-top: 10px;
     }
     
     .treatment-column {
@@ -114,7 +114,7 @@
     
 	.treatment-box {
 	  border: 1px solid #ccc;
-	  padding: 10px;
+	  padding: 6px;
 	  min-width: 200px;
 	  width: 1050px; /* 고정된 너비 설정 */
 	  display: flex;
@@ -153,7 +153,7 @@
 
     .separator {
       border-top: 2px solid #ccc;
-      margin: 20px 0;
+      margin: 10px 0;
     }
     
   table.custom-table-outer {
@@ -190,7 +190,7 @@
   .custom-table th,
   .custom-table td {
     border: 1px solid #ccc;
-    padding: 10px;
+    padding: 6px;
     vertical-align: middle;
     font-size: 15px;
   }
@@ -226,7 +226,7 @@
 	  display: flex;                   /* 같은 비율로 균등 분할 */
 	  align-items: center;
 	  gap: 8px;
-	  padding: 10px;
+	  padding: 6px;
 	  box-sizing: border-box;
 	}
 	
@@ -275,92 +275,7 @@
 	    <span id="ageDiff" style="margin-left: 15px; font-size: 1rem; color: #555;"></span>
 	  </div>
 	  
-	<script>
-	  const today = new Date().toISOString().split("T")[0];
-	  document.getElementById("treatmentDate").max = today;
 	
-	  // 생년월일 설정 (예시로 2025년 1월 1일)
-	  const birth = new Date("2025-01-01");
-	  
-	  let matched = []; // 전역에서 선언
-	
-	  document.getElementById("treatmentDate").addEventListener("change", function () {
-		const dateStr = document.getElementById("treatmentDate").value;
-		console.log("입력된 문자열:", dateStr);
-		
-		const dateObj = new Date(dateStr); // 문자열을 Date 객체로 변환
-	    console.log("Date 객체:", dateObj);
-		
-		
-	    let years = dateObj.getFullYear() - birth.getFullYear();
-	    let months = dateObj.getMonth() - birth.getMonth();
-	    let days = dateObj.getDate() - birth.getDate();
-	      console.log("연도 (getFullYear):", years);
-	      console.log("월 (getMonth):", months); // 실제 월
-	      console.log("일 (getDate):", days);
-	    
-	
-	    console.log("원본 차이:",years,"년",months,"개월");
-	
-	
-	
-	    const resultText = "생후 " + years + " Y " + months + " M ";
-	    document.getElementById("ageDiff").textContent = resultText;
-	    
-	    const regions = teethsParam.split(',')
-	      .map(n => n.trim())
-	      .filter(n => n)
-	      .map(n => 'Teeth' + n);
-	    
-	    
-	    //const regions = teethsParam.split(',');
-	    
-	    console.log('regions:', regions);
-
-	    // allHistoryData에서 date와 region이 일치하는 항목만 골라냄
-	    matched = allHistoryData.filter(item =>
-	      item.date === dateStr && regions.includes(item.region)
-	    );
-
-	    console.log("해당 날짜·치아 일치 이력(클라이언트 필터링):", matched);
-	    // 이제 matched 배열을 isStatusDuplicate 등에 활용하세요.
-
-	 // --- matched: 서버에서 가져온 기존 이력 배열 ---
-	 // matched = [
-	 //   { date: '2025-05-14', treatment: 'RF,Apexo', state: 'W,E', region: 'Teeth63' },
-	 //   …
-	 // ]
-
-	 // 1. matched 배열에서 이미 사용된 치료(status)와 부위(permanent) 값 추출
-	 const usedStatuses   = new Set();
-	 const usedPermanents = new Set();
-
-
-
-	 // 3. 모든 permanent 그룹 버튼에도 동일하게 적용
-//	     (permanentC, permanentDD 두 그룹 모두)
-
-	// 2) permanentC 라디오 그룹의 모든 value
-	const permanentCValues = ['C1','C2','C3'];
-	
-	// 3) 그룹 중 하나라도 사용되었는지 판정
-	const disablePermanentCGroup = permanentCValues.some(v => usedPermanents.has(v));
-	
-	// 4) permanentC 라디오 버튼 전체를 disable/enable
-	document.querySelectorAll('input[name="permanentC"]').forEach(radio => {
-	  radio.disabled = disablePermanentCGroup;
-	});
-	 
-	 document.querySelectorAll('input[name="permanentDD"]').forEach(input => {
-	   if (usedPermanents.has(input.value)) {
-	     input.disabled = true;
-	   } else {
-	     input.disabled = false;
-	   }
-	 });
-
-	  });
-	</script>
 
 
 	
@@ -539,6 +454,9 @@
 	    <button id="clearSelectionsBtn" type="button" style="padding: 5px 15px; font-size:15px; margin-left: 10px;">
 		 Clear
   		 </button>
+  		 <button id="deleteAllBtn" type="button" style="padding: 5px 15px; font-size:15px; margin-left: 10px;">
+		 Delete all
+  		 </button>
 	</div>
 	
 	
@@ -546,10 +464,9 @@
 	<div class="separator"></div>
 	
 	
-
 	
 	<div style="padding: 0px 20px; font-size: 20px; font-weight: bold;">
-	   진료 기록
+	   진료 기록  [ Teeth: <span id="selectedButtonsLabel2"></span> ] 
 	</div>
 	
 	<input type="hidden" id="namespace" value="<portlet:namespace/>"/>
@@ -559,8 +476,8 @@
 	<table id="treatmentTable" style="width:90%; border-collapse: collapse; margin: 0 auto;">
 	  <thead>
 	    <tr>
+   	      <th style="border:1px solid #ccc; padding:8px;">Date</th>  
 	      <th style="border:1px solid #ccc; padding:8px;">Teeth</th> 
-	      <th style="border:1px solid #ccc; padding:8px;">Date</th>   
 	      <th style="border:1px solid #ccc; padding:8px;">State</th>
 	      <th style="border:1px solid #ccc; padding:8px;">Treatment</th>
 	      <th style="border:1px solid #ccc; padding:8px;">Action</th>
@@ -602,5 +519,6 @@ const resourceURL = '<%=resourceAddURL.toString()%>';
 <script>
   var INITIAL_TEETHS = '${initialTeeths}'; //jstl로 처리 
 </script>
+
 </body>
 </html>

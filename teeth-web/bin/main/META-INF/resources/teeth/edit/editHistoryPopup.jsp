@@ -65,7 +65,7 @@
       flex-direction: column;    /* <- 추가 */
       align-items: flex-start;   /* 왼쪽 정렬 */
       gap: 20px;                 /* 박스 사이 간격 */
-      margin-top: 20px;
+      margin-top: 10px;
     }
     
     .treatment-column {
@@ -80,7 +80,7 @@
     
 	.treatment-box {
 	  border: 1px solid #ccc;
-	  padding: 10px;
+	  padding: 6px;
 	  min-width: 200px;
 	  width: 1050px; /* 고정된 너비 설정 */
 	  display: flex;
@@ -119,7 +119,7 @@
 
     .separator {
       border-top: 2px solid #ccc;
-      margin: 20px 0;
+      margin: 10px 0;
     }
     
   table.custom-table-outer {
@@ -156,7 +156,7 @@
   .custom-table th,
   .custom-table td {
     border: 1px solid #ccc;
-    padding: 10px;
+    padding: 6px;
     vertical-align: middle;
     font-size: 15px;
   }
@@ -192,7 +192,7 @@
 	  display: flex;                   /* 같은 비율로 균등 분할 */
 	  align-items: center;
 	  gap: 8px;
-	  padding: 10px;
+	  padding: 6px;
 	  box-sizing: border-box;
 	}
 	
@@ -219,12 +219,59 @@
 <body>
 <h3 style="padding: 15px 10px;">Selected Treatment Information</h3>
 
-<div style="padding: 15px 10px; font-size: 1.0em;">
-	편집할 치식정보를 하단에서 선택	
-</div>
+<script type="text/javascript">
+function applyTreatment(treatmentInfo) {
+        // 1) 문자열 → 객체로 변환
+        var pairs = treatmentInfo.split(', ');
+        var data = {};
+        pairs.forEach(function(pair) {
+            var idx = pair.indexOf('=');
+            if (idx > -1) {
+                var key = pair.substring(0, idx);
+                var val = pair.substring(idx + 1);
+                data[key] = val;
+            }
+        });
 
+        // 2) 디테일 영역에 출력
+        document.getElementById('treatmentID').innerText =
+            'Treatment ID: ' + data.treatmentID;
+        document.getElementById('teethNum').innerText =
+            'Teeth Number: ' + data.teethNum;
+        document.getElementById('treatment').innerText =
+            'Treatment: ' + data.treatment;
+        document.getElementById('state').innerText =
+            'State: ' + data.state;
+        document.getElementById('treatmentDate').innerText =
+            'TreatmentDate: ' + data.treatmentDate;
+        //document.getElementById('treatment-details').style.display = 'block';
 
-<div id="treatment-buttons" style="padding: 20px 10px;">
+        // 3) 숨겨진 input 에도 세팅
+        document.getElementById('treatmentIdInput').value = data.treatmentID;
+        document.getElementById('teethInput').value = data.teethNum;
+        // 서버에 yyyy-MM-dd 형태로 전송하기 위해 포맷
+        document.getElementById('treatmentDateInput').value =
+            new Date(data.treatmentDate).toISOString().split('T')[0];
+
+        // 4) 기존 체크 해제
+        //document.querySelectorAll('input[name="status"], input[name="permanent"]')
+           //.forEach(function(el) { el.checked = false; });
+
+        // 5) treatment(=status) 체크
+        data.treatment.split(',').forEach(function(val) {
+            var v = val.trim();
+            var el = document.querySelector('input[name="status"][value="' + v + '"]');
+            if (el) el.checked = true;
+        });
+        // 6) state(=permanent) 체크
+        data.state.split(',').forEach(function(val) {
+            var v = val.trim();
+            var el = document.querySelector('input[name="permanent"][value="' + v + '"]');
+            if (el) el.checked = true;
+        });
+    }
+</script>
+<div id="treatment-buttons" style="padding: 20px 10px;" style="display: none;">
     <% if (EditHistoryList != null) {
         for (TreatmentHistory history : EditHistoryList) {
             String treatmentInfo = "treatmentID=" + history.getTreatmentID() +
@@ -235,7 +282,16 @@
                                    ", treatmentDate=" + history.getTreatmentDate();
             
     %>
-        <button class="treatment-btn" onclick="applyTreatment('<%= treatmentInfo %>')">
+		<%
+		String safeTreatmentInfo = treatmentInfo.replace("'", "\\'");
+		%>
+		<script>
+		const treat = '<%= safeTreatmentInfo %>';
+		applyTreatment(treat);
+		</script>
+    
+    
+        <button class="treatment-btn" onclick="applyTreatment('<%= treatmentInfo %>')" style="display: none;">
            Date: <%= sdf.format(history.getTreatmentDate()) %> | <%= history.getTreatment() %>
         </button>
     <% }
@@ -447,6 +503,11 @@
 
 	//edit 화면에서 선택한 진료기록을 삭제 요청하는 function
     function Delete() {
+		
+    	if (!confirm("정말 삭제하시겠습니까?")) {
+            return;  // 사용자가 취소하면 함수 종료
+        }
+		
     	setFormValues();  // 숨겨진 input 값 세팅
     	
     	const inputDate = new Date(document.getElementById('treatmentDateInput').value);
@@ -527,56 +588,6 @@
     }
 	
 	//선택한 치식을 화면에 출력하는 function 
-    function applyTreatment(treatmentInfo) {
-        // 1) 문자열 → 객체로 변환
-        var pairs = treatmentInfo.split(', ');
-        var data = {};
-        pairs.forEach(function(pair) {
-            var idx = pair.indexOf('=');
-            if (idx > -1) {
-                var key = pair.substring(0, idx);
-                var val = pair.substring(idx + 1);
-                data[key] = val;
-            }
-        });
-
-        // 2) 디테일 영역에 출력
-        document.getElementById('treatmentID').innerText =
-            'Treatment ID: ' + data.treatmentID;
-        document.getElementById('teethNum').innerText =
-            'Teeth Number: ' + data.teethNum;
-        document.getElementById('treatment').innerText =
-            'Treatment: ' + data.treatment;
-        document.getElementById('state').innerText =
-            'State: ' + data.state;
-        document.getElementById('treatmentDate').innerText =
-            'TreatmentDate: ' + data.treatmentDate;
-        document.getElementById('treatment-details').style.display = 'block';
-
-        // 3) 숨겨진 input 에도 세팅
-        document.getElementById('treatmentIdInput').value = data.treatmentID;
-        document.getElementById('teethInput').value = data.teethNum;
-        // 서버에 yyyy-MM-dd 형태로 전송하기 위해 포맷
-        document.getElementById('treatmentDateInput').value =
-            new Date(data.treatmentDate).toISOString().split('T')[0];
-
-        // 4) 기존 체크 해제
-        document.querySelectorAll('input[name="status"], input[name="permanent"]')
-            .forEach(function(el) { el.checked = false; });
-
-        // 5) treatment(=status) 체크
-        data.treatment.split(',').forEach(function(val) {
-            var v = val.trim();
-            var el = document.querySelector('input[name="status"][value="' + v + '"]');
-            if (el) el.checked = true;
-        });
-        // 6) state(=permanent) 체크
-        data.state.split(',').forEach(function(val) {
-            var v = val.trim();
-            var el = document.querySelector('input[name="permanent"][value="' + v + '"]');
-            if (el) el.checked = true;
-        });
-    }
 
 	//edit, delete 실행전  변경사항을 적용해주는  function
     function setFormValues() {
@@ -596,7 +607,10 @@
         document.getElementById('statusInput').value    = selectedStatus;
         document.getElementById('permanentInput').value = selectedPermanent;
     }
+
 </script>
 
 </body>
+
+
 </html>

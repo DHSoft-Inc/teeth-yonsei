@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
 encoding//src/main/java/teeth/web/command/render/DeciduousTeethViewRenderCommand.java=UTF-8
+encoding//src/main/java/teeth/web/command/render/HistoryPopupRenderCommand.java=UTF-8
 encoding//src/main/java/teeth/web/command/render/TeethviewRenderCommand.java=UTF-8
 encoding//src/main/java/teeth/web/command/resource/GetTeethHistoryResourceCommand.java=UTF-8
 encoding//src/main/java/teeth/web/command/resource/ToolTipResourceCommand.java=UTF-8
@@ -10,3 +11,4 @@ encoding//src/main/resources/META-INF/resources/teeth/add/addteeth.jsp=UTF-8
 encoding//src/main/resources/META-INF/resources/teeth/view/historyPopup.jsp=UTF-8
 encoding//src/main/resources/META-INF/resources/teeth/view/teethview.jsp=UTF-8
 encoding//src/main/resources/META-INF/resources/teeth/view/tooltip.jsp=UTF-8
+encoding//src/main/resources/content/Language.properties=UTF-8
