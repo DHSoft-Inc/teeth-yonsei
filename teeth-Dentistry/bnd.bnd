@@ -1,0 +1,4 @@
+Bundle-Name: teeth-Dentistry
+Bundle-SymbolicName: teeth.Dentistry
+Bundle-Version: 1.0.0
+Export-Package: teeth.Dentistry.constants

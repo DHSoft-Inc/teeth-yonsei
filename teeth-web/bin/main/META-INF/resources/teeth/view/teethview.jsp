@@ -18,14 +18,14 @@
 </portlet:renderURL>
 
 <c:choose>
-    <c:when test="${requestScope.isPermanent}">
+    <c:when test="<% isPermanent= %>">
         <script type="text/javascript">
-            window.location.href='${totalTeethURL}';
+            window.location.href='<%=totalTeethURL%>';
         </script>
     </c:when>
     <c:otherwise>
         <script type="text/javascript">
-            window.location.href='${deciduousTeethUsRL}';
+            window.location.href='<%=totalTeethURL%>';
         </script>
     </c:otherwise>
 </c:choose>
