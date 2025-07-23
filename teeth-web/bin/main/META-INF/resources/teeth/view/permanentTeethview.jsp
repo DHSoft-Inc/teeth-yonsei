@@ -229,11 +229,11 @@
 				centered: true,
 				modal:true,
 				resizable: true,
-				height:900,
+				height:950,
 				width:1200
 			},
 			id: "addTreatmentDialog",
-			title: Liferay.Language.get("teethview.dialog.addTreatment"),
+			title: "Add Treatement",
 			uri: url.toString()
 		});
 	}, ['liferay-portlet-url'] );
