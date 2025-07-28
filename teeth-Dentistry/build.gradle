@@ -14,6 +14,9 @@ dependencies {
 	compileOnly group: "javax.servlet", name: "javax.servlet-api"
 	compileOnly group: "jstl", name: "jstl"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
+	
+	compileOnly project(":modules:teeth-yonsei:teeth-api")
+	compileOnly project(":modules:teeth-yonsei:teeth-service")
 
 	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "3.1.0"
 }
