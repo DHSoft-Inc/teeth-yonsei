@@ -1,4 +1,4 @@
-package teeth.Dentistry.constants;
+package teeth.dentistry.constants;
 
 import java.util.HashMap;
 import java.util.Map;

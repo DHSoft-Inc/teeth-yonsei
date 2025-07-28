@@ -1,4 +1,4 @@
-package teeth.Dentistry.command.render;
+package teeth.dentistry.command.render;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -12,65 +12,56 @@ import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 
-import teeth.Dentistry.constants.TeethDentistryPortletKeys;
+import teeth.dentistry.constants.TeethDentistryPortletKeys;
 import teeth.model.TreatmentHistory;
 import teeth.service.TreatmentHistoryLocalServiceUtil;
+
+
+
 
 @Component(
 		immediate = true,
 		property = {
 			"javax.portlet.name="+ TeethDentistryPortletKeys.TEETHDENTISTRY,
-			"mvc.command.name=/teeth/teethView"
+			"mvc.command.name=/teeth/deciduousTeethView"
 		},
 		service = MVCRenderCommand.class
 	)
-
-public class TeethviewRenderCommand implements MVCRenderCommand{
+public class DeciduousTeethViewRenderCommand implements MVCRenderCommand {
+	
 	@Override
 	public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
 		// TODO Auto-generated method stub
-		long PatientID = 1001; 
+		_log.info("Hello!");
+		long PatientID = 1001; //�엫�떆 PatientID
 		List<TreatmentHistory> HistoryList = TreatmentHistoryLocalServiceUtil.getPatientTreatmentList(PatientID);
-		boolean isPermanent = false;
 		try
 		{
-			processTeethRange(renderRequest, PatientID, 11, 48, true, isPermanent);
+			// ��?移섎�?? �궗�슜
+			processTeethRange(renderRequest, PatientID, 51, 85);
 
-			processTeethRange(renderRequest, PatientID, 51, 85, false, isPermanent);
-			
 			renderRequest.setAttribute("patientID", PatientID);
 			renderRequest.setAttribute("HistoryList", HistoryList);
 			
-			if(isPermanent == true)
-			{
-				return "/teeth/view/permanentTeethview.jsp";
-			}
-			else
-			{
-				return "/teeth/view/deciduousTeethview.jsp";
-			}
+			return "/teeth/view/deciduousTeethview.jsp";
 		}
 		catch(Exception e)
 		{
-			_log.info("Error During TeethView!");
+			_log.info("Error During DeciduousTeethView!");
+			e.printStackTrace();
+			return null;
 		}
-		
-		
-		return null;
 	}
 	
-	private void processTeethRange(RenderRequest renderRequest, long PatientID, long from, long to, boolean checkPermanent, boolean isPermanent)
+	private void processTeethRange(RenderRequest renderRequest, long PatientID, long from, long to)
 	{
 		for(long i = from; i <= to; i++)
 		{
 			List<TreatmentHistory> HT = TreatmentHistoryLocalServiceUtil.getPatientTreatmentListByTeethNum(PatientID, i);
-			if (checkPermanent && !HT.isEmpty()) 
-			{
-				isPermanent = true;
-			}
 			renderRequest.setAttribute("teeth" + i, HT);
+	        
 			
 		}
 	}
-	Log _log = LogFactoryUtil.getLog(TeethviewRenderCommand.class);
+	Log _log = LogFactoryUtil.getLog(DeciduousTeethViewRenderCommand.class);
 }

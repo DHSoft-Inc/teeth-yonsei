@@ -1,4 +1,4 @@
-package teeth.Dentistry.command.render;
+package teeth.dentistry.command.render;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -12,20 +12,23 @@ import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 
-import teeth.Dentistry.constants.TeethDentistryPortletKeys;
+import teeth.dentistry.constants.TeethDentistryPortletKeys;
 import teeth.model.TreatmentHistory;
 import teeth.service.TreatmentHistoryLocalServiceUtil;
 
 
+
+
 @Component(
-	       immediate = true,
-	       property = {
-	    		   "javax.portlet.name="+ TeethDentistryPortletKeys.TEETHDENTISTRY,
-	           "mvc.command.name=/teeth/viewAuditTrail"
-	       },
-	       service = MVCRenderCommand.class
-	   )
-public class ViewAuditRenderCommand implements MVCRenderCommand{
+		immediate = true,
+		property = {
+			"javax.portlet.name="+ TeethDentistryPortletKeys.TEETHDENTISTRY,
+			"mvc.command.name=/teeth/totalTeethView"
+		},
+		service = MVCRenderCommand.class
+	)
+public class TotalTeethViewRenderCommand implements MVCRenderCommand{
+	
 	@Override
 	public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
 		// TODO Auto-generated method stub
@@ -34,10 +37,10 @@ public class ViewAuditRenderCommand implements MVCRenderCommand{
 		try
 		{			
 			_log.info("TotalTeethView!");
-			// �쁺援ъ튂
+			// �쁺?��?�튂
 			processTeethRange(renderRequest, PatientID, 11, 48);
 
-			// �쑀移�
+			// ��?移�
 			processTeethRange(renderRequest, PatientID, 51, 85);
 			
 			renderRequest.setAttribute("patientID", PatientID);

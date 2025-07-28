@@ -1,4 +1,4 @@
-package teeth.Dentistry.command.render;
+package teeth.dentistry.command.render;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -12,10 +12,9 @@ import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 
-import teeth.Dentistry.constants.TeethDentistryPortletKeys;
+import teeth.dentistry.constants.TeethDentistryPortletKeys;
 import teeth.model.TreatmentHistory;
 import teeth.service.TreatmentHistoryLocalServiceUtil;
-
 
 
 
@@ -23,45 +22,45 @@ import teeth.service.TreatmentHistoryLocalServiceUtil;
 		immediate = true,
 		property = {
 			"javax.portlet.name="+ TeethDentistryPortletKeys.TEETHDENTISTRY,
-			"mvc.command.name=/teeth/deciduousTeethView"
+			"mvc.command.name=/teeth/permanentTeethView"
 		},
 		service = MVCRenderCommand.class
 	)
-public class DeciduousTeethViewRenderCommand implements MVCRenderCommand {
-	
+public class PermanentTeethViewRenderCommand implements MVCRenderCommand{
+
 	@Override
 	public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
 		// TODO Auto-generated method stub
-		_log.info("Hello!");
 		long PatientID = 1001; //�엫�떆 PatientID
 		List<TreatmentHistory> HistoryList = TreatmentHistoryLocalServiceUtil.getPatientTreatmentList(PatientID);
 		try
-		{
-			// �쑀移섎쭔 �궗�슜
-			processTeethRange(renderRequest, PatientID, 51, 85);
+		{			
+			// �쁺?��?�튂留� �궗�슜
+			processTeethRange(renderRequest, PatientID, 11, 48);
 
 			renderRequest.setAttribute("patientID", PatientID);
 			renderRequest.setAttribute("HistoryList", HistoryList);
 			
-			return "/teeth/view/deciduousTeethview.jsp";
+			return "/teeth/view/permanentTeethview.jsp";
 		}
 		catch(Exception e)
 		{
-			_log.info("Error During DeciduousTeethView!");
+			_log.info("Error During PermanentTeethViewRenderCommand!");
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
+
 	private void processTeethRange(RenderRequest renderRequest, long PatientID, long from, long to)
 	{
 		for(long i = from; i <= to; i++)
 		{
 			List<TreatmentHistory> HT = TreatmentHistoryLocalServiceUtil.getPatientTreatmentListByTeethNum(PatientID, i);
 			renderRequest.setAttribute("teeth" + i, HT);
-	        
+	        _log.info("teeth" + i + " : " + HT);
 			
 		}
 	}
-	Log _log = LogFactoryUtil.getLog(DeciduousTeethViewRenderCommand.class);
+	Log _log = LogFactoryUtil.getLog(TotalTeethViewRenderCommand.class);
+	
 }

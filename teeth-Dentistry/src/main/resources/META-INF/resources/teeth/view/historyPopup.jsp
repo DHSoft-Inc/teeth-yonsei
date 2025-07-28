@@ -7,7 +7,7 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="java.util.List"%>
 <%@ page import="javax.portlet.PortletURL"%>
-<%@ page import="teeth.Dentistry.dto.DisplayHistory"%>
+<%@ page import="teeth.dentistry.dto.DisplayHistory"%>
 
 <style>
 /* 팝업 전체 여백 유지 */
@@ -66,7 +66,7 @@
 		<aui:col>
 			<liferay-ui:search-container cssClass="compact-search-container" total="<%=displayList.size()%>" delta="5" deltaConfigurable="true" iteratorURL="<%=iteratorURL%>" emptyResultsMessage="No Treatments Yet.">
 				<liferay-ui:search-container-results results="<%=displayList.subList(searchContainer.getStart(), Math.min(searchContainer.getEnd(), displayList.size()))%>" />
-				<liferay-ui:search-container-row className="teeth.Dentistry.dto.DisplayHistory" modelVar="treatment">
+				<liferay-ui:search-container-row className="teeth.dentistry.dto.DisplayHistory" modelVar="treatment">
 					<liferay-ui:search-container-column-text name="Treatment Date" value="<%=sdf.format(treatment.getDate())%>" />
 					<liferay-ui:search-container-column-text name="Age at Tx." value="<%=treatment.getAgeYears() + " 년 " + treatment.getAgeMonths() + " 개월 "%>" />
 					<liferay-ui:search-container-column-text name="State"

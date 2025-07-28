@@ -1,4 +1,4 @@
-package teeth.Dentistry.command.resource;
+package teeth.dentistry.command.resource;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -22,9 +22,8 @@ import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 
-import teeth.Dentistry.constants.TeethDentistryPortletKeys;
-
-import teeth.Dentistry.constants.teethTreatmentMVCCommand;
+import teeth.dentistry.constants.TeethDentistryPortletKeys;
+import teeth.dentistry.constants.teethTreatmentMVCCommand;
 import teeth.model.TreatmentAudit;
 import teeth.model.TreatmentHistory;
 import teeth.service.TreatmentAuditLocalServiceUtil;

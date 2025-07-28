@@ -1,4 +1,4 @@
-package teeth.Dentistry.command.resource;
+package teeth.dentistry.command.resource;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -15,7 +15,7 @@ import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 
-import teeth.Dentistry.constants.TeethDentistryPortletKeys;
+import teeth.dentistry.constants.TeethDentistryPortletKeys;
 import teeth.model.TreatmentHistory;
 import teeth.service.TreatmentHistoryLocalServiceUtil;
 
@@ -44,7 +44,7 @@ public class GetTeethHistoryResourceCommand extends BaseMVCResourceCommand{
 	            TreatmentHistoryLocalServiceUtil
 	                .getPatientTreatmentListByTeethNum(patientID, teethNum);
 
-	        // (3) JSON 諛곗뿴 �깮�꽦
+	        // (3) JSON 諛곗�?? �깮�꽦
 	        JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 	        for (TreatmentHistory th : list) {

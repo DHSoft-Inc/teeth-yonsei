@@ -1,4 +1,4 @@
-package teeth.Dentistry.constants;
+package teeth.dentistry.constants;
 
 /**
  * @author User

@@ -1,4 +1,4 @@
-package teeth.Dentistry.command.resource;
+package teeth.dentistry.command.resource;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -19,8 +19,8 @@ import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 
-import teeth.Dentistry.constants.TeethDentistryPortletKeys;
-import teeth.Dentistry.dto.DisplayHistory;
+import teeth.dentistry.constants.TeethDentistryPortletKeys;
+import teeth.dentistry.dto.DisplayHistory;
 import teeth.model.TreatmentHistory;
 
 

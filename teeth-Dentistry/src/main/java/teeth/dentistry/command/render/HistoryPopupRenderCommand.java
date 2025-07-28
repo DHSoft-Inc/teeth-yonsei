@@ -1,4 +1,4 @@
-package teeth.Dentistry.command.render;
+package teeth.dentistry.command.render;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -17,8 +17,8 @@ import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 
-import teeth.Dentistry.constants.TeethDentistryPortletKeys;
-import teeth.Dentistry.dto.DisplayHistory;
+import teeth.dentistry.constants.TeethDentistryPortletKeys;
+import teeth.dentistry.dto.DisplayHistory;
 import teeth.model.TreatmentHistory;
 import teeth.service.TreatmentHistoryLocalServiceUtil;
 
@@ -43,12 +43,12 @@ public class HistoryPopupRenderCommand implements MVCRenderCommand {
 	        _log.info("teethNum:" + teethNum);
 	        List<TreatmentHistory> treatmenthistory = TreatmentHistoryLocalServiceUtil.getPatientTreatmentListByTeethNum(patientID, teethNum);
 	        _log.info("List: " + treatmenthistory);
-	        //�엫�떆 �깮�뀈�썡�씪
-	        // �궇吏� �룷留룻꽣 �깮�꽦
+	        //�엫�떆 �깮��?��?���씪
+	        // �궇吏� �룷留룻�?? �깮�꽦
 	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	        
 	        Date Birth = new Date();
-	        // 臾몄옄�뿴�쓣 �뙆�떛�빐�꽌 Date濡� 蹂��솚
+	        // ?��몄옄�뿴�쓣 �뙆�떛�빐�꽌 Date濡� 蹂��솚
 	        try {
 	         Birth = sdf.parse("2025-01-01");
 	      } catch (ParseException e) {

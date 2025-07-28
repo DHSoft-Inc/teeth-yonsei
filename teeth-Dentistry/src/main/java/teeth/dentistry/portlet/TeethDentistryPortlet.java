@@ -1,6 +1,6 @@
-package teeth.Dentistry.portlet;
+package teeth.dentistry.portlet;
 
-import teeth.Dentistry.constants.TeethDentistryPortletKeys;
+import teeth.dentistry.constants.TeethDentistryPortletKeys;
 import teeth.model.TreatmentHistory;
 import teeth.service.TreatmentHistoryLocalServiceUtil;
 

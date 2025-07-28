@@ -3,7 +3,7 @@
 <%@page import="com.liferay.portal.kernel.language.LanguageUtil"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../../init.jsp"%>
-<%@ page import="teeth.Dentistry.dto.DisplayHistory"%>
+<%@ page import="teeth.dentistry.dto.DisplayHistory"%>
 <%@ page import="java.util.List"%>
 <%@ page import="javax.portlet.PortletURL"%>
 <%@ page import="java.text.SimpleDateFormat"%>
@@ -30,7 +30,7 @@
 				<% int count = searchContainer.getStart(); %>
 				
 				<liferay-ui:search-container-row
-					className="teeth.Dentistry.dto.DisplayHistory"
+					className="teeth.dentistry.dto.DisplayHistory"
 					modelVar="treatment">
 					<liferay-ui:search-container-column-text name="Treatment Date" value="<%=sdf.format(treatment.getDate())%>" />
 					<liferay-ui:search-container-column-text name="Age at Tx." value="<%=treatment.getAgeYears() + " 년 " + treatment.getAgeMonths() + " 개월 "%>" />
