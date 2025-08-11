@@ -3,6 +3,7 @@ package teeth.web.command.render;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class DeciduousTeethViewRenderCommand implements MVCRenderCommand {
 	public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
 		// TODO Auto-generated method stub
 		_log.info("Hello!");
-		long PatientID = 1001; //�엫�떆 PatientID
+		long PatientID = ParamUtil.getLong(renderRequest, "PatientID");
 		List<TreatmentHistory> HistoryList = TreatmentHistoryLocalServiceUtil.getPatientTreatmentList(PatientID);
 		try
 		{
