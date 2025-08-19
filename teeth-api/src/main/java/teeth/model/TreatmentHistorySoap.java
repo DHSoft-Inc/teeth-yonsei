@@ -33,6 +33,8 @@ public class TreatmentHistorySoap implements Serializable {
 
 		soapModel.setUuid(model.getUuid());
 		soapModel.setTreatmentID(model.getTreatmentID());
+		soapModel.setCrfId(model.getCrfId());
+		soapModel.setLinkId(model.getLinkId());
 		soapModel.setPatientID(model.getPatientID());
 		soapModel.setEditedUserID(model.getEditedUserID());
 		soapModel.setTeethNum(model.getTeethNum());
@@ -125,6 +127,22 @@ public class TreatmentHistorySoap implements Serializable {
 
 	public void setTreatmentID(long treatmentID) {
 		_treatmentID = treatmentID;
+	}
+
+	public long getCrfId() {
+		return _crfId;
+	}
+
+	public void setCrfId(long crfId) {
+		_crfId = crfId;
+	}
+
+	public long getLinkId() {
+		return _linkId;
+	}
+
+	public void setLinkId(long linkId) {
+		_linkId = linkId;
 	}
 
 	public long getPatientID() {
@@ -265,6 +283,8 @@ public class TreatmentHistorySoap implements Serializable {
 
 	private String _uuid;
 	private long _treatmentID;
+	private long _crfId;
+	private long _linkId;
 	private long _patientID;
 	private long _editedUserID;
 	private long _teethNum;

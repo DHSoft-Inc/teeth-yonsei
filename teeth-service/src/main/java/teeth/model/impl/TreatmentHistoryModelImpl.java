@@ -73,6 +73,7 @@ public class TreatmentHistoryModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"uuid_", Types.VARCHAR}, {"treatmentID", Types.BIGINT},
+		{"crfId", Types.BIGINT}, {"linkId", Types.BIGINT},
 		{"patientID", Types.BIGINT}, {"editedUserID", Types.BIGINT},
 		{"teethNum", Types.BIGINT}, {"treatmentDate", Types.TIMESTAMP},
 		{"editedDate", Types.TIMESTAMP}, {"treatment", Types.VARCHAR},
@@ -90,6 +91,8 @@ public class TreatmentHistoryModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("treatmentID", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("crfId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("linkId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("patientID", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("editedUserID", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("teethNum", Types.BIGINT);
@@ -110,7 +113,7 @@ public class TreatmentHistoryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table treatment_history (uuid_ VARCHAR(75) null,treatmentID LONG not null primary key,patientID LONG,editedUserID LONG,teethNum LONG,treatmentDate DATE null,editedDate DATE null,treatment VARCHAR(75) null,state_ VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table treatment_history (uuid_ VARCHAR(75) null,treatmentID LONG not null primary key,crfId LONG,linkId LONG,patientID LONG,editedUserID LONG,teethNum LONG,treatmentDate DATE null,editedDate DATE null,treatment VARCHAR(75) null,state_ VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table treatment_history";
 
@@ -263,6 +266,14 @@ public class TreatmentHistoryModelImpl
 			"treatmentID",
 			(BiConsumer<TreatmentHistory, Long>)
 				TreatmentHistory::setTreatmentID);
+		attributeGetterFunctions.put("crfId", TreatmentHistory::getCrfId);
+		attributeSetterBiConsumers.put(
+			"crfId",
+			(BiConsumer<TreatmentHistory, Long>)TreatmentHistory::setCrfId);
+		attributeGetterFunctions.put("linkId", TreatmentHistory::getLinkId);
+		attributeSetterBiConsumers.put(
+			"linkId",
+			(BiConsumer<TreatmentHistory, Long>)TreatmentHistory::setLinkId);
 		attributeGetterFunctions.put(
 			"patientID", TreatmentHistory::getPatientID);
 		attributeSetterBiConsumers.put(
@@ -392,6 +403,26 @@ public class TreatmentHistoryModelImpl
 	@Override
 	public void setTreatmentID(long treatmentID) {
 		_treatmentID = treatmentID;
+	}
+
+	@Override
+	public long getCrfId() {
+		return _crfId;
+	}
+
+	@Override
+	public void setCrfId(long crfId) {
+		_crfId = crfId;
+	}
+
+	@Override
+	public long getLinkId() {
+		return _linkId;
+	}
+
+	@Override
+	public void setLinkId(long linkId) {
+		_linkId = linkId;
 	}
 
 	@Override
@@ -826,6 +857,8 @@ public class TreatmentHistoryModelImpl
 
 		treatmentHistoryImpl.setUuid(getUuid());
 		treatmentHistoryImpl.setTreatmentID(getTreatmentID());
+		treatmentHistoryImpl.setCrfId(getCrfId());
+		treatmentHistoryImpl.setLinkId(getLinkId());
 		treatmentHistoryImpl.setPatientID(getPatientID());
 		treatmentHistoryImpl.setEditedUserID(getEditedUserID());
 		treatmentHistoryImpl.setTeethNum(getTeethNum());
@@ -947,6 +980,10 @@ public class TreatmentHistoryModelImpl
 		}
 
 		treatmentHistoryCacheModel.treatmentID = getTreatmentID();
+
+		treatmentHistoryCacheModel.crfId = getCrfId();
+
+		treatmentHistoryCacheModel.linkId = getLinkId();
 
 		treatmentHistoryCacheModel.patientID = getPatientID();
 
@@ -1140,6 +1177,8 @@ public class TreatmentHistoryModelImpl
 	private String _uuid;
 	private String _originalUuid;
 	private long _treatmentID;
+	private long _crfId;
+	private long _linkId;
 	private long _patientID;
 	private long _originalPatientID;
 	private boolean _setOriginalPatientID;

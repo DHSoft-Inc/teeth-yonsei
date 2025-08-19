@@ -6,9 +6,13 @@
 	   <entity name="TreatmentHistory" table="treatment_history" local-service="true" remote-service="false" uuid="true">
       <!-- Primary Key -->
       <column name="treatmentID" type="long" primary="true" />
+      
+      <!-- Foreign key 컬럼 -->
+      <column name="crfId" type="long" />	<!-- crf id -->
+      <column name="linkId" type="long" />	<!-- crf data link id -->
+      <column name="patientID" type="long" /> 	<!-- subject id -->
 
       <!-- Not-null 컬럼 -->
-      <column name="patientID" type="long" />
       <column name="editedUserID" type="long" />
       <column name="teethNum" type="long" />
 

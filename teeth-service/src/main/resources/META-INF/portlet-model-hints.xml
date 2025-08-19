@@ -25,6 +25,8 @@
 	<model name="teeth.model.TreatmentHistory">
 		<field name="uuid" type="String" />
 		<field name="treatmentID" type="long" />
+		<field name="crfId" type="long" />
+		<field name="linkId" type="long" />
 		<field name="patientID" type="long" />
 		<field name="editedUserID" type="long" />
 		<field name="teethNum" type="long" />
