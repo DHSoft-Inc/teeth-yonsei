@@ -57,7 +57,7 @@
 <!-- Add Tooth Popup -->
 <portlet:renderURL var="openDialogURL"
 	windowState="<%=LiferayWindowState.POP_UP.toString()%>">
-	<portlet:param name="mvcRenderCommandName" value="/render/add_tooth_treatment" />
+	<portlet:param name="mvcRenderCommandName" value="/render/selectTreatmentView" />
 	<portlet:param name="test" value="test" />
 </portlet:renderURL>
 <!-- View Audit Popup -->
@@ -221,7 +221,7 @@
          	"p_p_state": "pop_up",
          	"teeths" : selectedTeeth,
          	"test": "test",
-         	"mvcRenderCommandName": "/render/add_tooth_treatment"
+         	"mvcRenderCommandName": "/render/selectTreatmentView"
          });
 		console.log(url);
 		Liferay.Util.openWindow({
