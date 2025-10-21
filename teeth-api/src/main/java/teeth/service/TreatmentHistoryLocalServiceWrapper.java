@@ -45,6 +45,18 @@ public class TreatmentHistoryLocalServiceWrapper
 			editedUserID, serviceContext);
 	}
 
+	@Override
+	public teeth.model.TreatmentHistory AddHistory(
+		long crfId, long linkId, long patientID, long teethNum,
+		java.util.Date treatmentDate, String treatment, String state,
+		java.util.Date editedDate, long editedUserID,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+
+		return _treatmentHistoryLocalService.AddHistory(
+			crfId, linkId, patientID, teethNum, treatmentDate, treatment, state,
+			editedDate, editedUserID, serviceContext);
+	}
+
 	/**
 	 * Adds the treatment history to the database. Also notifies the appropriate model listeners.
 	 *
@@ -298,6 +310,16 @@ public class TreatmentHistoryLocalServiceWrapper
 	}
 
 	@Override
+	public teeth.model.TreatmentHistory getPatientTreatmentByAll(
+		long groupId, long crfId, long linkId, long patientID, long teethNum,
+		java.util.Date treatmentDate, String treatment) {
+
+		return _treatmentHistoryLocalService.getPatientTreatmentByAll(
+			groupId, crfId, linkId, patientID, teethNum, treatmentDate,
+			treatment);
+	}
+
+	@Override
 	public java.util.List<teeth.model.TreatmentHistory>
 		getPatientTreatmentByDateAndTeethNum(
 			long patientID, long teethNum, java.util.Date treatmentDate) {
@@ -444,6 +466,24 @@ public class TreatmentHistoryLocalServiceWrapper
 
 		return _treatmentHistoryLocalService.
 			getTreatmentHistoryByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
+	public java.util.List<teeth.model.TreatmentHistory> getTreatmentsByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId) {
+
+		return _treatmentHistoryLocalService.getTreatmentsByG_C_P_L(
+			groupId, crfId, patientID, linkId);
+	}
+
+	@Override
+	public java.util.List<teeth.model.TreatmentHistory>
+		getTreatmentsByG_C_P_L_TN(
+			long groupId, long crfId, long patientID, long linkId,
+			long teethNum) {
+
+		return _treatmentHistoryLocalService.getTreatmentsByG_C_P_L_TN(
+			groupId, crfId, patientID, linkId, teethNum);
 	}
 
 	@Override

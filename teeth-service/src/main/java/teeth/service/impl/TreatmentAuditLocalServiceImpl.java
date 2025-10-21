@@ -41,13 +41,82 @@ import teeth.service.base.TreatmentAuditLocalServiceBaseImpl;
 	service = AopService.class
 )
 
-public class TreatmentAuditLocalServiceImpl
-	extends TreatmentAuditLocalServiceBaseImpl {
-	 @Reference
-	   private AssetEntryLocalService _assetEntryLocalService;
+public class TreatmentAuditLocalServiceImpl extends TreatmentAuditLocalServiceBaseImpl {
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
 	   
-	   @Reference
-	   private AssetLinkLocalService _assetLinkLocalService;
+	@Reference
+	private AssetLinkLocalService _assetLinkLocalService;
+	
+	public TreatmentAudit AddAudit(long crfId, long linkId, long patientId, long teethNum, long editedUserID, Date TreatmentDate, String editType, String BeforeData, String afterData, ServiceContext serviceContext) 
+	{
+		
+		_log.info("teethNum: " + teethNum + " editType: " + editType + " BeforeData: " + BeforeData + " afterData: "
+				+ afterData);
+		try 
+		{
+			long groupId = serviceContext.getScopeGroupId();
+			long AuditID = super.counterLocalService.increment();
+			TreatmentAudit newAudit = super.treatmentAuditLocalService.createTreatmentAudit(AuditID);
+			
+			Date editedDate = new Date();
+			
+			newAudit.setGroupId(groupId);
+			newAudit.setCrfId(crfId);
+			newAudit.setLinkId(linkId);
+			newAudit.setPatientID(patientId);			
+			newAudit.setTeethNum(teethNum);
+			newAudit.setUserId(editedUserID);
+			newAudit.setEditedDate(editedDate);
+			newAudit.setEditedUserID(editedUserID);
+			newAudit.setTreatmentDate(TreatmentDate);
+			newAudit.setEditType(editType);
+			newAudit.setBeforeData(BeforeData);
+			newAudit.setAfterData(afterData);
+			treatmentAuditPersistence.update(newAudit);
+			
+			
+            // ï¿½ï¿½ AssetEntry ï¿½ß°ï¿½/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+            AssetEntry assetEntry = _assetEntryLocalService.updateEntry(
+                serviceContext.getUserId(),
+                groupId,
+                newAudit.getCreateDate(),
+                newAudit.getModifiedDate(),
+                TreatmentAudit.class.getName(),
+                newAudit.getAuditID(),
+                newAudit.getUuid(),
+                0,
+                serviceContext.getAssetCategoryIds(),
+                serviceContext.getAssetTagNames(),
+                true,  // visible
+                true,  // publishDate <= now ?
+                null,  // startDate
+                null,  // endDate
+                null,  // mimeType
+                ContentTypes.TEXT_HTML,
+                "Audit: " + newAudit.getEditType(),  // title
+                null, null, null, null,
+                0, 0,  // height, width
+                serviceContext.getAssetPriority()
+            );
+
+            // ï¿½ï¿½ AssetLink ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            _assetLinkLocalService.updateLinks(
+                serviceContext.getUserId(),
+                assetEntry.getEntryId(),
+                serviceContext.getAssetLinkEntryIds(),
+                com.liferay.asset.kernel.model.AssetLinkConstants.TYPE_RELATED
+            );
+			
+			return newAudit;
+		} 
+		catch (Exception e) 
+		{
+			_log.info("Error during Add Audit!");
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	public TreatmentAudit AddAudit(long teethNum, long editedUserID, Date TreatmentDate, String editType, String BeforeData, String afterData, ServiceContext serviceContext) 
 	{
@@ -69,7 +138,7 @@ public class TreatmentAuditLocalServiceImpl
 			treatmentAuditPersistence.update(newAudit);
 			
 			
-            // ¡æ AssetEntry Ãß°¡/¾÷µ¥ÀÌÆ®
+            // ï¿½ï¿½ AssetEntry ï¿½ß°ï¿½/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
             AssetEntry assetEntry = _assetEntryLocalService.updateEntry(
                 serviceContext.getUserId(),
                 serviceContext.getScopeGroupId(),
@@ -93,7 +162,7 @@ public class TreatmentAuditLocalServiceImpl
                 serviceContext.getAssetPriority()
             );
 
-            // ¡æ AssetLink °ü°è ¼³Á¤
+            // ï¿½ï¿½ AssetLink ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             _assetLinkLocalService.updateLinks(
                 serviceContext.getUserId(),
                 assetEntry.getEntryId(),
@@ -120,6 +189,14 @@ public class TreatmentAuditLocalServiceImpl
 	public List<TreatmentAudit> getAuditByEditType(String EditType) 
 	{
 		return treatmentAuditPersistence.findByAudit_EditType(EditType);
+	}
+	
+	public List<TreatmentAudit> getAuditsByG_C_P_L(long groupId, long crfId, long patientID, long linkId) {
+		return treatmentAuditPersistence.findByG_C_P_L(groupId, crfId, patientID, linkId);
+	}
+	
+	public List<TreatmentAudit> getAuditsByG_C_P_L_TN(long groupId, long crfId, long patientID, long linkId, long teethNum) {
+		return treatmentAuditPersistence.findByG_C_P_L_TN(groupId, crfId, patientID, linkId, teethNum);
 	}
 
 	Log _log = LogFactoryUtil.getLog(TreatmentAuditLocalServiceImpl.class);

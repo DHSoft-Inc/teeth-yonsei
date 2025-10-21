@@ -1,6 +1,9 @@
 create table treatment_audit (
 	uuid_ VARCHAR(75) null,
 	AuditID LONG not null primary key,
+	crfId LONG,
+	linkId LONG,
+	patientID LONG,
 	teethNum LONG,
 	editedDate DATE null,
 	editedUserID LONG,

@@ -70,6 +70,11 @@ public interface TreatmentHistoryLocalService
 		String state, Date editedDate, long editedUserID,
 		ServiceContext serviceContext);
 
+	public TreatmentHistory AddHistory(
+		long crfId, long linkId, long patientID, long teethNum,
+		Date treatmentDate, String treatment, String state, Date editedDate,
+		long editedUserID, ServiceContext serviceContext);
+
 	/**
 	 * Adds the treatment history to the database. Also notifies the appropriate model listeners.
 	 *
@@ -236,6 +241,11 @@ public interface TreatmentHistoryLocalService
 		long patientID, long teethNum, Date treatmentDate, String treatment);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public TreatmentHistory getPatientTreatmentByAll(
+		long groupId, long crfId, long linkId, long patientID, long teethNum,
+		Date treatmentDate, String treatment);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<TreatmentHistory> getPatientTreatmentByDateAndTeethNum(
 		long patientID, long teethNum, Date treatmentDate);
 
@@ -332,6 +342,14 @@ public interface TreatmentHistoryLocalService
 	public TreatmentHistory getTreatmentHistoryByUuidAndGroupId(
 			String uuid, long groupId)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<TreatmentHistory> getTreatmentsByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<TreatmentHistory> getTreatmentsByG_C_P_L_TN(
+		long groupId, long crfId, long patientID, long linkId, long teethNum);
 
 	public TreatmentHistory UpdateHistory(
 		long treatmentID, String treatment, String state, Date editedDate,

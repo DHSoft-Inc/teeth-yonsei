@@ -131,21 +131,25 @@ public class TreatmentHistoryModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
+	public static final long CRFID_COLUMN_BITMASK = 2L;
 
-	public static final long PATIENTID_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
 
-	public static final long STATUS_COLUMN_BITMASK = 8L;
+	public static final long LINKID_COLUMN_BITMASK = 8L;
 
-	public static final long TEETHNUM_COLUMN_BITMASK = 16L;
+	public static final long PATIENTID_COLUMN_BITMASK = 16L;
 
-	public static final long TREATMENT_COLUMN_BITMASK = 32L;
+	public static final long STATUS_COLUMN_BITMASK = 32L;
 
-	public static final long TREATMENTDATE_COLUMN_BITMASK = 64L;
+	public static final long TEETHNUM_COLUMN_BITMASK = 64L;
 
-	public static final long UUID_COLUMN_BITMASK = 128L;
+	public static final long TREATMENT_COLUMN_BITMASK = 128L;
 
-	public static final long TREATMENTID_COLUMN_BITMASK = 256L;
+	public static final long TREATMENTDATE_COLUMN_BITMASK = 256L;
+
+	public static final long UUID_COLUMN_BITMASK = 512L;
+
+	public static final long TREATMENTID_COLUMN_BITMASK = 1024L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -412,7 +416,19 @@ public class TreatmentHistoryModelImpl
 
 	@Override
 	public void setCrfId(long crfId) {
+		_columnBitmask |= CRFID_COLUMN_BITMASK;
+
+		if (!_setOriginalCrfId) {
+			_setOriginalCrfId = true;
+
+			_originalCrfId = _crfId;
+		}
+
 		_crfId = crfId;
+	}
+
+	public long getOriginalCrfId() {
+		return _originalCrfId;
 	}
 
 	@Override
@@ -422,7 +438,19 @@ public class TreatmentHistoryModelImpl
 
 	@Override
 	public void setLinkId(long linkId) {
+		_columnBitmask |= LINKID_COLUMN_BITMASK;
+
+		if (!_setOriginalLinkId) {
+			_setOriginalLinkId = true;
+
+			_originalLinkId = _linkId;
+		}
+
 		_linkId = linkId;
+	}
+
+	public long getOriginalLinkId() {
+		return _originalLinkId;
 	}
 
 	@Override
@@ -938,6 +966,14 @@ public class TreatmentHistoryModelImpl
 	public void resetOriginalValues() {
 		_originalUuid = _uuid;
 
+		_originalCrfId = _crfId;
+
+		_setOriginalCrfId = false;
+
+		_originalLinkId = _linkId;
+
+		_setOriginalLinkId = false;
+
 		_originalPatientID = _patientID;
 
 		_setOriginalPatientID = false;
@@ -1178,7 +1214,11 @@ public class TreatmentHistoryModelImpl
 	private String _originalUuid;
 	private long _treatmentID;
 	private long _crfId;
+	private long _originalCrfId;
+	private boolean _setOriginalCrfId;
 	private long _linkId;
+	private long _originalLinkId;
+	private boolean _setOriginalLinkId;
 	private long _patientID;
 	private long _originalPatientID;
 	private boolean _setOriginalPatientID;

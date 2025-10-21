@@ -45,6 +45,9 @@ public class TreatmentAuditWrapper
 
 		attributes.put("uuid", getUuid());
 		attributes.put("AuditID", getAuditID());
+		attributes.put("crfId", getCrfId());
+		attributes.put("linkId", getLinkId());
+		attributes.put("patientID", getPatientID());
 		attributes.put("teethNum", getTeethNum());
 		attributes.put("editedDate", getEditedDate());
 		attributes.put("editedUserID", getEditedUserID());
@@ -78,6 +81,24 @@ public class TreatmentAuditWrapper
 
 		if (AuditID != null) {
 			setAuditID(AuditID);
+		}
+
+		Long crfId = (Long)attributes.get("crfId");
+
+		if (crfId != null) {
+			setCrfId(crfId);
+		}
+
+		Long linkId = (Long)attributes.get("linkId");
+
+		if (linkId != null) {
+			setLinkId(linkId);
+		}
+
+		Long patientID = (Long)attributes.get("patientID");
+
+		if (patientID != null) {
+			setPatientID(patientID);
 		}
 
 		Long teethNum = (Long)attributes.get("teethNum");
@@ -234,6 +255,16 @@ public class TreatmentAuditWrapper
 	}
 
 	/**
+	 * Returns the crf ID of this treatment audit.
+	 *
+	 * @return the crf ID of this treatment audit
+	 */
+	@Override
+	public long getCrfId() {
+		return model.getCrfId();
+	}
+
+	/**
 	 * Returns the edited date of this treatment audit.
 	 *
 	 * @return the edited date of this treatment audit
@@ -274,6 +305,16 @@ public class TreatmentAuditWrapper
 	}
 
 	/**
+	 * Returns the link ID of this treatment audit.
+	 *
+	 * @return the link ID of this treatment audit
+	 */
+	@Override
+	public long getLinkId() {
+		return model.getLinkId();
+	}
+
+	/**
 	 * Returns the modified date of this treatment audit.
 	 *
 	 * @return the modified date of this treatment audit
@@ -281,6 +322,16 @@ public class TreatmentAuditWrapper
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the patient ID of this treatment audit.
+	 *
+	 * @return the patient ID of this treatment audit
+	 */
+	@Override
+	public long getPatientID() {
+		return model.getPatientID();
 	}
 
 	/**
@@ -539,6 +590,16 @@ public class TreatmentAuditWrapper
 	}
 
 	/**
+	 * Sets the crf ID of this treatment audit.
+	 *
+	 * @param crfId the crf ID of this treatment audit
+	 */
+	@Override
+	public void setCrfId(long crfId) {
+		model.setCrfId(crfId);
+	}
+
+	/**
 	 * Sets the edited date of this treatment audit.
 	 *
 	 * @param editedDate the edited date of this treatment audit
@@ -579,6 +640,16 @@ public class TreatmentAuditWrapper
 	}
 
 	/**
+	 * Sets the link ID of this treatment audit.
+	 *
+	 * @param linkId the link ID of this treatment audit
+	 */
+	@Override
+	public void setLinkId(long linkId) {
+		model.setLinkId(linkId);
+	}
+
+	/**
 	 * Sets the modified date of this treatment audit.
 	 *
 	 * @param modifiedDate the modified date of this treatment audit
@@ -586,6 +657,16 @@ public class TreatmentAuditWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the patient ID of this treatment audit.
+	 *
+	 * @param patientID the patient ID of this treatment audit
+	 */
+	@Override
+	public void setPatientID(long patientID) {
+		model.setPatientID(patientID);
 	}
 
 	/**

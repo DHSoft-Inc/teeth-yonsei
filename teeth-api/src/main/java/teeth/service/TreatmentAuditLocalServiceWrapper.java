@@ -44,6 +44,18 @@ public class TreatmentAuditLocalServiceWrapper
 			afterData, serviceContext);
 	}
 
+	@Override
+	public teeth.model.TreatmentAudit AddAudit(
+		long crfId, long linkId, long patientId, long teethNum,
+		long editedUserID, java.util.Date TreatmentDate, String editType,
+		String BeforeData, String afterData,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+
+		return _treatmentAuditLocalService.AddAudit(
+			crfId, linkId, patientId, teethNum, editedUserID, TreatmentDate,
+			editType, BeforeData, afterData, serviceContext);
+	}
+
 	/**
 	 * Adds the treatment audit to the database. Also notifies the appropriate model listeners.
 	 *
@@ -248,6 +260,22 @@ public class TreatmentAuditLocalServiceWrapper
 		long teethNum) {
 
 		return _treatmentAuditLocalService.getAuditByTeethNum(teethNum);
+	}
+
+	@Override
+	public java.util.List<teeth.model.TreatmentAudit> getAuditsByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId) {
+
+		return _treatmentAuditLocalService.getAuditsByG_C_P_L(
+			groupId, crfId, patientID, linkId);
+	}
+
+	@Override
+	public java.util.List<teeth.model.TreatmentAudit> getAuditsByG_C_P_L_TN(
+		long groupId, long crfId, long patientID, long linkId, long teethNum) {
+
+		return _treatmentAuditLocalService.getAuditsByG_C_P_L_TN(
+			groupId, crfId, patientID, linkId, teethNum);
 	}
 
 	@Override
