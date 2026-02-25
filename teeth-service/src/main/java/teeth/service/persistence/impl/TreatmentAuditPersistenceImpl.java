@@ -1983,6 +1983,1293 @@ public class TreatmentAuditPersistenceImpl
 	private static final String _FINDER_COLUMN_AUDIT_TEETHNUM_TEETHNUM_2 =
 		"treatmentAudit.teethNum = ?";
 
+	private FinderPath _finderPathWithPaginationFindByG_C_P_L;
+	private FinderPath _finderPathWithoutPaginationFindByG_C_P_L;
+	private FinderPath _finderPathCountByG_C_P_L;
+
+	/**
+	 * Returns all the treatment audits where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @return the matching treatment audits
+	 */
+	@Override
+	public List<TreatmentAudit> findByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId) {
+
+		return findByG_C_P_L(
+			groupId, crfId, patientID, linkId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the treatment audits where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentAuditModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param start the lower bound of the range of treatment audits
+	 * @param end the upper bound of the range of treatment audits (not inclusive)
+	 * @return the range of matching treatment audits
+	 */
+	@Override
+	public List<TreatmentAudit> findByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId, int start,
+		int end) {
+
+		return findByG_C_P_L(
+			groupId, crfId, patientID, linkId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the treatment audits where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentAuditModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param start the lower bound of the range of treatment audits
+	 * @param end the upper bound of the range of treatment audits (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching treatment audits
+	 */
+	@Override
+	public List<TreatmentAudit> findByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId, int start,
+		int end, OrderByComparator<TreatmentAudit> orderByComparator) {
+
+		return findByG_C_P_L(
+			groupId, crfId, patientID, linkId, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the treatment audits where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentAuditModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param start the lower bound of the range of treatment audits
+	 * @param end the upper bound of the range of treatment audits (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching treatment audits
+	 */
+	@Override
+	public List<TreatmentAudit> findByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId, int start,
+		int end, OrderByComparator<TreatmentAudit> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_C_P_L;
+				finderArgs = new Object[] {groupId, crfId, patientID, linkId};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByG_C_P_L;
+			finderArgs = new Object[] {
+				groupId, crfId, patientID, linkId, start, end, orderByComparator
+			};
+		}
+
+		List<TreatmentAudit> list = null;
+
+		if (useFinderCache) {
+			list = (List<TreatmentAudit>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (TreatmentAudit treatmentAudit : list) {
+					if ((groupId != treatmentAudit.getGroupId()) ||
+						(crfId != treatmentAudit.getCrfId()) ||
+						(patientID != treatmentAudit.getPatientID()) ||
+						(linkId != treatmentAudit.getLinkId())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					6 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(6);
+			}
+
+			sb.append(_SQL_SELECT_TREATMENTAUDIT_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_GROUPID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_CRFID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_PATIENTID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_LINKID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(TreatmentAuditModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				queryPos.add(crfId);
+
+				queryPos.add(patientID);
+
+				queryPos.add(linkId);
+
+				list = (List<TreatmentAudit>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first treatment audit in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment audit
+	 * @throws NoSuchTreatmentAuditException if a matching treatment audit could not be found
+	 */
+	@Override
+	public TreatmentAudit findByG_C_P_L_First(
+			long groupId, long crfId, long patientID, long linkId,
+			OrderByComparator<TreatmentAudit> orderByComparator)
+		throws NoSuchTreatmentAuditException {
+
+		TreatmentAudit treatmentAudit = fetchByG_C_P_L_First(
+			groupId, crfId, patientID, linkId, orderByComparator);
+
+		if (treatmentAudit != null) {
+			return treatmentAudit;
+		}
+
+		StringBundler sb = new StringBundler(10);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("groupId=");
+		sb.append(groupId);
+
+		sb.append(", crfId=");
+		sb.append(crfId);
+
+		sb.append(", patientID=");
+		sb.append(patientID);
+
+		sb.append(", linkId=");
+		sb.append(linkId);
+
+		sb.append("}");
+
+		throw new NoSuchTreatmentAuditException(sb.toString());
+	}
+
+	/**
+	 * Returns the first treatment audit in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment audit, or <code>null</code> if a matching treatment audit could not be found
+	 */
+	@Override
+	public TreatmentAudit fetchByG_C_P_L_First(
+		long groupId, long crfId, long patientID, long linkId,
+		OrderByComparator<TreatmentAudit> orderByComparator) {
+
+		List<TreatmentAudit> list = findByG_C_P_L(
+			groupId, crfId, patientID, linkId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last treatment audit in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment audit
+	 * @throws NoSuchTreatmentAuditException if a matching treatment audit could not be found
+	 */
+	@Override
+	public TreatmentAudit findByG_C_P_L_Last(
+			long groupId, long crfId, long patientID, long linkId,
+			OrderByComparator<TreatmentAudit> orderByComparator)
+		throws NoSuchTreatmentAuditException {
+
+		TreatmentAudit treatmentAudit = fetchByG_C_P_L_Last(
+			groupId, crfId, patientID, linkId, orderByComparator);
+
+		if (treatmentAudit != null) {
+			return treatmentAudit;
+		}
+
+		StringBundler sb = new StringBundler(10);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("groupId=");
+		sb.append(groupId);
+
+		sb.append(", crfId=");
+		sb.append(crfId);
+
+		sb.append(", patientID=");
+		sb.append(patientID);
+
+		sb.append(", linkId=");
+		sb.append(linkId);
+
+		sb.append("}");
+
+		throw new NoSuchTreatmentAuditException(sb.toString());
+	}
+
+	/**
+	 * Returns the last treatment audit in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment audit, or <code>null</code> if a matching treatment audit could not be found
+	 */
+	@Override
+	public TreatmentAudit fetchByG_C_P_L_Last(
+		long groupId, long crfId, long patientID, long linkId,
+		OrderByComparator<TreatmentAudit> orderByComparator) {
+
+		int count = countByG_C_P_L(groupId, crfId, patientID, linkId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<TreatmentAudit> list = findByG_C_P_L(
+			groupId, crfId, patientID, linkId, count - 1, count,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the treatment audits before and after the current treatment audit in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * @param AuditID the primary key of the current treatment audit
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next treatment audit
+	 * @throws NoSuchTreatmentAuditException if a treatment audit with the primary key could not be found
+	 */
+	@Override
+	public TreatmentAudit[] findByG_C_P_L_PrevAndNext(
+			long AuditID, long groupId, long crfId, long patientID, long linkId,
+			OrderByComparator<TreatmentAudit> orderByComparator)
+		throws NoSuchTreatmentAuditException {
+
+		TreatmentAudit treatmentAudit = findByPrimaryKey(AuditID);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			TreatmentAudit[] array = new TreatmentAuditImpl[3];
+
+			array[0] = getByG_C_P_L_PrevAndNext(
+				session, treatmentAudit, groupId, crfId, patientID, linkId,
+				orderByComparator, true);
+
+			array[1] = treatmentAudit;
+
+			array[2] = getByG_C_P_L_PrevAndNext(
+				session, treatmentAudit, groupId, crfId, patientID, linkId,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected TreatmentAudit getByG_C_P_L_PrevAndNext(
+		Session session, TreatmentAudit treatmentAudit, long groupId,
+		long crfId, long patientID, long linkId,
+		OrderByComparator<TreatmentAudit> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				7 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(6);
+		}
+
+		sb.append(_SQL_SELECT_TREATMENTAUDIT_WHERE);
+
+		sb.append(_FINDER_COLUMN_G_C_P_L_GROUPID_2);
+
+		sb.append(_FINDER_COLUMN_G_C_P_L_CRFID_2);
+
+		sb.append(_FINDER_COLUMN_G_C_P_L_PATIENTID_2);
+
+		sb.append(_FINDER_COLUMN_G_C_P_L_LINKID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(TreatmentAuditModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(groupId);
+
+		queryPos.add(crfId);
+
+		queryPos.add(patientID);
+
+		queryPos.add(linkId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						treatmentAudit)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<TreatmentAudit> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the treatment audits where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 */
+	@Override
+	public void removeByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId) {
+
+		for (TreatmentAudit treatmentAudit :
+				findByG_C_P_L(
+					groupId, crfId, patientID, linkId, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(treatmentAudit);
+		}
+	}
+
+	/**
+	 * Returns the number of treatment audits where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @return the number of matching treatment audits
+	 */
+	@Override
+	public int countByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId) {
+
+		FinderPath finderPath = _finderPathCountByG_C_P_L;
+
+		Object[] finderArgs = new Object[] {groupId, crfId, patientID, linkId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(_SQL_COUNT_TREATMENTAUDIT_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_GROUPID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_CRFID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_PATIENTID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_LINKID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				queryPos.add(crfId);
+
+				queryPos.add(patientID);
+
+				queryPos.add(linkId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_C_P_L_GROUPID_2 =
+		"treatmentAudit.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_C_P_L_CRFID_2 =
+		"treatmentAudit.crfId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_C_P_L_PATIENTID_2 =
+		"treatmentAudit.patientID = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_C_P_L_LINKID_2 =
+		"treatmentAudit.linkId = ?";
+
+	private FinderPath _finderPathWithPaginationFindByG_C_P_L_TN;
+	private FinderPath _finderPathWithoutPaginationFindByG_C_P_L_TN;
+	private FinderPath _finderPathCountByG_C_P_L_TN;
+
+	/**
+	 * Returns all the treatment audits where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @return the matching treatment audits
+	 */
+	@Override
+	public List<TreatmentAudit> findByG_C_P_L_TN(
+		long groupId, long crfId, long patientID, long linkId, long teethNum) {
+
+		return findByG_C_P_L_TN(
+			groupId, crfId, patientID, linkId, teethNum, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the treatment audits where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentAuditModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param start the lower bound of the range of treatment audits
+	 * @param end the upper bound of the range of treatment audits (not inclusive)
+	 * @return the range of matching treatment audits
+	 */
+	@Override
+	public List<TreatmentAudit> findByG_C_P_L_TN(
+		long groupId, long crfId, long patientID, long linkId, long teethNum,
+		int start, int end) {
+
+		return findByG_C_P_L_TN(
+			groupId, crfId, patientID, linkId, teethNum, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the treatment audits where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentAuditModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param start the lower bound of the range of treatment audits
+	 * @param end the upper bound of the range of treatment audits (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching treatment audits
+	 */
+	@Override
+	public List<TreatmentAudit> findByG_C_P_L_TN(
+		long groupId, long crfId, long patientID, long linkId, long teethNum,
+		int start, int end,
+		OrderByComparator<TreatmentAudit> orderByComparator) {
+
+		return findByG_C_P_L_TN(
+			groupId, crfId, patientID, linkId, teethNum, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the treatment audits where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentAuditModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param start the lower bound of the range of treatment audits
+	 * @param end the upper bound of the range of treatment audits (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching treatment audits
+	 */
+	@Override
+	public List<TreatmentAudit> findByG_C_P_L_TN(
+		long groupId, long crfId, long patientID, long linkId, long teethNum,
+		int start, int end, OrderByComparator<TreatmentAudit> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_C_P_L_TN;
+				finderArgs = new Object[] {
+					groupId, crfId, patientID, linkId, teethNum
+				};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByG_C_P_L_TN;
+			finderArgs = new Object[] {
+				groupId, crfId, patientID, linkId, teethNum, start, end,
+				orderByComparator
+			};
+		}
+
+		List<TreatmentAudit> list = null;
+
+		if (useFinderCache) {
+			list = (List<TreatmentAudit>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (TreatmentAudit treatmentAudit : list) {
+					if ((groupId != treatmentAudit.getGroupId()) ||
+						(crfId != treatmentAudit.getCrfId()) ||
+						(patientID != treatmentAudit.getPatientID()) ||
+						(linkId != treatmentAudit.getLinkId()) ||
+						(teethNum != treatmentAudit.getTeethNum())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					7 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(7);
+			}
+
+			sb.append(_SQL_SELECT_TREATMENTAUDIT_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_TN_GROUPID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_TN_CRFID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_TN_PATIENTID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_TN_LINKID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_TN_TEETHNUM_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(TreatmentAuditModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				queryPos.add(crfId);
+
+				queryPos.add(patientID);
+
+				queryPos.add(linkId);
+
+				queryPos.add(teethNum);
+
+				list = (List<TreatmentAudit>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first treatment audit in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment audit
+	 * @throws NoSuchTreatmentAuditException if a matching treatment audit could not be found
+	 */
+	@Override
+	public TreatmentAudit findByG_C_P_L_TN_First(
+			long groupId, long crfId, long patientID, long linkId,
+			long teethNum, OrderByComparator<TreatmentAudit> orderByComparator)
+		throws NoSuchTreatmentAuditException {
+
+		TreatmentAudit treatmentAudit = fetchByG_C_P_L_TN_First(
+			groupId, crfId, patientID, linkId, teethNum, orderByComparator);
+
+		if (treatmentAudit != null) {
+			return treatmentAudit;
+		}
+
+		StringBundler sb = new StringBundler(12);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("groupId=");
+		sb.append(groupId);
+
+		sb.append(", crfId=");
+		sb.append(crfId);
+
+		sb.append(", patientID=");
+		sb.append(patientID);
+
+		sb.append(", linkId=");
+		sb.append(linkId);
+
+		sb.append(", teethNum=");
+		sb.append(teethNum);
+
+		sb.append("}");
+
+		throw new NoSuchTreatmentAuditException(sb.toString());
+	}
+
+	/**
+	 * Returns the first treatment audit in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment audit, or <code>null</code> if a matching treatment audit could not be found
+	 */
+	@Override
+	public TreatmentAudit fetchByG_C_P_L_TN_First(
+		long groupId, long crfId, long patientID, long linkId, long teethNum,
+		OrderByComparator<TreatmentAudit> orderByComparator) {
+
+		List<TreatmentAudit> list = findByG_C_P_L_TN(
+			groupId, crfId, patientID, linkId, teethNum, 0, 1,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last treatment audit in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment audit
+	 * @throws NoSuchTreatmentAuditException if a matching treatment audit could not be found
+	 */
+	@Override
+	public TreatmentAudit findByG_C_P_L_TN_Last(
+			long groupId, long crfId, long patientID, long linkId,
+			long teethNum, OrderByComparator<TreatmentAudit> orderByComparator)
+		throws NoSuchTreatmentAuditException {
+
+		TreatmentAudit treatmentAudit = fetchByG_C_P_L_TN_Last(
+			groupId, crfId, patientID, linkId, teethNum, orderByComparator);
+
+		if (treatmentAudit != null) {
+			return treatmentAudit;
+		}
+
+		StringBundler sb = new StringBundler(12);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("groupId=");
+		sb.append(groupId);
+
+		sb.append(", crfId=");
+		sb.append(crfId);
+
+		sb.append(", patientID=");
+		sb.append(patientID);
+
+		sb.append(", linkId=");
+		sb.append(linkId);
+
+		sb.append(", teethNum=");
+		sb.append(teethNum);
+
+		sb.append("}");
+
+		throw new NoSuchTreatmentAuditException(sb.toString());
+	}
+
+	/**
+	 * Returns the last treatment audit in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment audit, or <code>null</code> if a matching treatment audit could not be found
+	 */
+	@Override
+	public TreatmentAudit fetchByG_C_P_L_TN_Last(
+		long groupId, long crfId, long patientID, long linkId, long teethNum,
+		OrderByComparator<TreatmentAudit> orderByComparator) {
+
+		int count = countByG_C_P_L_TN(
+			groupId, crfId, patientID, linkId, teethNum);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<TreatmentAudit> list = findByG_C_P_L_TN(
+			groupId, crfId, patientID, linkId, teethNum, count - 1, count,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the treatment audits before and after the current treatment audit in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * @param AuditID the primary key of the current treatment audit
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next treatment audit
+	 * @throws NoSuchTreatmentAuditException if a treatment audit with the primary key could not be found
+	 */
+	@Override
+	public TreatmentAudit[] findByG_C_P_L_TN_PrevAndNext(
+			long AuditID, long groupId, long crfId, long patientID, long linkId,
+			long teethNum, OrderByComparator<TreatmentAudit> orderByComparator)
+		throws NoSuchTreatmentAuditException {
+
+		TreatmentAudit treatmentAudit = findByPrimaryKey(AuditID);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			TreatmentAudit[] array = new TreatmentAuditImpl[3];
+
+			array[0] = getByG_C_P_L_TN_PrevAndNext(
+				session, treatmentAudit, groupId, crfId, patientID, linkId,
+				teethNum, orderByComparator, true);
+
+			array[1] = treatmentAudit;
+
+			array[2] = getByG_C_P_L_TN_PrevAndNext(
+				session, treatmentAudit, groupId, crfId, patientID, linkId,
+				teethNum, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected TreatmentAudit getByG_C_P_L_TN_PrevAndNext(
+		Session session, TreatmentAudit treatmentAudit, long groupId,
+		long crfId, long patientID, long linkId, long teethNum,
+		OrderByComparator<TreatmentAudit> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				8 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(7);
+		}
+
+		sb.append(_SQL_SELECT_TREATMENTAUDIT_WHERE);
+
+		sb.append(_FINDER_COLUMN_G_C_P_L_TN_GROUPID_2);
+
+		sb.append(_FINDER_COLUMN_G_C_P_L_TN_CRFID_2);
+
+		sb.append(_FINDER_COLUMN_G_C_P_L_TN_PATIENTID_2);
+
+		sb.append(_FINDER_COLUMN_G_C_P_L_TN_LINKID_2);
+
+		sb.append(_FINDER_COLUMN_G_C_P_L_TN_TEETHNUM_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(TreatmentAuditModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(groupId);
+
+		queryPos.add(crfId);
+
+		queryPos.add(patientID);
+
+		queryPos.add(linkId);
+
+		queryPos.add(teethNum);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						treatmentAudit)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<TreatmentAudit> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the treatment audits where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 */
+	@Override
+	public void removeByG_C_P_L_TN(
+		long groupId, long crfId, long patientID, long linkId, long teethNum) {
+
+		for (TreatmentAudit treatmentAudit :
+				findByG_C_P_L_TN(
+					groupId, crfId, patientID, linkId, teethNum,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(treatmentAudit);
+		}
+	}
+
+	/**
+	 * Returns the number of treatment audits where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @return the number of matching treatment audits
+	 */
+	@Override
+	public int countByG_C_P_L_TN(
+		long groupId, long crfId, long patientID, long linkId, long teethNum) {
+
+		FinderPath finderPath = _finderPathCountByG_C_P_L_TN;
+
+		Object[] finderArgs = new Object[] {
+			groupId, crfId, patientID, linkId, teethNum
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_SQL_COUNT_TREATMENTAUDIT_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_TN_GROUPID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_TN_CRFID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_TN_PATIENTID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_TN_LINKID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_TN_TEETHNUM_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				queryPos.add(crfId);
+
+				queryPos.add(patientID);
+
+				queryPos.add(linkId);
+
+				queryPos.add(teethNum);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_C_P_L_TN_GROUPID_2 =
+		"treatmentAudit.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_C_P_L_TN_CRFID_2 =
+		"treatmentAudit.crfId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_C_P_L_TN_PATIENTID_2 =
+		"treatmentAudit.patientID = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_C_P_L_TN_LINKID_2 =
+		"treatmentAudit.linkId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_C_P_L_TN_TEETHNUM_2 =
+		"treatmentAudit.teethNum = ?";
+
 	private FinderPath _finderPathWithPaginationFindByAudit_EditType;
 	private FinderPath _finderPathWithoutPaginationFindByAudit_EditType;
 	private FinderPath _finderPathCountByAudit_EditType;
@@ -3947,6 +5234,29 @@ public class TreatmentAuditPersistenceImpl
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindByAudit_TeethNum, args);
 
+			args = new Object[] {
+				treatmentAuditModelImpl.getGroupId(),
+				treatmentAuditModelImpl.getCrfId(),
+				treatmentAuditModelImpl.getPatientID(),
+				treatmentAuditModelImpl.getLinkId()
+			};
+
+			finderCache.removeResult(_finderPathCountByG_C_P_L, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByG_C_P_L, args);
+
+			args = new Object[] {
+				treatmentAuditModelImpl.getGroupId(),
+				treatmentAuditModelImpl.getCrfId(),
+				treatmentAuditModelImpl.getPatientID(),
+				treatmentAuditModelImpl.getLinkId(),
+				treatmentAuditModelImpl.getTeethNum()
+			};
+
+			finderCache.removeResult(_finderPathCountByG_C_P_L_TN, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByG_C_P_L_TN, args);
+
 			args = new Object[] {treatmentAuditModelImpl.getEditType()};
 
 			finderCache.removeResult(_finderPathCountByAudit_EditType, args);
@@ -4034,6 +5344,62 @@ public class TreatmentAuditPersistenceImpl
 					_finderPathCountByAudit_TeethNum, args);
 				finderCache.removeResult(
 					_finderPathWithoutPaginationFindByAudit_TeethNum, args);
+			}
+
+			if ((treatmentAuditModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByG_C_P_L.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					treatmentAuditModelImpl.getOriginalGroupId(),
+					treatmentAuditModelImpl.getOriginalCrfId(),
+					treatmentAuditModelImpl.getOriginalPatientID(),
+					treatmentAuditModelImpl.getOriginalLinkId()
+				};
+
+				finderCache.removeResult(_finderPathCountByG_C_P_L, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByG_C_P_L, args);
+
+				args = new Object[] {
+					treatmentAuditModelImpl.getGroupId(),
+					treatmentAuditModelImpl.getCrfId(),
+					treatmentAuditModelImpl.getPatientID(),
+					treatmentAuditModelImpl.getLinkId()
+				};
+
+				finderCache.removeResult(_finderPathCountByG_C_P_L, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByG_C_P_L, args);
+			}
+
+			if ((treatmentAuditModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByG_C_P_L_TN.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					treatmentAuditModelImpl.getOriginalGroupId(),
+					treatmentAuditModelImpl.getOriginalCrfId(),
+					treatmentAuditModelImpl.getOriginalPatientID(),
+					treatmentAuditModelImpl.getOriginalLinkId(),
+					treatmentAuditModelImpl.getOriginalTeethNum()
+				};
+
+				finderCache.removeResult(_finderPathCountByG_C_P_L_TN, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByG_C_P_L_TN, args);
+
+				args = new Object[] {
+					treatmentAuditModelImpl.getGroupId(),
+					treatmentAuditModelImpl.getCrfId(),
+					treatmentAuditModelImpl.getPatientID(),
+					treatmentAuditModelImpl.getLinkId(),
+					treatmentAuditModelImpl.getTeethNum()
+				};
+
+				finderCache.removeResult(_finderPathCountByG_C_P_L_TN, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByG_C_P_L_TN, args);
 			}
 
 			if ((treatmentAuditModelImpl.getColumnBitmask() &
@@ -4469,6 +5835,67 @@ public class TreatmentAuditPersistenceImpl
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAudit_TeethNum",
 			new String[] {Long.class.getName()});
+
+		_finderPathWithPaginationFindByG_C_P_L = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, TreatmentAuditImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_P_L",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByG_C_P_L = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, TreatmentAuditImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_P_L",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName()
+			},
+			TreatmentAuditModelImpl.GROUPID_COLUMN_BITMASK |
+			TreatmentAuditModelImpl.CRFID_COLUMN_BITMASK |
+			TreatmentAuditModelImpl.PATIENTID_COLUMN_BITMASK |
+			TreatmentAuditModelImpl.LINKID_COLUMN_BITMASK);
+
+		_finderPathCountByG_C_P_L = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_P_L",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName()
+			});
+
+		_finderPathWithPaginationFindByG_C_P_L_TN = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, TreatmentAuditImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_P_L_TN",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByG_C_P_L_TN = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, TreatmentAuditImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_P_L_TN",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			},
+			TreatmentAuditModelImpl.GROUPID_COLUMN_BITMASK |
+			TreatmentAuditModelImpl.CRFID_COLUMN_BITMASK |
+			TreatmentAuditModelImpl.PATIENTID_COLUMN_BITMASK |
+			TreatmentAuditModelImpl.LINKID_COLUMN_BITMASK |
+			TreatmentAuditModelImpl.TEETHNUM_COLUMN_BITMASK);
+
+		_finderPathCountByG_C_P_L_TN = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_P_L_TN",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			});
 
 		_finderPathWithPaginationFindByAudit_EditType = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, TreatmentAuditImpl.class,

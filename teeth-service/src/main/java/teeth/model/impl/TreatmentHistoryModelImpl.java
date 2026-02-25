@@ -73,6 +73,7 @@ public class TreatmentHistoryModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"uuid_", Types.VARCHAR}, {"treatmentID", Types.BIGINT},
+		{"crfId", Types.BIGINT}, {"linkId", Types.BIGINT},
 		{"patientID", Types.BIGINT}, {"editedUserID", Types.BIGINT},
 		{"teethNum", Types.BIGINT}, {"treatmentDate", Types.TIMESTAMP},
 		{"editedDate", Types.TIMESTAMP}, {"treatment", Types.VARCHAR},
@@ -90,6 +91,8 @@ public class TreatmentHistoryModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("treatmentID", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("crfId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("linkId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("patientID", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("editedUserID", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("teethNum", Types.BIGINT);
@@ -110,7 +113,7 @@ public class TreatmentHistoryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table treatment_history (uuid_ VARCHAR(75) null,treatmentID LONG not null primary key,patientID LONG,editedUserID LONG,teethNum LONG,treatmentDate DATE null,editedDate DATE null,treatment VARCHAR(75) null,state_ VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table treatment_history (uuid_ VARCHAR(75) null,treatmentID LONG not null primary key,crfId LONG,linkId LONG,patientID LONG,editedUserID LONG,teethNum LONG,treatmentDate DATE null,editedDate DATE null,treatment VARCHAR(75) null,state_ VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table treatment_history";
 
@@ -128,21 +131,25 @@ public class TreatmentHistoryModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
+	public static final long CRFID_COLUMN_BITMASK = 2L;
 
-	public static final long PATIENTID_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
 
-	public static final long STATUS_COLUMN_BITMASK = 8L;
+	public static final long LINKID_COLUMN_BITMASK = 8L;
 
-	public static final long TEETHNUM_COLUMN_BITMASK = 16L;
+	public static final long PATIENTID_COLUMN_BITMASK = 16L;
 
-	public static final long TREATMENT_COLUMN_BITMASK = 32L;
+	public static final long STATUS_COLUMN_BITMASK = 32L;
 
-	public static final long TREATMENTDATE_COLUMN_BITMASK = 64L;
+	public static final long TEETHNUM_COLUMN_BITMASK = 64L;
 
-	public static final long UUID_COLUMN_BITMASK = 128L;
+	public static final long TREATMENT_COLUMN_BITMASK = 128L;
 
-	public static final long TREATMENTID_COLUMN_BITMASK = 256L;
+	public static final long TREATMENTDATE_COLUMN_BITMASK = 256L;
+
+	public static final long UUID_COLUMN_BITMASK = 512L;
+
+	public static final long TREATMENTID_COLUMN_BITMASK = 1024L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -263,6 +270,14 @@ public class TreatmentHistoryModelImpl
 			"treatmentID",
 			(BiConsumer<TreatmentHistory, Long>)
 				TreatmentHistory::setTreatmentID);
+		attributeGetterFunctions.put("crfId", TreatmentHistory::getCrfId);
+		attributeSetterBiConsumers.put(
+			"crfId",
+			(BiConsumer<TreatmentHistory, Long>)TreatmentHistory::setCrfId);
+		attributeGetterFunctions.put("linkId", TreatmentHistory::getLinkId);
+		attributeSetterBiConsumers.put(
+			"linkId",
+			(BiConsumer<TreatmentHistory, Long>)TreatmentHistory::setLinkId);
 		attributeGetterFunctions.put(
 			"patientID", TreatmentHistory::getPatientID);
 		attributeSetterBiConsumers.put(
@@ -392,6 +407,50 @@ public class TreatmentHistoryModelImpl
 	@Override
 	public void setTreatmentID(long treatmentID) {
 		_treatmentID = treatmentID;
+	}
+
+	@Override
+	public long getCrfId() {
+		return _crfId;
+	}
+
+	@Override
+	public void setCrfId(long crfId) {
+		_columnBitmask |= CRFID_COLUMN_BITMASK;
+
+		if (!_setOriginalCrfId) {
+			_setOriginalCrfId = true;
+
+			_originalCrfId = _crfId;
+		}
+
+		_crfId = crfId;
+	}
+
+	public long getOriginalCrfId() {
+		return _originalCrfId;
+	}
+
+	@Override
+	public long getLinkId() {
+		return _linkId;
+	}
+
+	@Override
+	public void setLinkId(long linkId) {
+		_columnBitmask |= LINKID_COLUMN_BITMASK;
+
+		if (!_setOriginalLinkId) {
+			_setOriginalLinkId = true;
+
+			_originalLinkId = _linkId;
+		}
+
+		_linkId = linkId;
+	}
+
+	public long getOriginalLinkId() {
+		return _originalLinkId;
 	}
 
 	@Override
@@ -826,6 +885,8 @@ public class TreatmentHistoryModelImpl
 
 		treatmentHistoryImpl.setUuid(getUuid());
 		treatmentHistoryImpl.setTreatmentID(getTreatmentID());
+		treatmentHistoryImpl.setCrfId(getCrfId());
+		treatmentHistoryImpl.setLinkId(getLinkId());
 		treatmentHistoryImpl.setPatientID(getPatientID());
 		treatmentHistoryImpl.setEditedUserID(getEditedUserID());
 		treatmentHistoryImpl.setTeethNum(getTeethNum());
@@ -905,6 +966,14 @@ public class TreatmentHistoryModelImpl
 	public void resetOriginalValues() {
 		_originalUuid = _uuid;
 
+		_originalCrfId = _crfId;
+
+		_setOriginalCrfId = false;
+
+		_originalLinkId = _linkId;
+
+		_setOriginalLinkId = false;
+
 		_originalPatientID = _patientID;
 
 		_setOriginalPatientID = false;
@@ -947,6 +1016,10 @@ public class TreatmentHistoryModelImpl
 		}
 
 		treatmentHistoryCacheModel.treatmentID = getTreatmentID();
+
+		treatmentHistoryCacheModel.crfId = getCrfId();
+
+		treatmentHistoryCacheModel.linkId = getLinkId();
 
 		treatmentHistoryCacheModel.patientID = getPatientID();
 
@@ -1140,6 +1213,12 @@ public class TreatmentHistoryModelImpl
 	private String _uuid;
 	private String _originalUuid;
 	private long _treatmentID;
+	private long _crfId;
+	private long _originalCrfId;
+	private boolean _setOriginalCrfId;
+	private long _linkId;
+	private long _originalLinkId;
+	private boolean _setOriginalLinkId;
 	private long _patientID;
 	private long _originalPatientID;
 	private boolean _setOriginalPatientID;

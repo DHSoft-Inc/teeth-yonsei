@@ -93,6 +93,48 @@ public interface TreatmentAuditModel
 	public void setAuditID(long AuditID);
 
 	/**
+	 * Returns the crf ID of this treatment audit.
+	 *
+	 * @return the crf ID of this treatment audit
+	 */
+	public long getCrfId();
+
+	/**
+	 * Sets the crf ID of this treatment audit.
+	 *
+	 * @param crfId the crf ID of this treatment audit
+	 */
+	public void setCrfId(long crfId);
+
+	/**
+	 * Returns the link ID of this treatment audit.
+	 *
+	 * @return the link ID of this treatment audit
+	 */
+	public long getLinkId();
+
+	/**
+	 * Sets the link ID of this treatment audit.
+	 *
+	 * @param linkId the link ID of this treatment audit
+	 */
+	public void setLinkId(long linkId);
+
+	/**
+	 * Returns the patient ID of this treatment audit.
+	 *
+	 * @return the patient ID of this treatment audit
+	 */
+	public long getPatientID();
+
+	/**
+	 * Sets the patient ID of this treatment audit.
+	 *
+	 * @param patientID the patient ID of this treatment audit
+	 */
+	public void setPatientID(long patientID);
+
+	/**
 	 * Returns the teeth num of this treatment audit.
 	 *
 	 * @return the teeth num of this treatment audit

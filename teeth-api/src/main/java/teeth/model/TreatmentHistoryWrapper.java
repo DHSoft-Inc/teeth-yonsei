@@ -45,6 +45,8 @@ public class TreatmentHistoryWrapper
 
 		attributes.put("uuid", getUuid());
 		attributes.put("treatmentID", getTreatmentID());
+		attributes.put("crfId", getCrfId());
+		attributes.put("linkId", getLinkId());
 		attributes.put("patientID", getPatientID());
 		attributes.put("editedUserID", getEditedUserID());
 		attributes.put("teethNum", getTeethNum());
@@ -78,6 +80,18 @@ public class TreatmentHistoryWrapper
 
 		if (treatmentID != null) {
 			setTreatmentID(treatmentID);
+		}
+
+		Long crfId = (Long)attributes.get("crfId");
+
+		if (crfId != null) {
+			setCrfId(crfId);
+		}
+
+		Long linkId = (Long)attributes.get("linkId");
+
+		if (linkId != null) {
+			setLinkId(linkId);
 		}
 
 		Long patientID = (Long)attributes.get("patientID");
@@ -204,6 +218,16 @@ public class TreatmentHistoryWrapper
 	}
 
 	/**
+	 * Returns the crf ID of this treatment history.
+	 *
+	 * @return the crf ID of this treatment history
+	 */
+	@Override
+	public long getCrfId() {
+		return model.getCrfId();
+	}
+
+	/**
 	 * Returns the edited date of this treatment history.
 	 *
 	 * @return the edited date of this treatment history
@@ -231,6 +255,16 @@ public class TreatmentHistoryWrapper
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
+	}
+
+	/**
+	 * Returns the link ID of this treatment history.
+	 *
+	 * @return the link ID of this treatment history
+	 */
+	@Override
+	public long getLinkId() {
+		return model.getLinkId();
 	}
 
 	/**
@@ -509,6 +543,16 @@ public class TreatmentHistoryWrapper
 	}
 
 	/**
+	 * Sets the crf ID of this treatment history.
+	 *
+	 * @param crfId the crf ID of this treatment history
+	 */
+	@Override
+	public void setCrfId(long crfId) {
+		model.setCrfId(crfId);
+	}
+
+	/**
 	 * Sets the edited date of this treatment history.
 	 *
 	 * @param editedDate the edited date of this treatment history
@@ -536,6 +580,16 @@ public class TreatmentHistoryWrapper
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
+	}
+
+	/**
+	 * Sets the link ID of this treatment history.
+	 *
+	 * @param linkId the link ID of this treatment history
+	 */
+	@Override
+	public void setLinkId(long linkId) {
+		model.setLinkId(linkId);
 	}
 
 	/**

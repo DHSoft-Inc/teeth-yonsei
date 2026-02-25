@@ -93,6 +93,34 @@ public interface TreatmentHistoryModel
 	public void setTreatmentID(long treatmentID);
 
 	/**
+	 * Returns the crf ID of this treatment history.
+	 *
+	 * @return the crf ID of this treatment history
+	 */
+	public long getCrfId();
+
+	/**
+	 * Sets the crf ID of this treatment history.
+	 *
+	 * @param crfId the crf ID of this treatment history
+	 */
+	public void setCrfId(long crfId);
+
+	/**
+	 * Returns the link ID of this treatment history.
+	 *
+	 * @return the link ID of this treatment history
+	 */
+	public long getLinkId();
+
+	/**
+	 * Sets the link ID of this treatment history.
+	 *
+	 * @param linkId the link ID of this treatment history
+	 */
+	public void setLinkId(long linkId);
+
+	/**
 	 * Returns the patient ID of this treatment history.
 	 *
 	 * @return the patient ID of this treatment history

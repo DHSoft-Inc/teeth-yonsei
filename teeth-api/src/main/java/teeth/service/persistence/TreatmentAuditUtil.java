@@ -703,6 +703,455 @@ public class TreatmentAuditUtil {
 	}
 
 	/**
+	 * Returns all the treatment audits where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @return the matching treatment audits
+	 */
+	public static List<TreatmentAudit> findByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId) {
+
+		return getPersistence().findByG_C_P_L(
+			groupId, crfId, patientID, linkId);
+	}
+
+	/**
+	 * Returns a range of all the treatment audits where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentAuditModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param start the lower bound of the range of treatment audits
+	 * @param end the upper bound of the range of treatment audits (not inclusive)
+	 * @return the range of matching treatment audits
+	 */
+	public static List<TreatmentAudit> findByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId, int start,
+		int end) {
+
+		return getPersistence().findByG_C_P_L(
+			groupId, crfId, patientID, linkId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the treatment audits where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentAuditModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param start the lower bound of the range of treatment audits
+	 * @param end the upper bound of the range of treatment audits (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching treatment audits
+	 */
+	public static List<TreatmentAudit> findByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId, int start,
+		int end, OrderByComparator<TreatmentAudit> orderByComparator) {
+
+		return getPersistence().findByG_C_P_L(
+			groupId, crfId, patientID, linkId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the treatment audits where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentAuditModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param start the lower bound of the range of treatment audits
+	 * @param end the upper bound of the range of treatment audits (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching treatment audits
+	 */
+	public static List<TreatmentAudit> findByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId, int start,
+		int end, OrderByComparator<TreatmentAudit> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByG_C_P_L(
+			groupId, crfId, patientID, linkId, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first treatment audit in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment audit
+	 * @throws NoSuchTreatmentAuditException if a matching treatment audit could not be found
+	 */
+	public static TreatmentAudit findByG_C_P_L_First(
+			long groupId, long crfId, long patientID, long linkId,
+			OrderByComparator<TreatmentAudit> orderByComparator)
+		throws teeth.exception.NoSuchTreatmentAuditException {
+
+		return getPersistence().findByG_C_P_L_First(
+			groupId, crfId, patientID, linkId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first treatment audit in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment audit, or <code>null</code> if a matching treatment audit could not be found
+	 */
+	public static TreatmentAudit fetchByG_C_P_L_First(
+		long groupId, long crfId, long patientID, long linkId,
+		OrderByComparator<TreatmentAudit> orderByComparator) {
+
+		return getPersistence().fetchByG_C_P_L_First(
+			groupId, crfId, patientID, linkId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last treatment audit in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment audit
+	 * @throws NoSuchTreatmentAuditException if a matching treatment audit could not be found
+	 */
+	public static TreatmentAudit findByG_C_P_L_Last(
+			long groupId, long crfId, long patientID, long linkId,
+			OrderByComparator<TreatmentAudit> orderByComparator)
+		throws teeth.exception.NoSuchTreatmentAuditException {
+
+		return getPersistence().findByG_C_P_L_Last(
+			groupId, crfId, patientID, linkId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last treatment audit in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment audit, or <code>null</code> if a matching treatment audit could not be found
+	 */
+	public static TreatmentAudit fetchByG_C_P_L_Last(
+		long groupId, long crfId, long patientID, long linkId,
+		OrderByComparator<TreatmentAudit> orderByComparator) {
+
+		return getPersistence().fetchByG_C_P_L_Last(
+			groupId, crfId, patientID, linkId, orderByComparator);
+	}
+
+	/**
+	 * Returns the treatment audits before and after the current treatment audit in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * @param AuditID the primary key of the current treatment audit
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next treatment audit
+	 * @throws NoSuchTreatmentAuditException if a treatment audit with the primary key could not be found
+	 */
+	public static TreatmentAudit[] findByG_C_P_L_PrevAndNext(
+			long AuditID, long groupId, long crfId, long patientID, long linkId,
+			OrderByComparator<TreatmentAudit> orderByComparator)
+		throws teeth.exception.NoSuchTreatmentAuditException {
+
+		return getPersistence().findByG_C_P_L_PrevAndNext(
+			AuditID, groupId, crfId, patientID, linkId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the treatment audits where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 */
+	public static void removeByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId) {
+
+		getPersistence().removeByG_C_P_L(groupId, crfId, patientID, linkId);
+	}
+
+	/**
+	 * Returns the number of treatment audits where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @return the number of matching treatment audits
+	 */
+	public static int countByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId) {
+
+		return getPersistence().countByG_C_P_L(
+			groupId, crfId, patientID, linkId);
+	}
+
+	/**
+	 * Returns all the treatment audits where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @return the matching treatment audits
+	 */
+	public static List<TreatmentAudit> findByG_C_P_L_TN(
+		long groupId, long crfId, long patientID, long linkId, long teethNum) {
+
+		return getPersistence().findByG_C_P_L_TN(
+			groupId, crfId, patientID, linkId, teethNum);
+	}
+
+	/**
+	 * Returns a range of all the treatment audits where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentAuditModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param start the lower bound of the range of treatment audits
+	 * @param end the upper bound of the range of treatment audits (not inclusive)
+	 * @return the range of matching treatment audits
+	 */
+	public static List<TreatmentAudit> findByG_C_P_L_TN(
+		long groupId, long crfId, long patientID, long linkId, long teethNum,
+		int start, int end) {
+
+		return getPersistence().findByG_C_P_L_TN(
+			groupId, crfId, patientID, linkId, teethNum, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the treatment audits where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentAuditModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param start the lower bound of the range of treatment audits
+	 * @param end the upper bound of the range of treatment audits (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching treatment audits
+	 */
+	public static List<TreatmentAudit> findByG_C_P_L_TN(
+		long groupId, long crfId, long patientID, long linkId, long teethNum,
+		int start, int end,
+		OrderByComparator<TreatmentAudit> orderByComparator) {
+
+		return getPersistence().findByG_C_P_L_TN(
+			groupId, crfId, patientID, linkId, teethNum, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the treatment audits where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentAuditModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param start the lower bound of the range of treatment audits
+	 * @param end the upper bound of the range of treatment audits (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching treatment audits
+	 */
+	public static List<TreatmentAudit> findByG_C_P_L_TN(
+		long groupId, long crfId, long patientID, long linkId, long teethNum,
+		int start, int end, OrderByComparator<TreatmentAudit> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByG_C_P_L_TN(
+			groupId, crfId, patientID, linkId, teethNum, start, end,
+			orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first treatment audit in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment audit
+	 * @throws NoSuchTreatmentAuditException if a matching treatment audit could not be found
+	 */
+	public static TreatmentAudit findByG_C_P_L_TN_First(
+			long groupId, long crfId, long patientID, long linkId,
+			long teethNum, OrderByComparator<TreatmentAudit> orderByComparator)
+		throws teeth.exception.NoSuchTreatmentAuditException {
+
+		return getPersistence().findByG_C_P_L_TN_First(
+			groupId, crfId, patientID, linkId, teethNum, orderByComparator);
+	}
+
+	/**
+	 * Returns the first treatment audit in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment audit, or <code>null</code> if a matching treatment audit could not be found
+	 */
+	public static TreatmentAudit fetchByG_C_P_L_TN_First(
+		long groupId, long crfId, long patientID, long linkId, long teethNum,
+		OrderByComparator<TreatmentAudit> orderByComparator) {
+
+		return getPersistence().fetchByG_C_P_L_TN_First(
+			groupId, crfId, patientID, linkId, teethNum, orderByComparator);
+	}
+
+	/**
+	 * Returns the last treatment audit in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment audit
+	 * @throws NoSuchTreatmentAuditException if a matching treatment audit could not be found
+	 */
+	public static TreatmentAudit findByG_C_P_L_TN_Last(
+			long groupId, long crfId, long patientID, long linkId,
+			long teethNum, OrderByComparator<TreatmentAudit> orderByComparator)
+		throws teeth.exception.NoSuchTreatmentAuditException {
+
+		return getPersistence().findByG_C_P_L_TN_Last(
+			groupId, crfId, patientID, linkId, teethNum, orderByComparator);
+	}
+
+	/**
+	 * Returns the last treatment audit in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment audit, or <code>null</code> if a matching treatment audit could not be found
+	 */
+	public static TreatmentAudit fetchByG_C_P_L_TN_Last(
+		long groupId, long crfId, long patientID, long linkId, long teethNum,
+		OrderByComparator<TreatmentAudit> orderByComparator) {
+
+		return getPersistence().fetchByG_C_P_L_TN_Last(
+			groupId, crfId, patientID, linkId, teethNum, orderByComparator);
+	}
+
+	/**
+	 * Returns the treatment audits before and after the current treatment audit in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * @param AuditID the primary key of the current treatment audit
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next treatment audit
+	 * @throws NoSuchTreatmentAuditException if a treatment audit with the primary key could not be found
+	 */
+	public static TreatmentAudit[] findByG_C_P_L_TN_PrevAndNext(
+			long AuditID, long groupId, long crfId, long patientID, long linkId,
+			long teethNum, OrderByComparator<TreatmentAudit> orderByComparator)
+		throws teeth.exception.NoSuchTreatmentAuditException {
+
+		return getPersistence().findByG_C_P_L_TN_PrevAndNext(
+			AuditID, groupId, crfId, patientID, linkId, teethNum,
+			orderByComparator);
+	}
+
+	/**
+	 * Removes all the treatment audits where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 */
+	public static void removeByG_C_P_L_TN(
+		long groupId, long crfId, long patientID, long linkId, long teethNum) {
+
+		getPersistence().removeByG_C_P_L_TN(
+			groupId, crfId, patientID, linkId, teethNum);
+	}
+
+	/**
+	 * Returns the number of treatment audits where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @return the number of matching treatment audits
+	 */
+	public static int countByG_C_P_L_TN(
+		long groupId, long crfId, long patientID, long linkId, long teethNum) {
+
+		return getPersistence().countByG_C_P_L_TN(
+			groupId, crfId, patientID, linkId, teethNum);
+	}
+
+	/**
 	 * Returns all the treatment audits where editType = &#63;.
 	 *
 	 * @param editType the edit type

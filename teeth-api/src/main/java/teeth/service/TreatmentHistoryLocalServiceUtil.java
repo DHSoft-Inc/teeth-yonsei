@@ -55,6 +55,17 @@ public class TreatmentHistoryLocalServiceUtil {
 			editedUserID, serviceContext);
 	}
 
+	public static TreatmentHistory AddHistory(
+		long crfId, long linkId, long patientID, long teethNum,
+		java.util.Date treatmentDate, String treatment, String state,
+		java.util.Date editedDate, long editedUserID,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+
+		return getService().AddHistory(
+			crfId, linkId, patientID, teethNum, treatmentDate, treatment, state,
+			editedDate, editedUserID, serviceContext);
+	}
+
 	/**
 	 * Adds the treatment history to the database. Also notifies the appropriate model listeners.
 	 *
@@ -267,6 +278,15 @@ public class TreatmentHistoryLocalServiceUtil {
 			patientID, teethNum, treatmentDate, treatment);
 	}
 
+	public static TreatmentHistory getPatientTreatmentByAll(
+		long groupId, long crfId, long linkId, long patientID, long teethNum,
+		java.util.Date treatmentDate, String treatment) {
+
+		return getService().getPatientTreatmentByAll(
+			groupId, crfId, linkId, patientID, teethNum, treatmentDate,
+			treatment);
+	}
+
 	public static List<TreatmentHistory> getPatientTreatmentByDateAndTeethNum(
 		long patientID, long teethNum, java.util.Date treatmentDate) {
 
@@ -394,6 +414,20 @@ public class TreatmentHistoryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getTreatmentHistoryByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static List<TreatmentHistory> getTreatmentsByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId) {
+
+		return getService().getTreatmentsByG_C_P_L(
+			groupId, crfId, patientID, linkId);
+	}
+
+	public static List<TreatmentHistory> getTreatmentsByG_C_P_L_TN(
+		long groupId, long crfId, long patientID, long linkId, long teethNum) {
+
+		return getService().getTreatmentsByG_C_P_L_TN(
+			groupId, crfId, patientID, linkId, teethNum);
 	}
 
 	public static TreatmentHistory UpdateHistory(

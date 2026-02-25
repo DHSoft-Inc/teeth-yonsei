@@ -69,6 +69,11 @@ public interface TreatmentAuditLocalService
 		long teethNum, long editedUserID, Date TreatmentDate, String editType,
 		String BeforeData, String afterData, ServiceContext serviceContext);
 
+	public TreatmentAudit AddAudit(
+		long crfId, long linkId, long patientId, long teethNum,
+		long editedUserID, Date TreatmentDate, String editType,
+		String BeforeData, String afterData, ServiceContext serviceContext);
+
 	/**
 	 * Adds the treatment audit to the database. Also notifies the appropriate model listeners.
 	 *
@@ -214,6 +219,14 @@ public interface TreatmentAuditLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<TreatmentAudit> getAuditByTeethNum(long teethNum);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<TreatmentAudit> getAuditsByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<TreatmentAudit> getAuditsByG_C_P_L_TN(
+		long groupId, long crfId, long patientID, long linkId, long teethNum);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(

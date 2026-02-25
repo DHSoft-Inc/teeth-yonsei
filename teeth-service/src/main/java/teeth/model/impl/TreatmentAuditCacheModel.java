@@ -63,12 +63,18 @@ public class TreatmentAuditCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
 		sb.append(", AuditID=");
 		sb.append(AuditID);
+		sb.append(", crfId=");
+		sb.append(crfId);
+		sb.append(", linkId=");
+		sb.append(linkId);
+		sb.append(", patientID=");
+		sb.append(patientID);
 		sb.append(", teethNum=");
 		sb.append(teethNum);
 		sb.append(", editedDate=");
@@ -120,6 +126,9 @@ public class TreatmentAuditCacheModel
 		}
 
 		treatmentAuditImpl.setAuditID(AuditID);
+		treatmentAuditImpl.setCrfId(crfId);
+		treatmentAuditImpl.setLinkId(linkId);
+		treatmentAuditImpl.setPatientID(patientID);
 		treatmentAuditImpl.setTeethNum(teethNum);
 
 		if (editedDate == Long.MIN_VALUE) {
@@ -212,6 +221,12 @@ public class TreatmentAuditCacheModel
 
 		AuditID = objectInput.readLong();
 
+		crfId = objectInput.readLong();
+
+		linkId = objectInput.readLong();
+
+		patientID = objectInput.readLong();
+
 		teethNum = objectInput.readLong();
 		editedDate = objectInput.readLong();
 
@@ -247,6 +262,12 @@ public class TreatmentAuditCacheModel
 		}
 
 		objectOutput.writeLong(AuditID);
+
+		objectOutput.writeLong(crfId);
+
+		objectOutput.writeLong(linkId);
+
+		objectOutput.writeLong(patientID);
 
 		objectOutput.writeLong(teethNum);
 		objectOutput.writeLong(editedDate);
@@ -308,6 +329,9 @@ public class TreatmentAuditCacheModel
 
 	public String uuid;
 	public long AuditID;
+	public long crfId;
+	public long linkId;
+	public long patientID;
 	public long teethNum;
 	public long editedDate;
 	public long editedUserID;

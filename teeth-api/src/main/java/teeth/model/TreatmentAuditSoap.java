@@ -33,6 +33,9 @@ public class TreatmentAuditSoap implements Serializable {
 
 		soapModel.setUuid(model.getUuid());
 		soapModel.setAuditID(model.getAuditID());
+		soapModel.setCrfId(model.getCrfId());
+		soapModel.setLinkId(model.getLinkId());
+		soapModel.setPatientID(model.getPatientID());
 		soapModel.setTeethNum(model.getTeethNum());
 		soapModel.setEditedDate(model.getEditedDate());
 		soapModel.setEditedUserID(model.getEditedUserID());
@@ -122,6 +125,30 @@ public class TreatmentAuditSoap implements Serializable {
 
 	public void setAuditID(long AuditID) {
 		_AuditID = AuditID;
+	}
+
+	public long getCrfId() {
+		return _crfId;
+	}
+
+	public void setCrfId(long crfId) {
+		_crfId = crfId;
+	}
+
+	public long getLinkId() {
+		return _linkId;
+	}
+
+	public void setLinkId(long linkId) {
+		_linkId = linkId;
+	}
+
+	public long getPatientID() {
+		return _patientID;
+	}
+
+	public void setPatientID(long patientID) {
+		_patientID = patientID;
 	}
 
 	public long getTeethNum() {
@@ -262,6 +289,9 @@ public class TreatmentAuditSoap implements Serializable {
 
 	private String _uuid;
 	private long _AuditID;
+	private long _crfId;
+	private long _linkId;
+	private long _patientID;
 	private long _teethNum;
 	private Date _editedDate;
 	private long _editedUserID;

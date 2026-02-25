@@ -1993,6 +1993,1299 @@ public class TreatmentHistoryPersistenceImpl
 	private static final String _FINDER_COLUMN_TEETH_PATIENTID_PATIENTID_2 =
 		"treatmentHistory.patientID = ?";
 
+	private FinderPath _finderPathWithPaginationFindByG_C_P_L;
+	private FinderPath _finderPathWithoutPaginationFindByG_C_P_L;
+	private FinderPath _finderPathCountByG_C_P_L;
+
+	/**
+	 * Returns all the treatment histories where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @return the matching treatment histories
+	 */
+	@Override
+	public List<TreatmentHistory> findByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId) {
+
+		return findByG_C_P_L(
+			groupId, crfId, patientID, linkId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the treatment histories where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentHistoryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param start the lower bound of the range of treatment histories
+	 * @param end the upper bound of the range of treatment histories (not inclusive)
+	 * @return the range of matching treatment histories
+	 */
+	@Override
+	public List<TreatmentHistory> findByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId, int start,
+		int end) {
+
+		return findByG_C_P_L(
+			groupId, crfId, patientID, linkId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the treatment histories where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentHistoryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param start the lower bound of the range of treatment histories
+	 * @param end the upper bound of the range of treatment histories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching treatment histories
+	 */
+	@Override
+	public List<TreatmentHistory> findByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId, int start,
+		int end, OrderByComparator<TreatmentHistory> orderByComparator) {
+
+		return findByG_C_P_L(
+			groupId, crfId, patientID, linkId, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the treatment histories where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentHistoryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param start the lower bound of the range of treatment histories
+	 * @param end the upper bound of the range of treatment histories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching treatment histories
+	 */
+	@Override
+	public List<TreatmentHistory> findByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId, int start,
+		int end, OrderByComparator<TreatmentHistory> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_C_P_L;
+				finderArgs = new Object[] {groupId, crfId, patientID, linkId};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByG_C_P_L;
+			finderArgs = new Object[] {
+				groupId, crfId, patientID, linkId, start, end, orderByComparator
+			};
+		}
+
+		List<TreatmentHistory> list = null;
+
+		if (useFinderCache) {
+			list = (List<TreatmentHistory>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (TreatmentHistory treatmentHistory : list) {
+					if ((groupId != treatmentHistory.getGroupId()) ||
+						(crfId != treatmentHistory.getCrfId()) ||
+						(patientID != treatmentHistory.getPatientID()) ||
+						(linkId != treatmentHistory.getLinkId())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					6 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(6);
+			}
+
+			sb.append(_SQL_SELECT_TREATMENTHISTORY_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_GROUPID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_CRFID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_PATIENTID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_LINKID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(TreatmentHistoryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				queryPos.add(crfId);
+
+				queryPos.add(patientID);
+
+				queryPos.add(linkId);
+
+				list = (List<TreatmentHistory>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first treatment history in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment history
+	 * @throws NoSuchTreatmentHistoryException if a matching treatment history could not be found
+	 */
+	@Override
+	public TreatmentHistory findByG_C_P_L_First(
+			long groupId, long crfId, long patientID, long linkId,
+			OrderByComparator<TreatmentHistory> orderByComparator)
+		throws NoSuchTreatmentHistoryException {
+
+		TreatmentHistory treatmentHistory = fetchByG_C_P_L_First(
+			groupId, crfId, patientID, linkId, orderByComparator);
+
+		if (treatmentHistory != null) {
+			return treatmentHistory;
+		}
+
+		StringBundler sb = new StringBundler(10);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("groupId=");
+		sb.append(groupId);
+
+		sb.append(", crfId=");
+		sb.append(crfId);
+
+		sb.append(", patientID=");
+		sb.append(patientID);
+
+		sb.append(", linkId=");
+		sb.append(linkId);
+
+		sb.append("}");
+
+		throw new NoSuchTreatmentHistoryException(sb.toString());
+	}
+
+	/**
+	 * Returns the first treatment history in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment history, or <code>null</code> if a matching treatment history could not be found
+	 */
+	@Override
+	public TreatmentHistory fetchByG_C_P_L_First(
+		long groupId, long crfId, long patientID, long linkId,
+		OrderByComparator<TreatmentHistory> orderByComparator) {
+
+		List<TreatmentHistory> list = findByG_C_P_L(
+			groupId, crfId, patientID, linkId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last treatment history in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment history
+	 * @throws NoSuchTreatmentHistoryException if a matching treatment history could not be found
+	 */
+	@Override
+	public TreatmentHistory findByG_C_P_L_Last(
+			long groupId, long crfId, long patientID, long linkId,
+			OrderByComparator<TreatmentHistory> orderByComparator)
+		throws NoSuchTreatmentHistoryException {
+
+		TreatmentHistory treatmentHistory = fetchByG_C_P_L_Last(
+			groupId, crfId, patientID, linkId, orderByComparator);
+
+		if (treatmentHistory != null) {
+			return treatmentHistory;
+		}
+
+		StringBundler sb = new StringBundler(10);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("groupId=");
+		sb.append(groupId);
+
+		sb.append(", crfId=");
+		sb.append(crfId);
+
+		sb.append(", patientID=");
+		sb.append(patientID);
+
+		sb.append(", linkId=");
+		sb.append(linkId);
+
+		sb.append("}");
+
+		throw new NoSuchTreatmentHistoryException(sb.toString());
+	}
+
+	/**
+	 * Returns the last treatment history in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment history, or <code>null</code> if a matching treatment history could not be found
+	 */
+	@Override
+	public TreatmentHistory fetchByG_C_P_L_Last(
+		long groupId, long crfId, long patientID, long linkId,
+		OrderByComparator<TreatmentHistory> orderByComparator) {
+
+		int count = countByG_C_P_L(groupId, crfId, patientID, linkId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<TreatmentHistory> list = findByG_C_P_L(
+			groupId, crfId, patientID, linkId, count - 1, count,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the treatment histories before and after the current treatment history in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * @param treatmentID the primary key of the current treatment history
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next treatment history
+	 * @throws NoSuchTreatmentHistoryException if a treatment history with the primary key could not be found
+	 */
+	@Override
+	public TreatmentHistory[] findByG_C_P_L_PrevAndNext(
+			long treatmentID, long groupId, long crfId, long patientID,
+			long linkId, OrderByComparator<TreatmentHistory> orderByComparator)
+		throws NoSuchTreatmentHistoryException {
+
+		TreatmentHistory treatmentHistory = findByPrimaryKey(treatmentID);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			TreatmentHistory[] array = new TreatmentHistoryImpl[3];
+
+			array[0] = getByG_C_P_L_PrevAndNext(
+				session, treatmentHistory, groupId, crfId, patientID, linkId,
+				orderByComparator, true);
+
+			array[1] = treatmentHistory;
+
+			array[2] = getByG_C_P_L_PrevAndNext(
+				session, treatmentHistory, groupId, crfId, patientID, linkId,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected TreatmentHistory getByG_C_P_L_PrevAndNext(
+		Session session, TreatmentHistory treatmentHistory, long groupId,
+		long crfId, long patientID, long linkId,
+		OrderByComparator<TreatmentHistory> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				7 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(6);
+		}
+
+		sb.append(_SQL_SELECT_TREATMENTHISTORY_WHERE);
+
+		sb.append(_FINDER_COLUMN_G_C_P_L_GROUPID_2);
+
+		sb.append(_FINDER_COLUMN_G_C_P_L_CRFID_2);
+
+		sb.append(_FINDER_COLUMN_G_C_P_L_PATIENTID_2);
+
+		sb.append(_FINDER_COLUMN_G_C_P_L_LINKID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(TreatmentHistoryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(groupId);
+
+		queryPos.add(crfId);
+
+		queryPos.add(patientID);
+
+		queryPos.add(linkId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						treatmentHistory)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<TreatmentHistory> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the treatment histories where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 */
+	@Override
+	public void removeByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId) {
+
+		for (TreatmentHistory treatmentHistory :
+				findByG_C_P_L(
+					groupId, crfId, patientID, linkId, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(treatmentHistory);
+		}
+	}
+
+	/**
+	 * Returns the number of treatment histories where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @return the number of matching treatment histories
+	 */
+	@Override
+	public int countByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId) {
+
+		FinderPath finderPath = _finderPathCountByG_C_P_L;
+
+		Object[] finderArgs = new Object[] {groupId, crfId, patientID, linkId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(_SQL_COUNT_TREATMENTHISTORY_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_GROUPID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_CRFID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_PATIENTID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_LINKID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				queryPos.add(crfId);
+
+				queryPos.add(patientID);
+
+				queryPos.add(linkId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_C_P_L_GROUPID_2 =
+		"treatmentHistory.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_C_P_L_CRFID_2 =
+		"treatmentHistory.crfId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_C_P_L_PATIENTID_2 =
+		"treatmentHistory.patientID = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_C_P_L_LINKID_2 =
+		"treatmentHistory.linkId = ?";
+
+	private FinderPath _finderPathWithPaginationFindByG_C_P_L_TN;
+	private FinderPath _finderPathWithoutPaginationFindByG_C_P_L_TN;
+	private FinderPath _finderPathCountByG_C_P_L_TN;
+
+	/**
+	 * Returns all the treatment histories where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @return the matching treatment histories
+	 */
+	@Override
+	public List<TreatmentHistory> findByG_C_P_L_TN(
+		long groupId, long crfId, long patientID, long linkId, long teethNum) {
+
+		return findByG_C_P_L_TN(
+			groupId, crfId, patientID, linkId, teethNum, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the treatment histories where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentHistoryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param start the lower bound of the range of treatment histories
+	 * @param end the upper bound of the range of treatment histories (not inclusive)
+	 * @return the range of matching treatment histories
+	 */
+	@Override
+	public List<TreatmentHistory> findByG_C_P_L_TN(
+		long groupId, long crfId, long patientID, long linkId, long teethNum,
+		int start, int end) {
+
+		return findByG_C_P_L_TN(
+			groupId, crfId, patientID, linkId, teethNum, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the treatment histories where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentHistoryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param start the lower bound of the range of treatment histories
+	 * @param end the upper bound of the range of treatment histories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching treatment histories
+	 */
+	@Override
+	public List<TreatmentHistory> findByG_C_P_L_TN(
+		long groupId, long crfId, long patientID, long linkId, long teethNum,
+		int start, int end,
+		OrderByComparator<TreatmentHistory> orderByComparator) {
+
+		return findByG_C_P_L_TN(
+			groupId, crfId, patientID, linkId, teethNum, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the treatment histories where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentHistoryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param start the lower bound of the range of treatment histories
+	 * @param end the upper bound of the range of treatment histories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching treatment histories
+	 */
+	@Override
+	public List<TreatmentHistory> findByG_C_P_L_TN(
+		long groupId, long crfId, long patientID, long linkId, long teethNum,
+		int start, int end,
+		OrderByComparator<TreatmentHistory> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_C_P_L_TN;
+				finderArgs = new Object[] {
+					groupId, crfId, patientID, linkId, teethNum
+				};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByG_C_P_L_TN;
+			finderArgs = new Object[] {
+				groupId, crfId, patientID, linkId, teethNum, start, end,
+				orderByComparator
+			};
+		}
+
+		List<TreatmentHistory> list = null;
+
+		if (useFinderCache) {
+			list = (List<TreatmentHistory>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (TreatmentHistory treatmentHistory : list) {
+					if ((groupId != treatmentHistory.getGroupId()) ||
+						(crfId != treatmentHistory.getCrfId()) ||
+						(patientID != treatmentHistory.getPatientID()) ||
+						(linkId != treatmentHistory.getLinkId()) ||
+						(teethNum != treatmentHistory.getTeethNum())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					7 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(7);
+			}
+
+			sb.append(_SQL_SELECT_TREATMENTHISTORY_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_TN_GROUPID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_TN_CRFID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_TN_PATIENTID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_TN_LINKID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_TN_TEETHNUM_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(TreatmentHistoryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				queryPos.add(crfId);
+
+				queryPos.add(patientID);
+
+				queryPos.add(linkId);
+
+				queryPos.add(teethNum);
+
+				list = (List<TreatmentHistory>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first treatment history in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment history
+	 * @throws NoSuchTreatmentHistoryException if a matching treatment history could not be found
+	 */
+	@Override
+	public TreatmentHistory findByG_C_P_L_TN_First(
+			long groupId, long crfId, long patientID, long linkId,
+			long teethNum,
+			OrderByComparator<TreatmentHistory> orderByComparator)
+		throws NoSuchTreatmentHistoryException {
+
+		TreatmentHistory treatmentHistory = fetchByG_C_P_L_TN_First(
+			groupId, crfId, patientID, linkId, teethNum, orderByComparator);
+
+		if (treatmentHistory != null) {
+			return treatmentHistory;
+		}
+
+		StringBundler sb = new StringBundler(12);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("groupId=");
+		sb.append(groupId);
+
+		sb.append(", crfId=");
+		sb.append(crfId);
+
+		sb.append(", patientID=");
+		sb.append(patientID);
+
+		sb.append(", linkId=");
+		sb.append(linkId);
+
+		sb.append(", teethNum=");
+		sb.append(teethNum);
+
+		sb.append("}");
+
+		throw new NoSuchTreatmentHistoryException(sb.toString());
+	}
+
+	/**
+	 * Returns the first treatment history in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment history, or <code>null</code> if a matching treatment history could not be found
+	 */
+	@Override
+	public TreatmentHistory fetchByG_C_P_L_TN_First(
+		long groupId, long crfId, long patientID, long linkId, long teethNum,
+		OrderByComparator<TreatmentHistory> orderByComparator) {
+
+		List<TreatmentHistory> list = findByG_C_P_L_TN(
+			groupId, crfId, patientID, linkId, teethNum, 0, 1,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last treatment history in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment history
+	 * @throws NoSuchTreatmentHistoryException if a matching treatment history could not be found
+	 */
+	@Override
+	public TreatmentHistory findByG_C_P_L_TN_Last(
+			long groupId, long crfId, long patientID, long linkId,
+			long teethNum,
+			OrderByComparator<TreatmentHistory> orderByComparator)
+		throws NoSuchTreatmentHistoryException {
+
+		TreatmentHistory treatmentHistory = fetchByG_C_P_L_TN_Last(
+			groupId, crfId, patientID, linkId, teethNum, orderByComparator);
+
+		if (treatmentHistory != null) {
+			return treatmentHistory;
+		}
+
+		StringBundler sb = new StringBundler(12);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("groupId=");
+		sb.append(groupId);
+
+		sb.append(", crfId=");
+		sb.append(crfId);
+
+		sb.append(", patientID=");
+		sb.append(patientID);
+
+		sb.append(", linkId=");
+		sb.append(linkId);
+
+		sb.append(", teethNum=");
+		sb.append(teethNum);
+
+		sb.append("}");
+
+		throw new NoSuchTreatmentHistoryException(sb.toString());
+	}
+
+	/**
+	 * Returns the last treatment history in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment history, or <code>null</code> if a matching treatment history could not be found
+	 */
+	@Override
+	public TreatmentHistory fetchByG_C_P_L_TN_Last(
+		long groupId, long crfId, long patientID, long linkId, long teethNum,
+		OrderByComparator<TreatmentHistory> orderByComparator) {
+
+		int count = countByG_C_P_L_TN(
+			groupId, crfId, patientID, linkId, teethNum);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<TreatmentHistory> list = findByG_C_P_L_TN(
+			groupId, crfId, patientID, linkId, teethNum, count - 1, count,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the treatment histories before and after the current treatment history in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * @param treatmentID the primary key of the current treatment history
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next treatment history
+	 * @throws NoSuchTreatmentHistoryException if a treatment history with the primary key could not be found
+	 */
+	@Override
+	public TreatmentHistory[] findByG_C_P_L_TN_PrevAndNext(
+			long treatmentID, long groupId, long crfId, long patientID,
+			long linkId, long teethNum,
+			OrderByComparator<TreatmentHistory> orderByComparator)
+		throws NoSuchTreatmentHistoryException {
+
+		TreatmentHistory treatmentHistory = findByPrimaryKey(treatmentID);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			TreatmentHistory[] array = new TreatmentHistoryImpl[3];
+
+			array[0] = getByG_C_P_L_TN_PrevAndNext(
+				session, treatmentHistory, groupId, crfId, patientID, linkId,
+				teethNum, orderByComparator, true);
+
+			array[1] = treatmentHistory;
+
+			array[2] = getByG_C_P_L_TN_PrevAndNext(
+				session, treatmentHistory, groupId, crfId, patientID, linkId,
+				teethNum, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected TreatmentHistory getByG_C_P_L_TN_PrevAndNext(
+		Session session, TreatmentHistory treatmentHistory, long groupId,
+		long crfId, long patientID, long linkId, long teethNum,
+		OrderByComparator<TreatmentHistory> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				8 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(7);
+		}
+
+		sb.append(_SQL_SELECT_TREATMENTHISTORY_WHERE);
+
+		sb.append(_FINDER_COLUMN_G_C_P_L_TN_GROUPID_2);
+
+		sb.append(_FINDER_COLUMN_G_C_P_L_TN_CRFID_2);
+
+		sb.append(_FINDER_COLUMN_G_C_P_L_TN_PATIENTID_2);
+
+		sb.append(_FINDER_COLUMN_G_C_P_L_TN_LINKID_2);
+
+		sb.append(_FINDER_COLUMN_G_C_P_L_TN_TEETHNUM_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(TreatmentHistoryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(groupId);
+
+		queryPos.add(crfId);
+
+		queryPos.add(patientID);
+
+		queryPos.add(linkId);
+
+		queryPos.add(teethNum);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						treatmentHistory)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<TreatmentHistory> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the treatment histories where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 */
+	@Override
+	public void removeByG_C_P_L_TN(
+		long groupId, long crfId, long patientID, long linkId, long teethNum) {
+
+		for (TreatmentHistory treatmentHistory :
+				findByG_C_P_L_TN(
+					groupId, crfId, patientID, linkId, teethNum,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(treatmentHistory);
+		}
+	}
+
+	/**
+	 * Returns the number of treatment histories where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @return the number of matching treatment histories
+	 */
+	@Override
+	public int countByG_C_P_L_TN(
+		long groupId, long crfId, long patientID, long linkId, long teethNum) {
+
+		FinderPath finderPath = _finderPathCountByG_C_P_L_TN;
+
+		Object[] finderArgs = new Object[] {
+			groupId, crfId, patientID, linkId, teethNum
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_SQL_COUNT_TREATMENTHISTORY_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_TN_GROUPID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_TN_CRFID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_TN_PATIENTID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_TN_LINKID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_TN_TEETHNUM_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				queryPos.add(crfId);
+
+				queryPos.add(patientID);
+
+				queryPos.add(linkId);
+
+				queryPos.add(teethNum);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_C_P_L_TN_GROUPID_2 =
+		"treatmentHistory.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_C_P_L_TN_CRFID_2 =
+		"treatmentHistory.crfId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_C_P_L_TN_PATIENTID_2 =
+		"treatmentHistory.patientID = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_C_P_L_TN_LINKID_2 =
+		"treatmentHistory.linkId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_C_P_L_TN_TEETHNUM_2 =
+		"treatmentHistory.teethNum = ?";
+
 	private FinderPath _finderPathWithPaginationFindByTeeth_PatientID_TeethNum;
 	private FinderPath
 		_finderPathWithoutPaginationFindByTeeth_PatientID_TeethNum;
@@ -3797,6 +5090,428 @@ public class TreatmentHistoryPersistenceImpl
 		_FINDER_COLUMN_TEETH_PATIENTID_TEETHNUM_DATE_TREATMENTDATE_2 =
 			"treatmentHistory.treatmentDate = ?";
 
+	private FinderPath _finderPathFetchByG_C_P_L_TN_D_T;
+	private FinderPath _finderPathCountByG_C_P_L_TN_D_T;
+
+	/**
+	 * Returns the treatment history where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63; and treatmentDate = &#63; and treatment = &#63; or throws a <code>NoSuchTreatmentHistoryException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param treatmentDate the treatment date
+	 * @param treatment the treatment
+	 * @return the matching treatment history
+	 * @throws NoSuchTreatmentHistoryException if a matching treatment history could not be found
+	 */
+	@Override
+	public TreatmentHistory findByG_C_P_L_TN_D_T(
+			long groupId, long crfId, long patientID, long linkId,
+			long teethNum, Date treatmentDate, String treatment)
+		throws NoSuchTreatmentHistoryException {
+
+		TreatmentHistory treatmentHistory = fetchByG_C_P_L_TN_D_T(
+			groupId, crfId, patientID, linkId, teethNum, treatmentDate,
+			treatment);
+
+		if (treatmentHistory == null) {
+			StringBundler sb = new StringBundler(16);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("groupId=");
+			sb.append(groupId);
+
+			sb.append(", crfId=");
+			sb.append(crfId);
+
+			sb.append(", patientID=");
+			sb.append(patientID);
+
+			sb.append(", linkId=");
+			sb.append(linkId);
+
+			sb.append(", teethNum=");
+			sb.append(teethNum);
+
+			sb.append(", treatmentDate=");
+			sb.append(treatmentDate);
+
+			sb.append(", treatment=");
+			sb.append(treatment);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchTreatmentHistoryException(sb.toString());
+		}
+
+		return treatmentHistory;
+	}
+
+	/**
+	 * Returns the treatment history where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63; and treatmentDate = &#63; and treatment = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param treatmentDate the treatment date
+	 * @param treatment the treatment
+	 * @return the matching treatment history, or <code>null</code> if a matching treatment history could not be found
+	 */
+	@Override
+	public TreatmentHistory fetchByG_C_P_L_TN_D_T(
+		long groupId, long crfId, long patientID, long linkId, long teethNum,
+		Date treatmentDate, String treatment) {
+
+		return fetchByG_C_P_L_TN_D_T(
+			groupId, crfId, patientID, linkId, teethNum, treatmentDate,
+			treatment, true);
+	}
+
+	/**
+	 * Returns the treatment history where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63; and treatmentDate = &#63; and treatment = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param treatmentDate the treatment date
+	 * @param treatment the treatment
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching treatment history, or <code>null</code> if a matching treatment history could not be found
+	 */
+	@Override
+	public TreatmentHistory fetchByG_C_P_L_TN_D_T(
+		long groupId, long crfId, long patientID, long linkId, long teethNum,
+		Date treatmentDate, String treatment, boolean useFinderCache) {
+
+		treatment = Objects.toString(treatment, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, crfId, patientID, linkId, teethNum,
+				_getTime(treatmentDate), treatment
+			};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByG_C_P_L_TN_D_T, finderArgs, this);
+		}
+
+		if (result instanceof TreatmentHistory) {
+			TreatmentHistory treatmentHistory = (TreatmentHistory)result;
+
+			if ((groupId != treatmentHistory.getGroupId()) ||
+				(crfId != treatmentHistory.getCrfId()) ||
+				(patientID != treatmentHistory.getPatientID()) ||
+				(linkId != treatmentHistory.getLinkId()) ||
+				(teethNum != treatmentHistory.getTeethNum()) ||
+				!Objects.equals(
+					treatmentDate, treatmentHistory.getTreatmentDate()) ||
+				!Objects.equals(treatment, treatmentHistory.getTreatment())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(9);
+
+			sb.append(_SQL_SELECT_TREATMENTHISTORY_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_TN_D_T_GROUPID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_TN_D_T_CRFID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_TN_D_T_PATIENTID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_TN_D_T_LINKID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_TN_D_T_TEETHNUM_2);
+
+			boolean bindTreatmentDate = false;
+
+			if (treatmentDate == null) {
+				sb.append(_FINDER_COLUMN_G_C_P_L_TN_D_T_TREATMENTDATE_1);
+			}
+			else {
+				bindTreatmentDate = true;
+
+				sb.append(_FINDER_COLUMN_G_C_P_L_TN_D_T_TREATMENTDATE_2);
+			}
+
+			boolean bindTreatment = false;
+
+			if (treatment.isEmpty()) {
+				sb.append(_FINDER_COLUMN_G_C_P_L_TN_D_T_TREATMENT_3);
+			}
+			else {
+				bindTreatment = true;
+
+				sb.append(_FINDER_COLUMN_G_C_P_L_TN_D_T_TREATMENT_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				queryPos.add(crfId);
+
+				queryPos.add(patientID);
+
+				queryPos.add(linkId);
+
+				queryPos.add(teethNum);
+
+				if (bindTreatmentDate) {
+					queryPos.add(new Timestamp(treatmentDate.getTime()));
+				}
+
+				if (bindTreatment) {
+					queryPos.add(treatment);
+				}
+
+				List<TreatmentHistory> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByG_C_P_L_TN_D_T, finderArgs, list);
+					}
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									groupId, crfId, patientID, linkId, teethNum,
+									_getTime(treatmentDate), treatment
+								};
+							}
+
+							_log.warn(
+								"TreatmentHistoryPersistenceImpl.fetchByG_C_P_L_TN_D_T(long, long, long, long, long, Date, String, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					TreatmentHistory treatmentHistory = list.get(0);
+
+					result = treatmentHistory;
+
+					cacheResult(treatmentHistory);
+				}
+			}
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByG_C_P_L_TN_D_T, finderArgs);
+				}
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (TreatmentHistory)result;
+		}
+	}
+
+	/**
+	 * Removes the treatment history where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63; and treatmentDate = &#63; and treatment = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param treatmentDate the treatment date
+	 * @param treatment the treatment
+	 * @return the treatment history that was removed
+	 */
+	@Override
+	public TreatmentHistory removeByG_C_P_L_TN_D_T(
+			long groupId, long crfId, long patientID, long linkId,
+			long teethNum, Date treatmentDate, String treatment)
+		throws NoSuchTreatmentHistoryException {
+
+		TreatmentHistory treatmentHistory = findByG_C_P_L_TN_D_T(
+			groupId, crfId, patientID, linkId, teethNum, treatmentDate,
+			treatment);
+
+		return remove(treatmentHistory);
+	}
+
+	/**
+	 * Returns the number of treatment histories where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63; and treatmentDate = &#63; and treatment = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param treatmentDate the treatment date
+	 * @param treatment the treatment
+	 * @return the number of matching treatment histories
+	 */
+	@Override
+	public int countByG_C_P_L_TN_D_T(
+		long groupId, long crfId, long patientID, long linkId, long teethNum,
+		Date treatmentDate, String treatment) {
+
+		treatment = Objects.toString(treatment, "");
+
+		FinderPath finderPath = _finderPathCountByG_C_P_L_TN_D_T;
+
+		Object[] finderArgs = new Object[] {
+			groupId, crfId, patientID, linkId, teethNum,
+			_getTime(treatmentDate), treatment
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(8);
+
+			sb.append(_SQL_COUNT_TREATMENTHISTORY_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_TN_D_T_GROUPID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_TN_D_T_CRFID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_TN_D_T_PATIENTID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_TN_D_T_LINKID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_P_L_TN_D_T_TEETHNUM_2);
+
+			boolean bindTreatmentDate = false;
+
+			if (treatmentDate == null) {
+				sb.append(_FINDER_COLUMN_G_C_P_L_TN_D_T_TREATMENTDATE_1);
+			}
+			else {
+				bindTreatmentDate = true;
+
+				sb.append(_FINDER_COLUMN_G_C_P_L_TN_D_T_TREATMENTDATE_2);
+			}
+
+			boolean bindTreatment = false;
+
+			if (treatment.isEmpty()) {
+				sb.append(_FINDER_COLUMN_G_C_P_L_TN_D_T_TREATMENT_3);
+			}
+			else {
+				bindTreatment = true;
+
+				sb.append(_FINDER_COLUMN_G_C_P_L_TN_D_T_TREATMENT_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				queryPos.add(crfId);
+
+				queryPos.add(patientID);
+
+				queryPos.add(linkId);
+
+				queryPos.add(teethNum);
+
+				if (bindTreatmentDate) {
+					queryPos.add(new Timestamp(treatmentDate.getTime()));
+				}
+
+				if (bindTreatment) {
+					queryPos.add(treatment);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_C_P_L_TN_D_T_GROUPID_2 =
+		"treatmentHistory.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_C_P_L_TN_D_T_CRFID_2 =
+		"treatmentHistory.crfId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_C_P_L_TN_D_T_PATIENTID_2 =
+		"treatmentHistory.patientID = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_C_P_L_TN_D_T_LINKID_2 =
+		"treatmentHistory.linkId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_C_P_L_TN_D_T_TEETHNUM_2 =
+		"treatmentHistory.teethNum = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_C_P_L_TN_D_T_TREATMENTDATE_1 =
+		"treatmentHistory.treatmentDate IS NULL AND ";
+
+	private static final String _FINDER_COLUMN_G_C_P_L_TN_D_T_TREATMENTDATE_2 =
+		"treatmentHistory.treatmentDate = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_C_P_L_TN_D_T_TREATMENT_2 =
+		"treatmentHistory.treatment = ?";
+
+	private static final String _FINDER_COLUMN_G_C_P_L_TN_D_T_TREATMENT_3 =
+		"(treatmentHistory.treatment IS NULL OR treatmentHistory.treatment = '')";
+
 	private FinderPath
 		_finderPathFetchByTeeth_PatientID_TeethNum_Date_Treatment;
 	private FinderPath
@@ -5253,6 +6968,17 @@ public class TreatmentHistoryPersistenceImpl
 			treatmentHistory);
 
 		finderCache.putResult(
+			_finderPathFetchByG_C_P_L_TN_D_T,
+			new Object[] {
+				treatmentHistory.getGroupId(), treatmentHistory.getCrfId(),
+				treatmentHistory.getPatientID(), treatmentHistory.getLinkId(),
+				treatmentHistory.getTeethNum(),
+				treatmentHistory.getTreatmentDate(),
+				treatmentHistory.getTreatment()
+			},
+			treatmentHistory);
+
+		finderCache.putResult(
 			_finderPathFetchByTeeth_PatientID_TeethNum_Date_Treatment,
 			new Object[] {
 				treatmentHistory.getPatientID(), treatmentHistory.getTeethNum(),
@@ -5370,6 +7096,22 @@ public class TreatmentHistoryPersistenceImpl
 			_finderPathFetchByUUID_G, args, treatmentHistoryModelImpl, false);
 
 		args = new Object[] {
+			treatmentHistoryModelImpl.getGroupId(),
+			treatmentHistoryModelImpl.getCrfId(),
+			treatmentHistoryModelImpl.getPatientID(),
+			treatmentHistoryModelImpl.getLinkId(),
+			treatmentHistoryModelImpl.getTeethNum(),
+			_getTime(treatmentHistoryModelImpl.getTreatmentDate()),
+			treatmentHistoryModelImpl.getTreatment()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByG_C_P_L_TN_D_T, args, Long.valueOf(1), false);
+		finderCache.putResult(
+			_finderPathFetchByG_C_P_L_TN_D_T, args, treatmentHistoryModelImpl,
+			false);
+
+		args = new Object[] {
 			treatmentHistoryModelImpl.getPatientID(),
 			treatmentHistoryModelImpl.getTeethNum(),
 			_getTime(treatmentHistoryModelImpl.getTreatmentDate()),
@@ -5408,6 +7150,38 @@ public class TreatmentHistoryPersistenceImpl
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
 			finderCache.removeResult(_finderPathFetchByUUID_G, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+				treatmentHistoryModelImpl.getGroupId(),
+				treatmentHistoryModelImpl.getCrfId(),
+				treatmentHistoryModelImpl.getPatientID(),
+				treatmentHistoryModelImpl.getLinkId(),
+				treatmentHistoryModelImpl.getTeethNum(),
+				_getTime(treatmentHistoryModelImpl.getTreatmentDate()),
+				treatmentHistoryModelImpl.getTreatment()
+			};
+
+			finderCache.removeResult(_finderPathCountByG_C_P_L_TN_D_T, args);
+			finderCache.removeResult(_finderPathFetchByG_C_P_L_TN_D_T, args);
+		}
+
+		if ((treatmentHistoryModelImpl.getColumnBitmask() &
+			 _finderPathFetchByG_C_P_L_TN_D_T.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				treatmentHistoryModelImpl.getOriginalGroupId(),
+				treatmentHistoryModelImpl.getOriginalCrfId(),
+				treatmentHistoryModelImpl.getOriginalPatientID(),
+				treatmentHistoryModelImpl.getOriginalLinkId(),
+				treatmentHistoryModelImpl.getOriginalTeethNum(),
+				_getTime(treatmentHistoryModelImpl.getOriginalTreatmentDate()),
+				treatmentHistoryModelImpl.getOriginalTreatment()
+			};
+
+			finderCache.removeResult(_finderPathCountByG_C_P_L_TN_D_T, args);
+			finderCache.removeResult(_finderPathFetchByG_C_P_L_TN_D_T, args);
 		}
 
 		if (clearCurrent) {
@@ -5659,6 +7433,29 @@ public class TreatmentHistoryPersistenceImpl
 				_finderPathWithoutPaginationFindByTeeth_PatientID, args);
 
 			args = new Object[] {
+				treatmentHistoryModelImpl.getGroupId(),
+				treatmentHistoryModelImpl.getCrfId(),
+				treatmentHistoryModelImpl.getPatientID(),
+				treatmentHistoryModelImpl.getLinkId()
+			};
+
+			finderCache.removeResult(_finderPathCountByG_C_P_L, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByG_C_P_L, args);
+
+			args = new Object[] {
+				treatmentHistoryModelImpl.getGroupId(),
+				treatmentHistoryModelImpl.getCrfId(),
+				treatmentHistoryModelImpl.getPatientID(),
+				treatmentHistoryModelImpl.getLinkId(),
+				treatmentHistoryModelImpl.getTeethNum()
+			};
+
+			finderCache.removeResult(_finderPathCountByG_C_P_L_TN, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByG_C_P_L_TN, args);
+
+			args = new Object[] {
 				treatmentHistoryModelImpl.getPatientID(),
 				treatmentHistoryModelImpl.getTeethNum()
 			};
@@ -5772,6 +7569,62 @@ public class TreatmentHistoryPersistenceImpl
 					_finderPathCountByTeeth_PatientID, args);
 				finderCache.removeResult(
 					_finderPathWithoutPaginationFindByTeeth_PatientID, args);
+			}
+
+			if ((treatmentHistoryModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByG_C_P_L.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					treatmentHistoryModelImpl.getOriginalGroupId(),
+					treatmentHistoryModelImpl.getOriginalCrfId(),
+					treatmentHistoryModelImpl.getOriginalPatientID(),
+					treatmentHistoryModelImpl.getOriginalLinkId()
+				};
+
+				finderCache.removeResult(_finderPathCountByG_C_P_L, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByG_C_P_L, args);
+
+				args = new Object[] {
+					treatmentHistoryModelImpl.getGroupId(),
+					treatmentHistoryModelImpl.getCrfId(),
+					treatmentHistoryModelImpl.getPatientID(),
+					treatmentHistoryModelImpl.getLinkId()
+				};
+
+				finderCache.removeResult(_finderPathCountByG_C_P_L, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByG_C_P_L, args);
+			}
+
+			if ((treatmentHistoryModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByG_C_P_L_TN.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					treatmentHistoryModelImpl.getOriginalGroupId(),
+					treatmentHistoryModelImpl.getOriginalCrfId(),
+					treatmentHistoryModelImpl.getOriginalPatientID(),
+					treatmentHistoryModelImpl.getOriginalLinkId(),
+					treatmentHistoryModelImpl.getOriginalTeethNum()
+				};
+
+				finderCache.removeResult(_finderPathCountByG_C_P_L_TN, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByG_C_P_L_TN, args);
+
+				args = new Object[] {
+					treatmentHistoryModelImpl.getGroupId(),
+					treatmentHistoryModelImpl.getCrfId(),
+					treatmentHistoryModelImpl.getPatientID(),
+					treatmentHistoryModelImpl.getLinkId(),
+					treatmentHistoryModelImpl.getTeethNum()
+				};
+
+				finderCache.removeResult(_finderPathCountByG_C_P_L_TN, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByG_C_P_L_TN, args);
 			}
 
 			if ((treatmentHistoryModelImpl.getColumnBitmask() &
@@ -6271,6 +8124,67 @@ public class TreatmentHistoryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTeeth_PatientID",
 			new String[] {Long.class.getName()});
 
+		_finderPathWithPaginationFindByG_C_P_L = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, TreatmentHistoryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_P_L",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByG_C_P_L = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, TreatmentHistoryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_P_L",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName()
+			},
+			TreatmentHistoryModelImpl.GROUPID_COLUMN_BITMASK |
+			TreatmentHistoryModelImpl.CRFID_COLUMN_BITMASK |
+			TreatmentHistoryModelImpl.PATIENTID_COLUMN_BITMASK |
+			TreatmentHistoryModelImpl.LINKID_COLUMN_BITMASK);
+
+		_finderPathCountByG_C_P_L = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_P_L",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName()
+			});
+
+		_finderPathWithPaginationFindByG_C_P_L_TN = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, TreatmentHistoryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_P_L_TN",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByG_C_P_L_TN = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, TreatmentHistoryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_P_L_TN",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			},
+			TreatmentHistoryModelImpl.GROUPID_COLUMN_BITMASK |
+			TreatmentHistoryModelImpl.CRFID_COLUMN_BITMASK |
+			TreatmentHistoryModelImpl.PATIENTID_COLUMN_BITMASK |
+			TreatmentHistoryModelImpl.LINKID_COLUMN_BITMASK |
+			TreatmentHistoryModelImpl.TEETHNUM_COLUMN_BITMASK);
+
+		_finderPathCountByG_C_P_L_TN = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_P_L_TN",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			});
+
 		_finderPathWithPaginationFindByTeeth_PatientID_TeethNum =
 			new FinderPath(
 				entityCacheEnabled, finderCacheEnabled,
@@ -6355,6 +8269,33 @@ public class TreatmentHistoryPersistenceImpl
 			"countByTeeth_PatientID_TeethNum_Date",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Date.class.getName()
+			});
+
+		_finderPathFetchByG_C_P_L_TN_D_T = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, TreatmentHistoryImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_P_L_TN_D_T",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Date.class.getName(),
+				String.class.getName()
+			},
+			TreatmentHistoryModelImpl.GROUPID_COLUMN_BITMASK |
+			TreatmentHistoryModelImpl.CRFID_COLUMN_BITMASK |
+			TreatmentHistoryModelImpl.PATIENTID_COLUMN_BITMASK |
+			TreatmentHistoryModelImpl.LINKID_COLUMN_BITMASK |
+			TreatmentHistoryModelImpl.TEETHNUM_COLUMN_BITMASK |
+			TreatmentHistoryModelImpl.TREATMENTDATE_COLUMN_BITMASK |
+			TreatmentHistoryModelImpl.TREATMENT_COLUMN_BITMASK);
+
+		_finderPathCountByG_C_P_L_TN_D_T = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_P_L_TN_D_T",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Date.class.getName(),
+				String.class.getName()
 			});
 
 		_finderPathFetchByTeeth_PatientID_TeethNum_Date_Treatment =

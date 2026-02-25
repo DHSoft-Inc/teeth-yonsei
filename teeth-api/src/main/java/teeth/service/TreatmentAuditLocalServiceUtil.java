@@ -54,6 +54,17 @@ public class TreatmentAuditLocalServiceUtil {
 			afterData, serviceContext);
 	}
 
+	public static TreatmentAudit AddAudit(
+		long crfId, long linkId, long patientId, long teethNum,
+		long editedUserID, java.util.Date TreatmentDate, String editType,
+		String BeforeData, String afterData,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+
+		return getService().AddAudit(
+			crfId, linkId, patientId, teethNum, editedUserID, TreatmentDate,
+			editType, BeforeData, afterData, serviceContext);
+	}
+
 	/**
 	 * Adds the treatment audit to the database. Also notifies the appropriate model listeners.
 	 *
@@ -229,6 +240,20 @@ public class TreatmentAuditLocalServiceUtil {
 
 	public static List<TreatmentAudit> getAuditByTeethNum(long teethNum) {
 		return getService().getAuditByTeethNum(teethNum);
+	}
+
+	public static List<TreatmentAudit> getAuditsByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId) {
+
+		return getService().getAuditsByG_C_P_L(
+			groupId, crfId, patientID, linkId);
+	}
+
+	public static List<TreatmentAudit> getAuditsByG_C_P_L_TN(
+		long groupId, long crfId, long patientID, long linkId, long teethNum) {
+
+		return getService().getAuditsByG_C_P_L_TN(
+			groupId, crfId, patientID, linkId, teethNum);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery

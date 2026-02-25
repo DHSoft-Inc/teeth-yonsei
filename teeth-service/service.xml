@@ -3,140 +3,186 @@
 
 <service-builder dependency-injector="ds" package-path="teeth">
 	<namespace>Teeth</namespace>
-	   <entity name="TreatmentHistory" table="treatment_history" local-service="true" remote-service="false" uuid="true">
-      <!-- Primary Key -->
-      <column name="treatmentID" type="long" primary="true" />
+	<entity name="TreatmentHistory" table="treatment_history" local-service="true" remote-service="false" uuid="true">
+		<!-- Primary Key -->
+		<column name="treatmentID" type="long" primary="true" />
+		
+		<!-- Foreign key -->
+		<column name="crfId" type="long" />	<!-- crf id -->
+		<column name="linkId" type="long" />	<!-- crf data link id -->
+		<column name="patientID" type="long" /> 	<!-- subject id -->
+		
+		<!-- Not-null column -->
+		<column name="editedUserID" type="long" />
+		<column name="teethNum" type="long" />
+		
+		<!-- Date : java.util.Date -->
+		<column name="treatmentDate" type="Date" />
+		<column name="editedDate" type="Date" />
+		
+		<!-- 문자열 타입 -->
+		<column name="treatment" type="String" />
+		<column name="state" type="String" />
+		
+		<!-- site / server instance field -->
+		<column name="groupId" type="long" />
+		<column name="companyId" type="long" />
+		
+		<!-- audit field -->
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+		
+		<!-- workflow -->
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
+		
+		<finder name="Teeth_PatientID" return-type="Collection">
+		   <finder-column name="patientID" />
+		</finder>
+		
+		<finder name="G_C_P_L" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="crfId" />
+			<finder-column name="patientID" />
+			<finder-column name="linkId" />
+		</finder>
+		
+		<finder name="G_C_P_L_TN" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="crfId" />
+			<finder-column name="patientID" />
+			<finder-column name="linkId" />
+			<finder-column name="teethNum" />
+		</finder>
+		
+		<finder name="Teeth_PatientID_TeethNum" return-type="Collection">
+			<finder-column name="patientID" />
+			<finder-column name="teethNum" />
+		</finder>
+		<finder name="Teeth_PatientID_Date" return-type="Collection">
+			<finder-column name="patientID" />
+			<finder-column name="treatmentDate" />
+		</finder>
+		
+		<finder name="Teeth_PatientID_TeethNum_Date" return-type="Collection">
+			<finder-column name="patientID" />
+			<finder-column name="teethNum" />
+			<finder-column name="treatmentDate" />
+		</finder>
+		
+		<finder name="G_C_P_L_TN_D_T" return-type="TreatmentHistory">
+			<finder-column name="groupId" />
+			<finder-column name="crfId" />
+			<finder-column name="patientID" />
+			<finder-column name="linkId" />
+			<finder-column name="teethNum" />
+			<finder-column name="treatmentDate" />
+			<finder-column name="treatment" />
+		</finder>
+		
+		<finder name="Teeth_PatientID_TeethNum_Date_Treatment" return-type="TreatmentHistory">
+			<finder-column name="patientID" />
+			<finder-column name="teethNum" />
+			<finder-column name="treatmentDate" />
+			<finder-column name="treatment" />
+		</finder>
+		
+		<!-- For Asset -->
+		<finder name="Status" return-type="Collection">
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="status" />
+		</finder>
+		
+		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
+		<reference package-path="com.liferay.portlet.asset" entity="AssetLink" /> 
+	</entity>
 
-      <!-- Not-null 컬럼 -->
-      <column name="patientID" type="long" />
-      <column name="editedUserID" type="long" />
-      <column name="teethNum" type="long" />
+	<entity name="TreatmentAudit" table="treatment_audit" local-service="true" remote-service="false" uuid="true">
+		<!-- Primary Key -->
+		<column name="AuditID" type="long" primary="true" />
+		
+		<!-- Foreign Key -->
+		<column name="crfId" type="long" />	<!-- crf id -->
+		<column name="linkId" type="long" />	<!-- crf data link id -->
+		<column name="patientID" type="long" /> 	<!-- subject id -->
+		
+		<!-- Other -->      
+		<column name="teethNum" type="long" />
+		<column name="editedDate" type="Date" />
+		<column name="editedUserID" type="long" />
+		
+		<!-- edit type (Add, Edit, Delete) -->
+		<column name="editType" type="String" />
+		
+		<!-- treatment data update date (Date) -->
+		<column name="treatmentDate" type="Date" />
+		
+		<!-- before edit -->
+		<column name="beforeData" type="String" />
+		
+		<!-- after edit -->
+		<column name="afterData" type="String" />
+		
+		<!-- site / server instance field -->
+		<column name="groupId" type="long" />
+		<column name="companyId" type="long" />
+		
+		<!--audit field -->
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+		
+		<!-- workflow -->
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
+		
+		<!-- by teeth Display -->
+	    <finder return-type="Collection" name="Audit_TeethNum">
+			<finder-column name="teethNum" />
+	    </finder>
+		
+		<finder name="G_C_P_L" return-type="Collection">
+	    	<finder-column name="groupId" />
+	    	<finder-column name="crfId" />
+	    	<finder-column name="patientID" />
+	    	<finder-column name="linkId" />
+	    </finder>
+	    
+	    <finder name="G_C_P_L_TN" return-type="Collection">
+	    	<finder-column name="groupId" />
+	    	<finder-column name="crfId" />
+	    	<finder-column name="patientID" />
+	    	<finder-column name="linkId" />
+	    	<finder-column name="teethNum" />
+	    </finder>
+		
+	    <!-- by edit type -->
+		<finder return-type="Collection" name="Audit_EditType">
+			<finder-column name="editType" />
+		</finder>
+		
+		<!-- For Asset -->
+		<finder name="Status" return-type="Collection">
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="status" />
+		</finder>
+		
+		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
+		<reference package-path="com.liferay.portlet.asset" entity="AssetLink" />
 
-      <!-- Date 타입: java.util.Date 로 매핑 -->
-      <column name="treatmentDate" type="Date" />
-      <column name="editedDate" type="Date" />
-
-      <!-- 문자열 타입 -->
-      <column name="treatment" type="String" />
-      <column name="state" type="String" />
-
-      <!-- 멀티테넌시 지원 -->
-      <column name="groupId" type="long" />
-      <column name="companyId" type="long" />
-
-      <!-- 감사(audit) 필드 -->
-      <column name="userId" type="long" />
-      <column name="userName" type="String" />
-      <column name="createDate" type="Date" />
-      <column name="modifiedDate" type="Date" />
-
-      <!-- 워크플로우 지원 -->
-      <column name="status" type="int" />
-      <column name="statusByUserId" type="long" />
-      <column name="statusByUserName" type="String" />
-      <column name="statusDate" type="Date" />
-
-      <finder name="Teeth_PatientID" return-type="Collection">
-         <finder-column name="patientID" />
-      </finder>
-      <finder name="Teeth_PatientID_TeethNum"
-         return-type="Collection">
-         <finder-column name="patientID" />
-         <finder-column name="teethNum" />
-      </finder>
-      <finder name="Teeth_PatientID_Date" return-type="Collection">
-         <finder-column name="patientID" />
-         <finder-column name="treatmentDate" />
-      </finder>
-
-      <finder name="Teeth_PatientID_TeethNum_Date"
-         return-type="Collection">
-         <finder-column name="patientID" />
-         <finder-column name="teethNum" />
-         <finder-column name="treatmentDate" />
-      </finder>
-
-      <finder name="Teeth_PatientID_TeethNum_Date_Treatment"
-         return-type="TreatmentHistory">
-         <finder-column name="patientID" />
-         <finder-column name="teethNum" />
-         <finder-column name="treatmentDate" />
-         <finder-column name="treatment" />
-      </finder>
-
-      <!-- For Asset -->
-      <finder name="Status" return-type="Collection">
-         <finder-column name="status" />
-      </finder>
-      <finder name="G_S" return-type="Collection">
-         <finder-column name="groupId" />
-         <finder-column name="status" />
-      </finder>
-
-      <reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
-      <reference package-path="com.liferay.portlet.asset" entity="AssetLink" />
-      
-   </entity>
-
-   <entity name="TreatmentAudit" table="treatment_audit" local-service="true" remote-service="false" uuid="true">
-      <!-- Primary Key -->
-      <column name="AuditID" type="long" primary="true" />
-
-      <!-- Other -->
-      <column name="teethNum" type="long" />
-      <column name="editedDate" type="Date" />
-      <column name="editedUserID" type="long" />
-
-      <!-- Edit된 종류(Add, Edit, Delete) -->
-      <column name="editType" type="String" />
-      
-      <!-- Edit한 Treatment의 날짜(Date) -->
-      <column name="treatmentDate" type="Date" />
-
-      <!-- Edit 이전의 Data -->
-      <column name="beforeData" type="String" />
-
-      <!-- Edit 이후의 Data -->
-      <column name="afterData" type="String" />
-
-      <!-- 멀티테넌시 지원 -->
-      <column name="groupId" type="long" />
-      <column name="companyId" type="long" />
-
-      <!-- 감사(audit) 필드 -->
-      <column name="userId" type="long" />
-      <column name="userName" type="String" />
-      <column name="createDate" type="Date" />
-      <column name="modifiedDate" type="Date" />
-   
-      <!-- 워크플로우 지원 -->
-      <column name="status" type="int" />
-      <column name="statusByUserId" type="long" />
-      <column name="statusByUserName" type="String" />
-      <column name="statusDate" type="Date" />
-
-      <!-- 치식별 Display -->
-      <finder return-type="Collection" name="Audit_TeethNum">
-         <finder-column name="teethNum" />
-      </finder>
-
-      <!-- 혹시 몰라서 넣어놓는 Edit 종류별 Display -->
-      <finder return-type="Collection" name="Audit_EditType">
-         <finder-column name="editType" />
-      </finder>
-      
-      <!-- For Asset -->
-      <finder name="Status" return-type="Collection">
-         <finder-column name="status" />
-      </finder>
-      <finder name="G_S" return-type="Collection">
-         <finder-column name="groupId" />
-         <finder-column name="status" />
-      </finder>
-      
-      <reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
-      <reference package-path="com.liferay.portlet.asset" entity="AssetLink" />
-
-   </entity>
+	</entity>
 
 </service-builder>

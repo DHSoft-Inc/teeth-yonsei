@@ -63,12 +63,16 @@ public class TreatmentHistoryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
 		sb.append(", treatmentID=");
 		sb.append(treatmentID);
+		sb.append(", crfId=");
+		sb.append(crfId);
+		sb.append(", linkId=");
+		sb.append(linkId);
 		sb.append(", patientID=");
 		sb.append(patientID);
 		sb.append(", editedUserID=");
@@ -120,6 +124,8 @@ public class TreatmentHistoryCacheModel
 		}
 
 		treatmentHistoryImpl.setTreatmentID(treatmentID);
+		treatmentHistoryImpl.setCrfId(crfId);
+		treatmentHistoryImpl.setLinkId(linkId);
 		treatmentHistoryImpl.setPatientID(patientID);
 		treatmentHistoryImpl.setEditedUserID(editedUserID);
 		treatmentHistoryImpl.setTeethNum(teethNum);
@@ -205,6 +211,10 @@ public class TreatmentHistoryCacheModel
 
 		treatmentID = objectInput.readLong();
 
+		crfId = objectInput.readLong();
+
+		linkId = objectInput.readLong();
+
 		patientID = objectInput.readLong();
 
 		editedUserID = objectInput.readLong();
@@ -241,6 +251,10 @@ public class TreatmentHistoryCacheModel
 		}
 
 		objectOutput.writeLong(treatmentID);
+
+		objectOutput.writeLong(crfId);
+
+		objectOutput.writeLong(linkId);
 
 		objectOutput.writeLong(patientID);
 
@@ -296,6 +310,8 @@ public class TreatmentHistoryCacheModel
 
 	public String uuid;
 	public long treatmentID;
+	public long crfId;
+	public long linkId;
 	public long patientID;
 	public long editedUserID;
 	public long teethNum;
