@@ -16,15 +16,21 @@ package teeth.model.impl;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
@@ -66,17 +72,28 @@ public class TreatmentAuditModelImpl
 	public static final String TABLE_NAME = "treatment_audit";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"AuditID", Types.BIGINT}, {"teethNum", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"AuditID", Types.BIGINT},
+		{"crfId", Types.BIGINT}, {"linkId", Types.BIGINT},
+		{"patientID", Types.BIGINT}, {"teethNum", Types.BIGINT},
 		{"editedDate", Types.TIMESTAMP}, {"editedUserID", Types.BIGINT},
 		{"editType", Types.VARCHAR}, {"treatmentDate", Types.TIMESTAMP},
-		{"beforeData", Types.VARCHAR}, {"afterData", Types.VARCHAR}
+		{"beforeData", Types.VARCHAR}, {"afterData", Types.VARCHAR},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
+		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("AuditID", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("crfId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("linkId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("patientID", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("teethNum", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("editedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("editedUserID", Types.BIGINT);
@@ -84,10 +101,20 @@ public class TreatmentAuditModelImpl
 		TABLE_COLUMNS_MAP.put("treatmentDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("beforeData", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("afterData", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table treatment_audit (AuditID LONG not null primary key,teethNum LONG,editedDate DATE null,editedUserID LONG,editType VARCHAR(75) null,treatmentDate DATE null,beforeData VARCHAR(75) null,afterData VARCHAR(75) null)";
+		"create table treatment_audit (uuid_ VARCHAR(75) null,AuditID LONG not null primary key,crfId LONG,linkId LONG,patientID LONG,teethNum LONG,editedDate DATE null,editedUserID LONG,editType VARCHAR(75) null,treatmentDate DATE null,beforeData VARCHAR(75) null,afterData VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table treatment_audit";
 
@@ -103,11 +130,25 @@ public class TreatmentAuditModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final long EDITTYPE_COLUMN_BITMASK = 1L;
+	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
-	public static final long TEETHNUM_COLUMN_BITMASK = 2L;
+	public static final long CRFID_COLUMN_BITMASK = 2L;
 
-	public static final long AUDITID_COLUMN_BITMASK = 4L;
+	public static final long EDITTYPE_COLUMN_BITMASK = 4L;
+
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
+
+	public static final long LINKID_COLUMN_BITMASK = 16L;
+
+	public static final long PATIENTID_COLUMN_BITMASK = 32L;
+
+	public static final long STATUS_COLUMN_BITMASK = 64L;
+
+	public static final long TEETHNUM_COLUMN_BITMASK = 128L;
+
+	public static final long UUID_COLUMN_BITMASK = 256L;
+
+	public static final long AUDITID_COLUMN_BITMASK = 512L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -216,10 +257,26 @@ public class TreatmentAuditModelImpl
 		Map<String, BiConsumer<TreatmentAudit, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<TreatmentAudit, ?>>();
 
+		attributeGetterFunctions.put("uuid", TreatmentAudit::getUuid);
+		attributeSetterBiConsumers.put(
+			"uuid",
+			(BiConsumer<TreatmentAudit, String>)TreatmentAudit::setUuid);
 		attributeGetterFunctions.put("AuditID", TreatmentAudit::getAuditID);
 		attributeSetterBiConsumers.put(
 			"AuditID",
 			(BiConsumer<TreatmentAudit, Long>)TreatmentAudit::setAuditID);
+		attributeGetterFunctions.put("crfId", TreatmentAudit::getCrfId);
+		attributeSetterBiConsumers.put(
+			"crfId",
+			(BiConsumer<TreatmentAudit, Long>)TreatmentAudit::setCrfId);
+		attributeGetterFunctions.put("linkId", TreatmentAudit::getLinkId);
+		attributeSetterBiConsumers.put(
+			"linkId",
+			(BiConsumer<TreatmentAudit, Long>)TreatmentAudit::setLinkId);
+		attributeGetterFunctions.put("patientID", TreatmentAudit::getPatientID);
+		attributeSetterBiConsumers.put(
+			"patientID",
+			(BiConsumer<TreatmentAudit, Long>)TreatmentAudit::setPatientID);
 		attributeGetterFunctions.put("teethNum", TreatmentAudit::getTeethNum);
 		attributeSetterBiConsumers.put(
 			"teethNum",
@@ -252,11 +309,83 @@ public class TreatmentAuditModelImpl
 		attributeSetterBiConsumers.put(
 			"afterData",
 			(BiConsumer<TreatmentAudit, String>)TreatmentAudit::setAfterData);
+		attributeGetterFunctions.put("groupId", TreatmentAudit::getGroupId);
+		attributeSetterBiConsumers.put(
+			"groupId",
+			(BiConsumer<TreatmentAudit, Long>)TreatmentAudit::setGroupId);
+		attributeGetterFunctions.put("companyId", TreatmentAudit::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<TreatmentAudit, Long>)TreatmentAudit::setCompanyId);
+		attributeGetterFunctions.put("userId", TreatmentAudit::getUserId);
+		attributeSetterBiConsumers.put(
+			"userId",
+			(BiConsumer<TreatmentAudit, Long>)TreatmentAudit::setUserId);
+		attributeGetterFunctions.put("userName", TreatmentAudit::getUserName);
+		attributeSetterBiConsumers.put(
+			"userName",
+			(BiConsumer<TreatmentAudit, String>)TreatmentAudit::setUserName);
+		attributeGetterFunctions.put(
+			"createDate", TreatmentAudit::getCreateDate);
+		attributeSetterBiConsumers.put(
+			"createDate",
+			(BiConsumer<TreatmentAudit, Date>)TreatmentAudit::setCreateDate);
+		attributeGetterFunctions.put(
+			"modifiedDate", TreatmentAudit::getModifiedDate);
+		attributeSetterBiConsumers.put(
+			"modifiedDate",
+			(BiConsumer<TreatmentAudit, Date>)TreatmentAudit::setModifiedDate);
+		attributeGetterFunctions.put("status", TreatmentAudit::getStatus);
+		attributeSetterBiConsumers.put(
+			"status",
+			(BiConsumer<TreatmentAudit, Integer>)TreatmentAudit::setStatus);
+		attributeGetterFunctions.put(
+			"statusByUserId", TreatmentAudit::getStatusByUserId);
+		attributeSetterBiConsumers.put(
+			"statusByUserId",
+			(BiConsumer<TreatmentAudit, Long>)
+				TreatmentAudit::setStatusByUserId);
+		attributeGetterFunctions.put(
+			"statusByUserName", TreatmentAudit::getStatusByUserName);
+		attributeSetterBiConsumers.put(
+			"statusByUserName",
+			(BiConsumer<TreatmentAudit, String>)
+				TreatmentAudit::setStatusByUserName);
+		attributeGetterFunctions.put(
+			"statusDate", TreatmentAudit::getStatusDate);
+		attributeSetterBiConsumers.put(
+			"statusDate",
+			(BiConsumer<TreatmentAudit, Date>)TreatmentAudit::setStatusDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public String getUuid() {
+		if (_uuid == null) {
+			return "";
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		_columnBitmask |= UUID_COLUMN_BITMASK;
+
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
+		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	@Override
@@ -267,6 +396,72 @@ public class TreatmentAuditModelImpl
 	@Override
 	public void setAuditID(long AuditID) {
 		_AuditID = AuditID;
+	}
+
+	@Override
+	public long getCrfId() {
+		return _crfId;
+	}
+
+	@Override
+	public void setCrfId(long crfId) {
+		_columnBitmask |= CRFID_COLUMN_BITMASK;
+
+		if (!_setOriginalCrfId) {
+			_setOriginalCrfId = true;
+
+			_originalCrfId = _crfId;
+		}
+
+		_crfId = crfId;
+	}
+
+	public long getOriginalCrfId() {
+		return _originalCrfId;
+	}
+
+	@Override
+	public long getLinkId() {
+		return _linkId;
+	}
+
+	@Override
+	public void setLinkId(long linkId) {
+		_columnBitmask |= LINKID_COLUMN_BITMASK;
+
+		if (!_setOriginalLinkId) {
+			_setOriginalLinkId = true;
+
+			_originalLinkId = _linkId;
+		}
+
+		_linkId = linkId;
+	}
+
+	public long getOriginalLinkId() {
+		return _originalLinkId;
+	}
+
+	@Override
+	public long getPatientID() {
+		return _patientID;
+	}
+
+	@Override
+	public void setPatientID(long patientID) {
+		_columnBitmask |= PATIENTID_COLUMN_BITMASK;
+
+		if (!_setOriginalPatientID) {
+			_setOriginalPatientID = true;
+
+			_originalPatientID = _patientID;
+		}
+
+		_patientID = patientID;
+	}
+
+	public long getOriginalPatientID() {
+		return _originalPatientID;
 	}
 
 	@Override
@@ -376,6 +571,276 @@ public class TreatmentAuditModelImpl
 		_afterData = afterData;
 	}
 
+	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
+		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
+	@Override
+	public long getUserId() {
+		return _userId;
+	}
+
+	@Override
+	public void setUserId(long userId) {
+		_userId = userId;
+	}
+
+	@Override
+	public String getUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException portalException) {
+			return "";
+		}
+	}
+
+	@Override
+	public void setUserUuid(String userUuid) {
+	}
+
+	@Override
+	public String getUserName() {
+		if (_userName == null) {
+			return "";
+		}
+		else {
+			return _userName;
+		}
+	}
+
+	@Override
+	public void setUserName(String userName) {
+		_userName = userName;
+	}
+
+	@Override
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	@Override
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
+	}
+
+	@Override
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
+		_modifiedDate = modifiedDate;
+	}
+
+	@Override
+	public int getStatus() {
+		return _status;
+	}
+
+	@Override
+	public void setStatus(int status) {
+		_columnBitmask |= STATUS_COLUMN_BITMASK;
+
+		if (!_setOriginalStatus) {
+			_setOriginalStatus = true;
+
+			_originalStatus = _status;
+		}
+
+		_status = status;
+	}
+
+	public int getOriginalStatus() {
+		return _originalStatus;
+	}
+
+	@Override
+	public long getStatusByUserId() {
+		return _statusByUserId;
+	}
+
+	@Override
+	public void setStatusByUserId(long statusByUserId) {
+		_statusByUserId = statusByUserId;
+	}
+
+	@Override
+	public String getStatusByUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getStatusByUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException portalException) {
+			return "";
+		}
+	}
+
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid) {
+	}
+
+	@Override
+	public String getStatusByUserName() {
+		if (_statusByUserName == null) {
+			return "";
+		}
+		else {
+			return _statusByUserName;
+		}
+	}
+
+	@Override
+	public void setStatusByUserName(String statusByUserName) {
+		_statusByUserName = statusByUserName;
+	}
+
+	@Override
+	public Date getStatusDate() {
+		return _statusDate;
+	}
+
+	@Override
+	public void setStatusDate(Date statusDate) {
+		_statusDate = statusDate;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(
+			PortalUtil.getClassNameId(TreatmentAudit.class.getName()));
+	}
+
+	@Override
+	public boolean isApproved() {
+		if (getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isDenied() {
+		if (getStatus() == WorkflowConstants.STATUS_DENIED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isDraft() {
+		if (getStatus() == WorkflowConstants.STATUS_DRAFT) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isExpired() {
+		if (getStatus() == WorkflowConstants.STATUS_EXPIRED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isInactive() {
+		if (getStatus() == WorkflowConstants.STATUS_INACTIVE) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isIncomplete() {
+		if (getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isPending() {
+		if (getStatus() == WorkflowConstants.STATUS_PENDING) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isScheduled() {
+		if (getStatus() == WorkflowConstants.STATUS_SCHEDULED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -383,7 +848,7 @@ public class TreatmentAuditModelImpl
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, TreatmentAudit.class.getName(), getPrimaryKey());
+			getCompanyId(), TreatmentAudit.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -412,7 +877,11 @@ public class TreatmentAuditModelImpl
 	public Object clone() {
 		TreatmentAuditImpl treatmentAuditImpl = new TreatmentAuditImpl();
 
+		treatmentAuditImpl.setUuid(getUuid());
 		treatmentAuditImpl.setAuditID(getAuditID());
+		treatmentAuditImpl.setCrfId(getCrfId());
+		treatmentAuditImpl.setLinkId(getLinkId());
+		treatmentAuditImpl.setPatientID(getPatientID());
 		treatmentAuditImpl.setTeethNum(getTeethNum());
 		treatmentAuditImpl.setEditedDate(getEditedDate());
 		treatmentAuditImpl.setEditedUserID(getEditedUserID());
@@ -420,6 +889,16 @@ public class TreatmentAuditModelImpl
 		treatmentAuditImpl.setTreatmentDate(getTreatmentDate());
 		treatmentAuditImpl.setBeforeData(getBeforeData());
 		treatmentAuditImpl.setAfterData(getAfterData());
+		treatmentAuditImpl.setGroupId(getGroupId());
+		treatmentAuditImpl.setCompanyId(getCompanyId());
+		treatmentAuditImpl.setUserId(getUserId());
+		treatmentAuditImpl.setUserName(getUserName());
+		treatmentAuditImpl.setCreateDate(getCreateDate());
+		treatmentAuditImpl.setModifiedDate(getModifiedDate());
+		treatmentAuditImpl.setStatus(getStatus());
+		treatmentAuditImpl.setStatusByUserId(getStatusByUserId());
+		treatmentAuditImpl.setStatusByUserName(getStatusByUserName());
+		treatmentAuditImpl.setStatusDate(getStatusDate());
 
 		treatmentAuditImpl.resetOriginalValues();
 
@@ -480,11 +959,38 @@ public class TreatmentAuditModelImpl
 
 	@Override
 	public void resetOriginalValues() {
+		_originalUuid = _uuid;
+
+		_originalCrfId = _crfId;
+
+		_setOriginalCrfId = false;
+
+		_originalLinkId = _linkId;
+
+		_setOriginalLinkId = false;
+
+		_originalPatientID = _patientID;
+
+		_setOriginalPatientID = false;
+
 		_originalTeethNum = _teethNum;
 
 		_setOriginalTeethNum = false;
 
 		_originalEditType = _editType;
+
+		_originalGroupId = _groupId;
+
+		_setOriginalGroupId = false;
+
+		_originalCompanyId = _companyId;
+
+		_setOriginalCompanyId = false;
+
+		_setModifiedDate = false;
+		_originalStatus = _status;
+
+		_setOriginalStatus = false;
 
 		_columnBitmask = 0;
 	}
@@ -494,7 +1000,21 @@ public class TreatmentAuditModelImpl
 		TreatmentAuditCacheModel treatmentAuditCacheModel =
 			new TreatmentAuditCacheModel();
 
+		treatmentAuditCacheModel.uuid = getUuid();
+
+		String uuid = treatmentAuditCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			treatmentAuditCacheModel.uuid = null;
+		}
+
 		treatmentAuditCacheModel.AuditID = getAuditID();
+
+		treatmentAuditCacheModel.crfId = getCrfId();
+
+		treatmentAuditCacheModel.linkId = getLinkId();
+
+		treatmentAuditCacheModel.patientID = getPatientID();
 
 		treatmentAuditCacheModel.teethNum = getTeethNum();
 
@@ -540,6 +1060,59 @@ public class TreatmentAuditModelImpl
 
 		if ((afterData != null) && (afterData.length() == 0)) {
 			treatmentAuditCacheModel.afterData = null;
+		}
+
+		treatmentAuditCacheModel.groupId = getGroupId();
+
+		treatmentAuditCacheModel.companyId = getCompanyId();
+
+		treatmentAuditCacheModel.userId = getUserId();
+
+		treatmentAuditCacheModel.userName = getUserName();
+
+		String userName = treatmentAuditCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			treatmentAuditCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			treatmentAuditCacheModel.createDate = createDate.getTime();
+		}
+		else {
+			treatmentAuditCacheModel.createDate = Long.MIN_VALUE;
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			treatmentAuditCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			treatmentAuditCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
+
+		treatmentAuditCacheModel.status = getStatus();
+
+		treatmentAuditCacheModel.statusByUserId = getStatusByUserId();
+
+		treatmentAuditCacheModel.statusByUserName = getStatusByUserName();
+
+		String statusByUserName = treatmentAuditCacheModel.statusByUserName;
+
+		if ((statusByUserName != null) && (statusByUserName.length() == 0)) {
+			treatmentAuditCacheModel.statusByUserName = null;
+		}
+
+		Date statusDate = getStatusDate();
+
+		if (statusDate != null) {
+			treatmentAuditCacheModel.statusDate = statusDate.getTime();
+		}
+		else {
+			treatmentAuditCacheModel.statusDate = Long.MIN_VALUE;
 		}
 
 		return treatmentAuditCacheModel;
@@ -637,7 +1210,18 @@ public class TreatmentAuditModelImpl
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private String _uuid;
+	private String _originalUuid;
 	private long _AuditID;
+	private long _crfId;
+	private long _originalCrfId;
+	private boolean _setOriginalCrfId;
+	private long _linkId;
+	private long _originalLinkId;
+	private boolean _setOriginalLinkId;
+	private long _patientID;
+	private long _originalPatientID;
+	private boolean _setOriginalPatientID;
 	private long _teethNum;
 	private long _originalTeethNum;
 	private boolean _setOriginalTeethNum;
@@ -648,6 +1232,23 @@ public class TreatmentAuditModelImpl
 	private Date _treatmentDate;
 	private String _beforeData;
 	private String _afterData;
+	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
+	private long _userId;
+	private String _userName;
+	private Date _createDate;
+	private Date _modifiedDate;
+	private boolean _setModifiedDate;
+	private int _status;
+	private int _originalStatus;
+	private boolean _setOriginalStatus;
+	private long _statusByUserId;
+	private String _statusByUserName;
+	private Date _statusDate;
 	private long _columnBitmask;
 	private TreatmentAudit _escapedModel;
 

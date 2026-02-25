@@ -63,10 +63,18 @@ public class TreatmentAuditCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(45);
 
-		sb.append("{AuditID=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", AuditID=");
 		sb.append(AuditID);
+		sb.append(", crfId=");
+		sb.append(crfId);
+		sb.append(", linkId=");
+		sb.append(linkId);
+		sb.append(", patientID=");
+		sb.append(patientID);
 		sb.append(", teethNum=");
 		sb.append(teethNum);
 		sb.append(", editedDate=");
@@ -81,6 +89,26 @@ public class TreatmentAuditCacheModel
 		sb.append(beforeData);
 		sb.append(", afterData=");
 		sb.append(afterData);
+		sb.append(", groupId=");
+		sb.append(groupId);
+		sb.append(", companyId=");
+		sb.append(companyId);
+		sb.append(", userId=");
+		sb.append(userId);
+		sb.append(", userName=");
+		sb.append(userName);
+		sb.append(", createDate=");
+		sb.append(createDate);
+		sb.append(", modifiedDate=");
+		sb.append(modifiedDate);
+		sb.append(", status=");
+		sb.append(status);
+		sb.append(", statusByUserId=");
+		sb.append(statusByUserId);
+		sb.append(", statusByUserName=");
+		sb.append(statusByUserName);
+		sb.append(", statusDate=");
+		sb.append(statusDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -90,7 +118,17 @@ public class TreatmentAuditCacheModel
 	public TreatmentAudit toEntityModel() {
 		TreatmentAuditImpl treatmentAuditImpl = new TreatmentAuditImpl();
 
+		if (uuid == null) {
+			treatmentAuditImpl.setUuid("");
+		}
+		else {
+			treatmentAuditImpl.setUuid(uuid);
+		}
+
 		treatmentAuditImpl.setAuditID(AuditID);
+		treatmentAuditImpl.setCrfId(crfId);
+		treatmentAuditImpl.setLinkId(linkId);
+		treatmentAuditImpl.setPatientID(patientID);
 		treatmentAuditImpl.setTeethNum(teethNum);
 
 		if (editedDate == Long.MIN_VALUE) {
@@ -130,6 +168,48 @@ public class TreatmentAuditCacheModel
 			treatmentAuditImpl.setAfterData(afterData);
 		}
 
+		treatmentAuditImpl.setGroupId(groupId);
+		treatmentAuditImpl.setCompanyId(companyId);
+		treatmentAuditImpl.setUserId(userId);
+
+		if (userName == null) {
+			treatmentAuditImpl.setUserName("");
+		}
+		else {
+			treatmentAuditImpl.setUserName(userName);
+		}
+
+		if (createDate == Long.MIN_VALUE) {
+			treatmentAuditImpl.setCreateDate(null);
+		}
+		else {
+			treatmentAuditImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			treatmentAuditImpl.setModifiedDate(null);
+		}
+		else {
+			treatmentAuditImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
+		treatmentAuditImpl.setStatus(status);
+		treatmentAuditImpl.setStatusByUserId(statusByUserId);
+
+		if (statusByUserName == null) {
+			treatmentAuditImpl.setStatusByUserName("");
+		}
+		else {
+			treatmentAuditImpl.setStatusByUserName(statusByUserName);
+		}
+
+		if (statusDate == Long.MIN_VALUE) {
+			treatmentAuditImpl.setStatusDate(null);
+		}
+		else {
+			treatmentAuditImpl.setStatusDate(new Date(statusDate));
+		}
+
 		treatmentAuditImpl.resetOriginalValues();
 
 		return treatmentAuditImpl;
@@ -137,7 +217,15 @@ public class TreatmentAuditCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		uuid = objectInput.readUTF();
+
 		AuditID = objectInput.readLong();
+
+		crfId = objectInput.readLong();
+
+		linkId = objectInput.readLong();
+
+		patientID = objectInput.readLong();
 
 		teethNum = objectInput.readLong();
 		editedDate = objectInput.readLong();
@@ -147,11 +235,39 @@ public class TreatmentAuditCacheModel
 		treatmentDate = objectInput.readLong();
 		beforeData = objectInput.readUTF();
 		afterData = objectInput.readUTF();
+
+		groupId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
+		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
+
+		status = objectInput.readInt();
+
+		statusByUserId = objectInput.readLong();
+		statusByUserName = objectInput.readUTF();
+		statusDate = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
 		objectOutput.writeLong(AuditID);
+
+		objectOutput.writeLong(crfId);
+
+		objectOutput.writeLong(linkId);
+
+		objectOutput.writeLong(patientID);
 
 		objectOutput.writeLong(teethNum);
 		objectOutput.writeLong(editedDate);
@@ -180,9 +296,42 @@ public class TreatmentAuditCacheModel
 		else {
 			objectOutput.writeUTF(afterData);
 		}
+
+		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
+		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
+
+		objectOutput.writeInt(status);
+
+		objectOutput.writeLong(statusByUserId);
+
+		if (statusByUserName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(statusByUserName);
+		}
+
+		objectOutput.writeLong(statusDate);
 	}
 
+	public String uuid;
 	public long AuditID;
+	public long crfId;
+	public long linkId;
+	public long patientID;
 	public long teethNum;
 	public long editedDate;
 	public long editedUserID;
@@ -190,5 +339,15 @@ public class TreatmentAuditCacheModel
 	public long treatmentDate;
 	public String beforeData;
 	public String afterData;
+	public long groupId;
+	public long companyId;
+	public long userId;
+	public String userName;
+	public long createDate;
+	public long modifiedDate;
+	public int status;
+	public long statusByUserId;
+	public String statusByUserName;
+	public long statusDate;
 
 }

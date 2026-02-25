@@ -16,6 +16,10 @@ package teeth.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedAuditedModel;
+import com.liferay.portal.kernel.model.WorkflowedModel;
 
 import java.util.Date;
 
@@ -33,7 +37,9 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface TreatmentHistoryModel extends BaseModel<TreatmentHistory> {
+public interface TreatmentHistoryModel
+	extends BaseModel<TreatmentHistory>, GroupedModel, ShardedModel,
+			StagedAuditedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -56,6 +62,23 @@ public interface TreatmentHistoryModel extends BaseModel<TreatmentHistory> {
 	public void setPrimaryKey(long primaryKey);
 
 	/**
+	 * Returns the uuid of this treatment history.
+	 *
+	 * @return the uuid of this treatment history
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this treatment history.
+	 *
+	 * @param uuid the uuid of this treatment history
+	 */
+	@Override
+	public void setUuid(String uuid);
+
+	/**
 	 * Returns the treatment ID of this treatment history.
 	 *
 	 * @return the treatment ID of this treatment history
@@ -68,6 +91,34 @@ public interface TreatmentHistoryModel extends BaseModel<TreatmentHistory> {
 	 * @param treatmentID the treatment ID of this treatment history
 	 */
 	public void setTreatmentID(long treatmentID);
+
+	/**
+	 * Returns the crf ID of this treatment history.
+	 *
+	 * @return the crf ID of this treatment history
+	 */
+	public long getCrfId();
+
+	/**
+	 * Sets the crf ID of this treatment history.
+	 *
+	 * @param crfId the crf ID of this treatment history
+	 */
+	public void setCrfId(long crfId);
+
+	/**
+	 * Returns the link ID of this treatment history.
+	 *
+	 * @return the link ID of this treatment history
+	 */
+	public long getLinkId();
+
+	/**
+	 * Sets the link ID of this treatment history.
+	 *
+	 * @param linkId the link ID of this treatment history
+	 */
+	public void setLinkId(long linkId);
 
 	/**
 	 * Returns the patient ID of this treatment history.
@@ -168,5 +219,263 @@ public interface TreatmentHistoryModel extends BaseModel<TreatmentHistory> {
 	 * @param state the state of this treatment history
 	 */
 	public void setState(String state);
+
+	/**
+	 * Returns the group ID of this treatment history.
+	 *
+	 * @return the group ID of this treatment history
+	 */
+	@Override
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this treatment history.
+	 *
+	 * @param groupId the group ID of this treatment history
+	 */
+	@Override
+	public void setGroupId(long groupId);
+
+	/**
+	 * Returns the company ID of this treatment history.
+	 *
+	 * @return the company ID of this treatment history
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this treatment history.
+	 *
+	 * @param companyId the company ID of this treatment history
+	 */
+	@Override
+	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the user ID of this treatment history.
+	 *
+	 * @return the user ID of this treatment history
+	 */
+	@Override
+	public long getUserId();
+
+	/**
+	 * Sets the user ID of this treatment history.
+	 *
+	 * @param userId the user ID of this treatment history
+	 */
+	@Override
+	public void setUserId(long userId);
+
+	/**
+	 * Returns the user uuid of this treatment history.
+	 *
+	 * @return the user uuid of this treatment history
+	 */
+	@Override
+	public String getUserUuid();
+
+	/**
+	 * Sets the user uuid of this treatment history.
+	 *
+	 * @param userUuid the user uuid of this treatment history
+	 */
+	@Override
+	public void setUserUuid(String userUuid);
+
+	/**
+	 * Returns the user name of this treatment history.
+	 *
+	 * @return the user name of this treatment history
+	 */
+	@AutoEscape
+	@Override
+	public String getUserName();
+
+	/**
+	 * Sets the user name of this treatment history.
+	 *
+	 * @param userName the user name of this treatment history
+	 */
+	@Override
+	public void setUserName(String userName);
+
+	/**
+	 * Returns the create date of this treatment history.
+	 *
+	 * @return the create date of this treatment history
+	 */
+	@Override
+	public Date getCreateDate();
+
+	/**
+	 * Sets the create date of this treatment history.
+	 *
+	 * @param createDate the create date of this treatment history
+	 */
+	@Override
+	public void setCreateDate(Date createDate);
+
+	/**
+	 * Returns the modified date of this treatment history.
+	 *
+	 * @return the modified date of this treatment history
+	 */
+	@Override
+	public Date getModifiedDate();
+
+	/**
+	 * Sets the modified date of this treatment history.
+	 *
+	 * @param modifiedDate the modified date of this treatment history
+	 */
+	@Override
+	public void setModifiedDate(Date modifiedDate);
+
+	/**
+	 * Returns the status of this treatment history.
+	 *
+	 * @return the status of this treatment history
+	 */
+	@Override
+	public int getStatus();
+
+	/**
+	 * Sets the status of this treatment history.
+	 *
+	 * @param status the status of this treatment history
+	 */
+	@Override
+	public void setStatus(int status);
+
+	/**
+	 * Returns the status by user ID of this treatment history.
+	 *
+	 * @return the status by user ID of this treatment history
+	 */
+	@Override
+	public long getStatusByUserId();
+
+	/**
+	 * Sets the status by user ID of this treatment history.
+	 *
+	 * @param statusByUserId the status by user ID of this treatment history
+	 */
+	@Override
+	public void setStatusByUserId(long statusByUserId);
+
+	/**
+	 * Returns the status by user uuid of this treatment history.
+	 *
+	 * @return the status by user uuid of this treatment history
+	 */
+	@Override
+	public String getStatusByUserUuid();
+
+	/**
+	 * Sets the status by user uuid of this treatment history.
+	 *
+	 * @param statusByUserUuid the status by user uuid of this treatment history
+	 */
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid);
+
+	/**
+	 * Returns the status by user name of this treatment history.
+	 *
+	 * @return the status by user name of this treatment history
+	 */
+	@AutoEscape
+	@Override
+	public String getStatusByUserName();
+
+	/**
+	 * Sets the status by user name of this treatment history.
+	 *
+	 * @param statusByUserName the status by user name of this treatment history
+	 */
+	@Override
+	public void setStatusByUserName(String statusByUserName);
+
+	/**
+	 * Returns the status date of this treatment history.
+	 *
+	 * @return the status date of this treatment history
+	 */
+	@Override
+	public Date getStatusDate();
+
+	/**
+	 * Sets the status date of this treatment history.
+	 *
+	 * @param statusDate the status date of this treatment history
+	 */
+	@Override
+	public void setStatusDate(Date statusDate);
+
+	/**
+	 * Returns <code>true</code> if this treatment history is approved.
+	 *
+	 * @return <code>true</code> if this treatment history is approved; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isApproved();
+
+	/**
+	 * Returns <code>true</code> if this treatment history is denied.
+	 *
+	 * @return <code>true</code> if this treatment history is denied; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDenied();
+
+	/**
+	 * Returns <code>true</code> if this treatment history is a draft.
+	 *
+	 * @return <code>true</code> if this treatment history is a draft; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDraft();
+
+	/**
+	 * Returns <code>true</code> if this treatment history is expired.
+	 *
+	 * @return <code>true</code> if this treatment history is expired; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isExpired();
+
+	/**
+	 * Returns <code>true</code> if this treatment history is inactive.
+	 *
+	 * @return <code>true</code> if this treatment history is inactive; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isInactive();
+
+	/**
+	 * Returns <code>true</code> if this treatment history is incomplete.
+	 *
+	 * @return <code>true</code> if this treatment history is incomplete; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isIncomplete();
+
+	/**
+	 * Returns <code>true</code> if this treatment history is pending.
+	 *
+	 * @return <code>true</code> if this treatment history is pending; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isPending();
+
+	/**
+	 * Returns <code>true</code> if this treatment history is scheduled.
+	 *
+	 * @return <code>true</code> if this treatment history is scheduled; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isScheduled();
 
 }

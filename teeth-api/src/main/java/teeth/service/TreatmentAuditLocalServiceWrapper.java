@@ -36,11 +36,24 @@ public class TreatmentAuditLocalServiceWrapper
 	@Override
 	public teeth.model.TreatmentAudit AddAudit(
 		long teethNum, long editedUserID, java.util.Date TreatmentDate,
-		String editType, String BeforeData, String afterData) {
+		String editType, String BeforeData, String afterData,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 
 		return _treatmentAuditLocalService.AddAudit(
 			teethNum, editedUserID, TreatmentDate, editType, BeforeData,
-			afterData);
+			afterData, serviceContext);
+	}
+
+	@Override
+	public teeth.model.TreatmentAudit AddAudit(
+		long crfId, long linkId, long patientId, long teethNum,
+		long editedUserID, java.util.Date TreatmentDate, String editType,
+		String BeforeData, String afterData,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+
+		return _treatmentAuditLocalService.AddAudit(
+			crfId, linkId, patientId, teethNum, editedUserID, TreatmentDate,
+			editType, BeforeData, afterData, serviceContext);
 	}
 
 	/**
@@ -213,6 +226,21 @@ public class TreatmentAuditLocalServiceWrapper
 		return _treatmentAuditLocalService.fetchTreatmentAudit(AuditID);
 	}
 
+	/**
+	 * Returns the treatment audit matching the UUID and group.
+	 *
+	 * @param uuid the treatment audit's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching treatment audit, or <code>null</code> if a matching treatment audit could not be found
+	 */
+	@Override
+	public teeth.model.TreatmentAudit fetchTreatmentAuditByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return _treatmentAuditLocalService.fetchTreatmentAuditByUuidAndGroupId(
+			uuid, groupId);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
@@ -232,6 +260,32 @@ public class TreatmentAuditLocalServiceWrapper
 		long teethNum) {
 
 		return _treatmentAuditLocalService.getAuditByTeethNum(teethNum);
+	}
+
+	@Override
+	public java.util.List<teeth.model.TreatmentAudit> getAuditsByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId) {
+
+		return _treatmentAuditLocalService.getAuditsByG_C_P_L(
+			groupId, crfId, patientID, linkId);
+	}
+
+	@Override
+	public java.util.List<teeth.model.TreatmentAudit> getAuditsByG_C_P_L_TN(
+		long groupId, long crfId, long patientID, long linkId, long teethNum) {
+
+		return _treatmentAuditLocalService.getAuditsByG_C_P_L_TN(
+			groupId, crfId, patientID, linkId, teethNum);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return _treatmentAuditLocalService.getExportActionableDynamicQuery(
+			portletDataContext);
 	}
 
 	@Override
@@ -277,6 +331,23 @@ public class TreatmentAuditLocalServiceWrapper
 	}
 
 	/**
+	 * Returns the treatment audit matching the UUID and group.
+	 *
+	 * @param uuid the treatment audit's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching treatment audit
+	 * @throws PortalException if a matching treatment audit could not be found
+	 */
+	@Override
+	public teeth.model.TreatmentAudit getTreatmentAuditByUuidAndGroupId(
+			String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _treatmentAuditLocalService.getTreatmentAuditByUuidAndGroupId(
+			uuid, groupId);
+	}
+
+	/**
 	 * Returns a range of all the treatment audits.
 	 *
 	 * <p>
@@ -292,6 +363,42 @@ public class TreatmentAuditLocalServiceWrapper
 		int start, int end) {
 
 		return _treatmentAuditLocalService.getTreatmentAudits(start, end);
+	}
+
+	/**
+	 * Returns all the treatment audits matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the treatment audits
+	 * @param companyId the primary key of the company
+	 * @return the matching treatment audits, or an empty list if no matches were found
+	 */
+	@Override
+	public java.util.List<teeth.model.TreatmentAudit>
+		getTreatmentAuditsByUuidAndCompanyId(String uuid, long companyId) {
+
+		return _treatmentAuditLocalService.getTreatmentAuditsByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of treatment audits matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the treatment audits
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of treatment audits
+	 * @param end the upper bound of the range of treatment audits (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching treatment audits, or an empty list if no matches were found
+	 */
+	@Override
+	public java.util.List<teeth.model.TreatmentAudit>
+		getTreatmentAuditsByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<teeth.model.TreatmentAudit> orderByComparator) {
+
+		return _treatmentAuditLocalService.getTreatmentAuditsByUuidAndCompanyId(
+			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**

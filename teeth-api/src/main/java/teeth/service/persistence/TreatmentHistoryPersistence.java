@@ -46,6 +46,354 @@ public interface TreatmentHistoryPersistence
 	 */
 
 	/**
+	 * Returns all the treatment histories where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching treatment histories
+	 */
+	public java.util.List<TreatmentHistory> findByUuid(String uuid);
+
+	/**
+	 * Returns a range of all the treatment histories where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentHistoryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of treatment histories
+	 * @param end the upper bound of the range of treatment histories (not inclusive)
+	 * @return the range of matching treatment histories
+	 */
+	public java.util.List<TreatmentHistory> findByUuid(
+		String uuid, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the treatment histories where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentHistoryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of treatment histories
+	 * @param end the upper bound of the range of treatment histories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching treatment histories
+	 */
+	public java.util.List<TreatmentHistory> findByUuid(
+		String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the treatment histories where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentHistoryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of treatment histories
+	 * @param end the upper bound of the range of treatment histories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching treatment histories
+	 */
+	public java.util.List<TreatmentHistory> findByUuid(
+		String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first treatment history in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment history
+	 * @throws NoSuchTreatmentHistoryException if a matching treatment history could not be found
+	 */
+	public TreatmentHistory findByUuid_First(
+			String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+				orderByComparator)
+		throws NoSuchTreatmentHistoryException;
+
+	/**
+	 * Returns the first treatment history in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment history, or <code>null</code> if a matching treatment history could not be found
+	 */
+	public TreatmentHistory fetchByUuid_First(
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+			orderByComparator);
+
+	/**
+	 * Returns the last treatment history in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment history
+	 * @throws NoSuchTreatmentHistoryException if a matching treatment history could not be found
+	 */
+	public TreatmentHistory findByUuid_Last(
+			String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+				orderByComparator)
+		throws NoSuchTreatmentHistoryException;
+
+	/**
+	 * Returns the last treatment history in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment history, or <code>null</code> if a matching treatment history could not be found
+	 */
+	public TreatmentHistory fetchByUuid_Last(
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+			orderByComparator);
+
+	/**
+	 * Returns the treatment histories before and after the current treatment history in the ordered set where uuid = &#63;.
+	 *
+	 * @param treatmentID the primary key of the current treatment history
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next treatment history
+	 * @throws NoSuchTreatmentHistoryException if a treatment history with the primary key could not be found
+	 */
+	public TreatmentHistory[] findByUuid_PrevAndNext(
+			long treatmentID, String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+				orderByComparator)
+		throws NoSuchTreatmentHistoryException;
+
+	/**
+	 * Removes all the treatment histories where uuid = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 */
+	public void removeByUuid(String uuid);
+
+	/**
+	 * Returns the number of treatment histories where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the number of matching treatment histories
+	 */
+	public int countByUuid(String uuid);
+
+	/**
+	 * Returns the treatment history where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchTreatmentHistoryException</code> if it could not be found.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching treatment history
+	 * @throws NoSuchTreatmentHistoryException if a matching treatment history could not be found
+	 */
+	public TreatmentHistory findByUUID_G(String uuid, long groupId)
+		throws NoSuchTreatmentHistoryException;
+
+	/**
+	 * Returns the treatment history where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching treatment history, or <code>null</code> if a matching treatment history could not be found
+	 */
+	public TreatmentHistory fetchByUUID_G(String uuid, long groupId);
+
+	/**
+	 * Returns the treatment history where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching treatment history, or <code>null</code> if a matching treatment history could not be found
+	 */
+	public TreatmentHistory fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache);
+
+	/**
+	 * Removes the treatment history where uuid = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the treatment history that was removed
+	 */
+	public TreatmentHistory removeByUUID_G(String uuid, long groupId)
+		throws NoSuchTreatmentHistoryException;
+
+	/**
+	 * Returns the number of treatment histories where uuid = &#63; and groupId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the number of matching treatment histories
+	 */
+	public int countByUUID_G(String uuid, long groupId);
+
+	/**
+	 * Returns all the treatment histories where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching treatment histories
+	 */
+	public java.util.List<TreatmentHistory> findByUuid_C(
+		String uuid, long companyId);
+
+	/**
+	 * Returns a range of all the treatment histories where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentHistoryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of treatment histories
+	 * @param end the upper bound of the range of treatment histories (not inclusive)
+	 * @return the range of matching treatment histories
+	 */
+	public java.util.List<TreatmentHistory> findByUuid_C(
+		String uuid, long companyId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the treatment histories where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentHistoryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of treatment histories
+	 * @param end the upper bound of the range of treatment histories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching treatment histories
+	 */
+	public java.util.List<TreatmentHistory> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the treatment histories where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentHistoryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of treatment histories
+	 * @param end the upper bound of the range of treatment histories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching treatment histories
+	 */
+	public java.util.List<TreatmentHistory> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first treatment history in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment history
+	 * @throws NoSuchTreatmentHistoryException if a matching treatment history could not be found
+	 */
+	public TreatmentHistory findByUuid_C_First(
+			String uuid, long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+				orderByComparator)
+		throws NoSuchTreatmentHistoryException;
+
+	/**
+	 * Returns the first treatment history in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment history, or <code>null</code> if a matching treatment history could not be found
+	 */
+	public TreatmentHistory fetchByUuid_C_First(
+		String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+			orderByComparator);
+
+	/**
+	 * Returns the last treatment history in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment history
+	 * @throws NoSuchTreatmentHistoryException if a matching treatment history could not be found
+	 */
+	public TreatmentHistory findByUuid_C_Last(
+			String uuid, long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+				orderByComparator)
+		throws NoSuchTreatmentHistoryException;
+
+	/**
+	 * Returns the last treatment history in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment history, or <code>null</code> if a matching treatment history could not be found
+	 */
+	public TreatmentHistory fetchByUuid_C_Last(
+		String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+			orderByComparator);
+
+	/**
+	 * Returns the treatment histories before and after the current treatment history in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param treatmentID the primary key of the current treatment history
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next treatment history
+	 * @throws NoSuchTreatmentHistoryException if a treatment history with the primary key could not be found
+	 */
+	public TreatmentHistory[] findByUuid_C_PrevAndNext(
+			long treatmentID, String uuid, long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+				orderByComparator)
+		throws NoSuchTreatmentHistoryException;
+
+	/**
+	 * Removes all the treatment histories where uuid = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 */
+	public void removeByUuid_C(String uuid, long companyId);
+
+	/**
+	 * Returns the number of treatment histories where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the number of matching treatment histories
+	 */
+	public int countByUuid_C(String uuid, long companyId);
+
+	/**
 	 * Returns all the treatment histories where patientID = &#63;.
 	 *
 	 * @param patientID the patient ID
@@ -188,6 +536,385 @@ public interface TreatmentHistoryPersistence
 	 * @return the number of matching treatment histories
 	 */
 	public int countByTeeth_PatientID(long patientID);
+
+	/**
+	 * Returns all the treatment histories where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @return the matching treatment histories
+	 */
+	public java.util.List<TreatmentHistory> findByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId);
+
+	/**
+	 * Returns a range of all the treatment histories where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentHistoryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param start the lower bound of the range of treatment histories
+	 * @param end the upper bound of the range of treatment histories (not inclusive)
+	 * @return the range of matching treatment histories
+	 */
+	public java.util.List<TreatmentHistory> findByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId, int start,
+		int end);
+
+	/**
+	 * Returns an ordered range of all the treatment histories where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentHistoryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param start the lower bound of the range of treatment histories
+	 * @param end the upper bound of the range of treatment histories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching treatment histories
+	 */
+	public java.util.List<TreatmentHistory> findByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the treatment histories where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentHistoryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param start the lower bound of the range of treatment histories
+	 * @param end the upper bound of the range of treatment histories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching treatment histories
+	 */
+	public java.util.List<TreatmentHistory> findByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first treatment history in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment history
+	 * @throws NoSuchTreatmentHistoryException if a matching treatment history could not be found
+	 */
+	public TreatmentHistory findByG_C_P_L_First(
+			long groupId, long crfId, long patientID, long linkId,
+			com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+				orderByComparator)
+		throws NoSuchTreatmentHistoryException;
+
+	/**
+	 * Returns the first treatment history in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment history, or <code>null</code> if a matching treatment history could not be found
+	 */
+	public TreatmentHistory fetchByG_C_P_L_First(
+		long groupId, long crfId, long patientID, long linkId,
+		com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+			orderByComparator);
+
+	/**
+	 * Returns the last treatment history in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment history
+	 * @throws NoSuchTreatmentHistoryException if a matching treatment history could not be found
+	 */
+	public TreatmentHistory findByG_C_P_L_Last(
+			long groupId, long crfId, long patientID, long linkId,
+			com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+				orderByComparator)
+		throws NoSuchTreatmentHistoryException;
+
+	/**
+	 * Returns the last treatment history in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment history, or <code>null</code> if a matching treatment history could not be found
+	 */
+	public TreatmentHistory fetchByG_C_P_L_Last(
+		long groupId, long crfId, long patientID, long linkId,
+		com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+			orderByComparator);
+
+	/**
+	 * Returns the treatment histories before and after the current treatment history in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * @param treatmentID the primary key of the current treatment history
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next treatment history
+	 * @throws NoSuchTreatmentHistoryException if a treatment history with the primary key could not be found
+	 */
+	public TreatmentHistory[] findByG_C_P_L_PrevAndNext(
+			long treatmentID, long groupId, long crfId, long patientID,
+			long linkId,
+			com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+				orderByComparator)
+		throws NoSuchTreatmentHistoryException;
+
+	/**
+	 * Removes all the treatment histories where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 */
+	public void removeByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId);
+
+	/**
+	 * Returns the number of treatment histories where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @return the number of matching treatment histories
+	 */
+	public int countByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId);
+
+	/**
+	 * Returns all the treatment histories where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @return the matching treatment histories
+	 */
+	public java.util.List<TreatmentHistory> findByG_C_P_L_TN(
+		long groupId, long crfId, long patientID, long linkId, long teethNum);
+
+	/**
+	 * Returns a range of all the treatment histories where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentHistoryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param start the lower bound of the range of treatment histories
+	 * @param end the upper bound of the range of treatment histories (not inclusive)
+	 * @return the range of matching treatment histories
+	 */
+	public java.util.List<TreatmentHistory> findByG_C_P_L_TN(
+		long groupId, long crfId, long patientID, long linkId, long teethNum,
+		int start, int end);
+
+	/**
+	 * Returns an ordered range of all the treatment histories where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentHistoryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param start the lower bound of the range of treatment histories
+	 * @param end the upper bound of the range of treatment histories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching treatment histories
+	 */
+	public java.util.List<TreatmentHistory> findByG_C_P_L_TN(
+		long groupId, long crfId, long patientID, long linkId, long teethNum,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the treatment histories where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentHistoryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param start the lower bound of the range of treatment histories
+	 * @param end the upper bound of the range of treatment histories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching treatment histories
+	 */
+	public java.util.List<TreatmentHistory> findByG_C_P_L_TN(
+		long groupId, long crfId, long patientID, long linkId, long teethNum,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first treatment history in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment history
+	 * @throws NoSuchTreatmentHistoryException if a matching treatment history could not be found
+	 */
+	public TreatmentHistory findByG_C_P_L_TN_First(
+			long groupId, long crfId, long patientID, long linkId,
+			long teethNum,
+			com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+				orderByComparator)
+		throws NoSuchTreatmentHistoryException;
+
+	/**
+	 * Returns the first treatment history in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment history, or <code>null</code> if a matching treatment history could not be found
+	 */
+	public TreatmentHistory fetchByG_C_P_L_TN_First(
+		long groupId, long crfId, long patientID, long linkId, long teethNum,
+		com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+			orderByComparator);
+
+	/**
+	 * Returns the last treatment history in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment history
+	 * @throws NoSuchTreatmentHistoryException if a matching treatment history could not be found
+	 */
+	public TreatmentHistory findByG_C_P_L_TN_Last(
+			long groupId, long crfId, long patientID, long linkId,
+			long teethNum,
+			com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+				orderByComparator)
+		throws NoSuchTreatmentHistoryException;
+
+	/**
+	 * Returns the last treatment history in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment history, or <code>null</code> if a matching treatment history could not be found
+	 */
+	public TreatmentHistory fetchByG_C_P_L_TN_Last(
+		long groupId, long crfId, long patientID, long linkId, long teethNum,
+		com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+			orderByComparator);
+
+	/**
+	 * Returns the treatment histories before and after the current treatment history in the ordered set where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * @param treatmentID the primary key of the current treatment history
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next treatment history
+	 * @throws NoSuchTreatmentHistoryException if a treatment history with the primary key could not be found
+	 */
+	public TreatmentHistory[] findByG_C_P_L_TN_PrevAndNext(
+			long treatmentID, long groupId, long crfId, long patientID,
+			long linkId, long teethNum,
+			com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+				orderByComparator)
+		throws NoSuchTreatmentHistoryException;
+
+	/**
+	 * Removes all the treatment histories where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 */
+	public void removeByG_C_P_L_TN(
+		long groupId, long crfId, long patientID, long linkId, long teethNum);
+
+	/**
+	 * Returns the number of treatment histories where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @return the number of matching treatment histories
+	 */
+	public int countByG_C_P_L_TN(
+		long groupId, long crfId, long patientID, long linkId, long teethNum);
 
 	/**
 	 * Returns all the treatment histories where patientID = &#63; and teethNum = &#63;.
@@ -669,6 +1396,90 @@ public interface TreatmentHistoryPersistence
 		long patientID, long teethNum, Date treatmentDate);
 
 	/**
+	 * Returns the treatment history where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63; and treatmentDate = &#63; and treatment = &#63; or throws a <code>NoSuchTreatmentHistoryException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param treatmentDate the treatment date
+	 * @param treatment the treatment
+	 * @return the matching treatment history
+	 * @throws NoSuchTreatmentHistoryException if a matching treatment history could not be found
+	 */
+	public TreatmentHistory findByG_C_P_L_TN_D_T(
+			long groupId, long crfId, long patientID, long linkId,
+			long teethNum, Date treatmentDate, String treatment)
+		throws NoSuchTreatmentHistoryException;
+
+	/**
+	 * Returns the treatment history where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63; and treatmentDate = &#63; and treatment = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param treatmentDate the treatment date
+	 * @param treatment the treatment
+	 * @return the matching treatment history, or <code>null</code> if a matching treatment history could not be found
+	 */
+	public TreatmentHistory fetchByG_C_P_L_TN_D_T(
+		long groupId, long crfId, long patientID, long linkId, long teethNum,
+		Date treatmentDate, String treatment);
+
+	/**
+	 * Returns the treatment history where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63; and treatmentDate = &#63; and treatment = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param treatmentDate the treatment date
+	 * @param treatment the treatment
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching treatment history, or <code>null</code> if a matching treatment history could not be found
+	 */
+	public TreatmentHistory fetchByG_C_P_L_TN_D_T(
+		long groupId, long crfId, long patientID, long linkId, long teethNum,
+		Date treatmentDate, String treatment, boolean useFinderCache);
+
+	/**
+	 * Removes the treatment history where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63; and treatmentDate = &#63; and treatment = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param treatmentDate the treatment date
+	 * @param treatment the treatment
+	 * @return the treatment history that was removed
+	 */
+	public TreatmentHistory removeByG_C_P_L_TN_D_T(
+			long groupId, long crfId, long patientID, long linkId,
+			long teethNum, Date treatmentDate, String treatment)
+		throws NoSuchTreatmentHistoryException;
+
+	/**
+	 * Returns the number of treatment histories where groupId = &#63; and crfId = &#63; and patientID = &#63; and linkId = &#63; and teethNum = &#63; and treatmentDate = &#63; and treatment = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param crfId the crf ID
+	 * @param patientID the patient ID
+	 * @param linkId the link ID
+	 * @param teethNum the teeth num
+	 * @param treatmentDate the treatment date
+	 * @param treatment the treatment
+	 * @return the number of matching treatment histories
+	 */
+	public int countByG_C_P_L_TN_D_T(
+		long groupId, long crfId, long patientID, long linkId, long teethNum,
+		Date treatmentDate, String treatment);
+
+	/**
 	 * Returns the treatment history where patientID = &#63; and teethNum = &#63; and treatmentDate = &#63; and treatment = &#63; or throws a <code>NoSuchTreatmentHistoryException</code> if it could not be found.
 	 *
 	 * @param patientID the patient ID
@@ -732,6 +1543,303 @@ public interface TreatmentHistoryPersistence
 	 */
 	public int countByTeeth_PatientID_TeethNum_Date_Treatment(
 		long patientID, long teethNum, Date treatmentDate, String treatment);
+
+	/**
+	 * Returns all the treatment histories where status = &#63;.
+	 *
+	 * @param status the status
+	 * @return the matching treatment histories
+	 */
+	public java.util.List<TreatmentHistory> findByStatus(int status);
+
+	/**
+	 * Returns a range of all the treatment histories where status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentHistoryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param status the status
+	 * @param start the lower bound of the range of treatment histories
+	 * @param end the upper bound of the range of treatment histories (not inclusive)
+	 * @return the range of matching treatment histories
+	 */
+	public java.util.List<TreatmentHistory> findByStatus(
+		int status, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the treatment histories where status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentHistoryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param status the status
+	 * @param start the lower bound of the range of treatment histories
+	 * @param end the upper bound of the range of treatment histories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching treatment histories
+	 */
+	public java.util.List<TreatmentHistory> findByStatus(
+		int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the treatment histories where status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentHistoryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param status the status
+	 * @param start the lower bound of the range of treatment histories
+	 * @param end the upper bound of the range of treatment histories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching treatment histories
+	 */
+	public java.util.List<TreatmentHistory> findByStatus(
+		int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first treatment history in the ordered set where status = &#63;.
+	 *
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment history
+	 * @throws NoSuchTreatmentHistoryException if a matching treatment history could not be found
+	 */
+	public TreatmentHistory findByStatus_First(
+			int status,
+			com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+				orderByComparator)
+		throws NoSuchTreatmentHistoryException;
+
+	/**
+	 * Returns the first treatment history in the ordered set where status = &#63;.
+	 *
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment history, or <code>null</code> if a matching treatment history could not be found
+	 */
+	public TreatmentHistory fetchByStatus_First(
+		int status,
+		com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+			orderByComparator);
+
+	/**
+	 * Returns the last treatment history in the ordered set where status = &#63;.
+	 *
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment history
+	 * @throws NoSuchTreatmentHistoryException if a matching treatment history could not be found
+	 */
+	public TreatmentHistory findByStatus_Last(
+			int status,
+			com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+				orderByComparator)
+		throws NoSuchTreatmentHistoryException;
+
+	/**
+	 * Returns the last treatment history in the ordered set where status = &#63;.
+	 *
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment history, or <code>null</code> if a matching treatment history could not be found
+	 */
+	public TreatmentHistory fetchByStatus_Last(
+		int status,
+		com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+			orderByComparator);
+
+	/**
+	 * Returns the treatment histories before and after the current treatment history in the ordered set where status = &#63;.
+	 *
+	 * @param treatmentID the primary key of the current treatment history
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next treatment history
+	 * @throws NoSuchTreatmentHistoryException if a treatment history with the primary key could not be found
+	 */
+	public TreatmentHistory[] findByStatus_PrevAndNext(
+			long treatmentID, int status,
+			com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+				orderByComparator)
+		throws NoSuchTreatmentHistoryException;
+
+	/**
+	 * Removes all the treatment histories where status = &#63; from the database.
+	 *
+	 * @param status the status
+	 */
+	public void removeByStatus(int status);
+
+	/**
+	 * Returns the number of treatment histories where status = &#63;.
+	 *
+	 * @param status the status
+	 * @return the number of matching treatment histories
+	 */
+	public int countByStatus(int status);
+
+	/**
+	 * Returns all the treatment histories where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @return the matching treatment histories
+	 */
+	public java.util.List<TreatmentHistory> findByG_S(long groupId, int status);
+
+	/**
+	 * Returns a range of all the treatment histories where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentHistoryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of treatment histories
+	 * @param end the upper bound of the range of treatment histories (not inclusive)
+	 * @return the range of matching treatment histories
+	 */
+	public java.util.List<TreatmentHistory> findByG_S(
+		long groupId, int status, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the treatment histories where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentHistoryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of treatment histories
+	 * @param end the upper bound of the range of treatment histories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching treatment histories
+	 */
+	public java.util.List<TreatmentHistory> findByG_S(
+		long groupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the treatment histories where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TreatmentHistoryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of treatment histories
+	 * @param end the upper bound of the range of treatment histories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching treatment histories
+	 */
+	public java.util.List<TreatmentHistory> findByG_S(
+		long groupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first treatment history in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment history
+	 * @throws NoSuchTreatmentHistoryException if a matching treatment history could not be found
+	 */
+	public TreatmentHistory findByG_S_First(
+			long groupId, int status,
+			com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+				orderByComparator)
+		throws NoSuchTreatmentHistoryException;
+
+	/**
+	 * Returns the first treatment history in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching treatment history, or <code>null</code> if a matching treatment history could not be found
+	 */
+	public TreatmentHistory fetchByG_S_First(
+		long groupId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+			orderByComparator);
+
+	/**
+	 * Returns the last treatment history in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment history
+	 * @throws NoSuchTreatmentHistoryException if a matching treatment history could not be found
+	 */
+	public TreatmentHistory findByG_S_Last(
+			long groupId, int status,
+			com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+				orderByComparator)
+		throws NoSuchTreatmentHistoryException;
+
+	/**
+	 * Returns the last treatment history in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching treatment history, or <code>null</code> if a matching treatment history could not be found
+	 */
+	public TreatmentHistory fetchByG_S_Last(
+		long groupId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+			orderByComparator);
+
+	/**
+	 * Returns the treatment histories before and after the current treatment history in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param treatmentID the primary key of the current treatment history
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next treatment history
+	 * @throws NoSuchTreatmentHistoryException if a treatment history with the primary key could not be found
+	 */
+	public TreatmentHistory[] findByG_S_PrevAndNext(
+			long treatmentID, long groupId, int status,
+			com.liferay.portal.kernel.util.OrderByComparator<TreatmentHistory>
+				orderByComparator)
+		throws NoSuchTreatmentHistoryException;
+
+	/**
+	 * Removes all the treatment histories where groupId = &#63; and status = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 */
+	public void removeByG_S(long groupId, int status);
+
+	/**
+	 * Returns the number of treatment histories where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @return the number of matching treatment histories
+	 */
+	public int countByG_S(long groupId, int status);
 
 	/**
 	 * Caches the treatment history in the entity cache if it is enabled.

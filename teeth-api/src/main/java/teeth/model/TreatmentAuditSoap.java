@@ -31,7 +31,11 @@ public class TreatmentAuditSoap implements Serializable {
 	public static TreatmentAuditSoap toSoapModel(TreatmentAudit model) {
 		TreatmentAuditSoap soapModel = new TreatmentAuditSoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setAuditID(model.getAuditID());
+		soapModel.setCrfId(model.getCrfId());
+		soapModel.setLinkId(model.getLinkId());
+		soapModel.setPatientID(model.getPatientID());
 		soapModel.setTeethNum(model.getTeethNum());
 		soapModel.setEditedDate(model.getEditedDate());
 		soapModel.setEditedUserID(model.getEditedUserID());
@@ -39,6 +43,16 @@ public class TreatmentAuditSoap implements Serializable {
 		soapModel.setTreatmentDate(model.getTreatmentDate());
 		soapModel.setBeforeData(model.getBeforeData());
 		soapModel.setAfterData(model.getAfterData());
+		soapModel.setGroupId(model.getGroupId());
+		soapModel.setCompanyId(model.getCompanyId());
+		soapModel.setUserId(model.getUserId());
+		soapModel.setUserName(model.getUserName());
+		soapModel.setCreateDate(model.getCreateDate());
+		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setStatus(model.getStatus());
+		soapModel.setStatusByUserId(model.getStatusByUserId());
+		soapModel.setStatusByUserName(model.getStatusByUserName());
+		soapModel.setStatusDate(model.getStatusDate());
 
 		return soapModel;
 	}
@@ -97,12 +111,44 @@ public class TreatmentAuditSoap implements Serializable {
 		setAuditID(pk);
 	}
 
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
+	}
+
 	public long getAuditID() {
 		return _AuditID;
 	}
 
 	public void setAuditID(long AuditID) {
 		_AuditID = AuditID;
+	}
+
+	public long getCrfId() {
+		return _crfId;
+	}
+
+	public void setCrfId(long crfId) {
+		_crfId = crfId;
+	}
+
+	public long getLinkId() {
+		return _linkId;
+	}
+
+	public void setLinkId(long linkId) {
+		_linkId = linkId;
+	}
+
+	public long getPatientID() {
+		return _patientID;
+	}
+
+	public void setPatientID(long patientID) {
+		_patientID = patientID;
 	}
 
 	public long getTeethNum() {
@@ -161,7 +207,91 @@ public class TreatmentAuditSoap implements Serializable {
 		_afterData = afterData;
 	}
 
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
+	public long getUserId() {
+		return _userId;
+	}
+
+	public void setUserId(long userId) {
+		_userId = userId;
+	}
+
+	public String getUserName() {
+		return _userName;
+	}
+
+	public void setUserName(String userName) {
+		_userName = userName;
+	}
+
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
+	}
+
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
+	}
+
+	public int getStatus() {
+		return _status;
+	}
+
+	public void setStatus(int status) {
+		_status = status;
+	}
+
+	public long getStatusByUserId() {
+		return _statusByUserId;
+	}
+
+	public void setStatusByUserId(long statusByUserId) {
+		_statusByUserId = statusByUserId;
+	}
+
+	public String getStatusByUserName() {
+		return _statusByUserName;
+	}
+
+	public void setStatusByUserName(String statusByUserName) {
+		_statusByUserName = statusByUserName;
+	}
+
+	public Date getStatusDate() {
+		return _statusDate;
+	}
+
+	public void setStatusDate(Date statusDate) {
+		_statusDate = statusDate;
+	}
+
+	private String _uuid;
 	private long _AuditID;
+	private long _crfId;
+	private long _linkId;
+	private long _patientID;
 	private long _teethNum;
 	private Date _editedDate;
 	private long _editedUserID;
@@ -169,5 +299,15 @@ public class TreatmentAuditSoap implements Serializable {
 	private Date _treatmentDate;
 	private String _beforeData;
 	private String _afterData;
+	private long _groupId;
+	private long _companyId;
+	private long _userId;
+	private String _userName;
+	private Date _createDate;
+	private Date _modifiedDate;
+	private int _status;
+	private long _statusByUserId;
+	private String _statusByUserName;
+	private Date _statusDate;
 
 }

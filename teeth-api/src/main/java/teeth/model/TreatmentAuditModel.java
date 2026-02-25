@@ -16,6 +16,10 @@ package teeth.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedAuditedModel;
+import com.liferay.portal.kernel.model.WorkflowedModel;
 
 import java.util.Date;
 
@@ -33,7 +37,9 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface TreatmentAuditModel extends BaseModel<TreatmentAudit> {
+public interface TreatmentAuditModel
+	extends BaseModel<TreatmentAudit>, GroupedModel, ShardedModel,
+			StagedAuditedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -56,6 +62,23 @@ public interface TreatmentAuditModel extends BaseModel<TreatmentAudit> {
 	public void setPrimaryKey(long primaryKey);
 
 	/**
+	 * Returns the uuid of this treatment audit.
+	 *
+	 * @return the uuid of this treatment audit
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this treatment audit.
+	 *
+	 * @param uuid the uuid of this treatment audit
+	 */
+	@Override
+	public void setUuid(String uuid);
+
+	/**
 	 * Returns the audit ID of this treatment audit.
 	 *
 	 * @return the audit ID of this treatment audit
@@ -68,6 +91,48 @@ public interface TreatmentAuditModel extends BaseModel<TreatmentAudit> {
 	 * @param AuditID the audit ID of this treatment audit
 	 */
 	public void setAuditID(long AuditID);
+
+	/**
+	 * Returns the crf ID of this treatment audit.
+	 *
+	 * @return the crf ID of this treatment audit
+	 */
+	public long getCrfId();
+
+	/**
+	 * Sets the crf ID of this treatment audit.
+	 *
+	 * @param crfId the crf ID of this treatment audit
+	 */
+	public void setCrfId(long crfId);
+
+	/**
+	 * Returns the link ID of this treatment audit.
+	 *
+	 * @return the link ID of this treatment audit
+	 */
+	public long getLinkId();
+
+	/**
+	 * Sets the link ID of this treatment audit.
+	 *
+	 * @param linkId the link ID of this treatment audit
+	 */
+	public void setLinkId(long linkId);
+
+	/**
+	 * Returns the patient ID of this treatment audit.
+	 *
+	 * @return the patient ID of this treatment audit
+	 */
+	public long getPatientID();
+
+	/**
+	 * Sets the patient ID of this treatment audit.
+	 *
+	 * @param patientID the patient ID of this treatment audit
+	 */
+	public void setPatientID(long patientID);
 
 	/**
 	 * Returns the teeth num of this treatment audit.
@@ -169,5 +234,263 @@ public interface TreatmentAuditModel extends BaseModel<TreatmentAudit> {
 	 * @param afterData the after data of this treatment audit
 	 */
 	public void setAfterData(String afterData);
+
+	/**
+	 * Returns the group ID of this treatment audit.
+	 *
+	 * @return the group ID of this treatment audit
+	 */
+	@Override
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this treatment audit.
+	 *
+	 * @param groupId the group ID of this treatment audit
+	 */
+	@Override
+	public void setGroupId(long groupId);
+
+	/**
+	 * Returns the company ID of this treatment audit.
+	 *
+	 * @return the company ID of this treatment audit
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this treatment audit.
+	 *
+	 * @param companyId the company ID of this treatment audit
+	 */
+	@Override
+	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the user ID of this treatment audit.
+	 *
+	 * @return the user ID of this treatment audit
+	 */
+	@Override
+	public long getUserId();
+
+	/**
+	 * Sets the user ID of this treatment audit.
+	 *
+	 * @param userId the user ID of this treatment audit
+	 */
+	@Override
+	public void setUserId(long userId);
+
+	/**
+	 * Returns the user uuid of this treatment audit.
+	 *
+	 * @return the user uuid of this treatment audit
+	 */
+	@Override
+	public String getUserUuid();
+
+	/**
+	 * Sets the user uuid of this treatment audit.
+	 *
+	 * @param userUuid the user uuid of this treatment audit
+	 */
+	@Override
+	public void setUserUuid(String userUuid);
+
+	/**
+	 * Returns the user name of this treatment audit.
+	 *
+	 * @return the user name of this treatment audit
+	 */
+	@AutoEscape
+	@Override
+	public String getUserName();
+
+	/**
+	 * Sets the user name of this treatment audit.
+	 *
+	 * @param userName the user name of this treatment audit
+	 */
+	@Override
+	public void setUserName(String userName);
+
+	/**
+	 * Returns the create date of this treatment audit.
+	 *
+	 * @return the create date of this treatment audit
+	 */
+	@Override
+	public Date getCreateDate();
+
+	/**
+	 * Sets the create date of this treatment audit.
+	 *
+	 * @param createDate the create date of this treatment audit
+	 */
+	@Override
+	public void setCreateDate(Date createDate);
+
+	/**
+	 * Returns the modified date of this treatment audit.
+	 *
+	 * @return the modified date of this treatment audit
+	 */
+	@Override
+	public Date getModifiedDate();
+
+	/**
+	 * Sets the modified date of this treatment audit.
+	 *
+	 * @param modifiedDate the modified date of this treatment audit
+	 */
+	@Override
+	public void setModifiedDate(Date modifiedDate);
+
+	/**
+	 * Returns the status of this treatment audit.
+	 *
+	 * @return the status of this treatment audit
+	 */
+	@Override
+	public int getStatus();
+
+	/**
+	 * Sets the status of this treatment audit.
+	 *
+	 * @param status the status of this treatment audit
+	 */
+	@Override
+	public void setStatus(int status);
+
+	/**
+	 * Returns the status by user ID of this treatment audit.
+	 *
+	 * @return the status by user ID of this treatment audit
+	 */
+	@Override
+	public long getStatusByUserId();
+
+	/**
+	 * Sets the status by user ID of this treatment audit.
+	 *
+	 * @param statusByUserId the status by user ID of this treatment audit
+	 */
+	@Override
+	public void setStatusByUserId(long statusByUserId);
+
+	/**
+	 * Returns the status by user uuid of this treatment audit.
+	 *
+	 * @return the status by user uuid of this treatment audit
+	 */
+	@Override
+	public String getStatusByUserUuid();
+
+	/**
+	 * Sets the status by user uuid of this treatment audit.
+	 *
+	 * @param statusByUserUuid the status by user uuid of this treatment audit
+	 */
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid);
+
+	/**
+	 * Returns the status by user name of this treatment audit.
+	 *
+	 * @return the status by user name of this treatment audit
+	 */
+	@AutoEscape
+	@Override
+	public String getStatusByUserName();
+
+	/**
+	 * Sets the status by user name of this treatment audit.
+	 *
+	 * @param statusByUserName the status by user name of this treatment audit
+	 */
+	@Override
+	public void setStatusByUserName(String statusByUserName);
+
+	/**
+	 * Returns the status date of this treatment audit.
+	 *
+	 * @return the status date of this treatment audit
+	 */
+	@Override
+	public Date getStatusDate();
+
+	/**
+	 * Sets the status date of this treatment audit.
+	 *
+	 * @param statusDate the status date of this treatment audit
+	 */
+	@Override
+	public void setStatusDate(Date statusDate);
+
+	/**
+	 * Returns <code>true</code> if this treatment audit is approved.
+	 *
+	 * @return <code>true</code> if this treatment audit is approved; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isApproved();
+
+	/**
+	 * Returns <code>true</code> if this treatment audit is denied.
+	 *
+	 * @return <code>true</code> if this treatment audit is denied; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDenied();
+
+	/**
+	 * Returns <code>true</code> if this treatment audit is a draft.
+	 *
+	 * @return <code>true</code> if this treatment audit is a draft; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDraft();
+
+	/**
+	 * Returns <code>true</code> if this treatment audit is expired.
+	 *
+	 * @return <code>true</code> if this treatment audit is expired; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isExpired();
+
+	/**
+	 * Returns <code>true</code> if this treatment audit is inactive.
+	 *
+	 * @return <code>true</code> if this treatment audit is inactive; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isInactive();
+
+	/**
+	 * Returns <code>true</code> if this treatment audit is incomplete.
+	 *
+	 * @return <code>true</code> if this treatment audit is incomplete; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isIncomplete();
+
+	/**
+	 * Returns <code>true</code> if this treatment audit is pending.
+	 *
+	 * @return <code>true</code> if this treatment audit is pending; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isPending();
+
+	/**
+	 * Returns <code>true</code> if this treatment audit is scheduled.
+	 *
+	 * @return <code>true</code> if this treatment audit is scheduled; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isScheduled();
 
 }

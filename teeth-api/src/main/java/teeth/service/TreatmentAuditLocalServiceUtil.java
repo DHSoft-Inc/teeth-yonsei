@@ -46,11 +46,23 @@ public class TreatmentAuditLocalServiceUtil {
 	 */
 	public static TreatmentAudit AddAudit(
 		long teethNum, long editedUserID, java.util.Date TreatmentDate,
-		String editType, String BeforeData, String afterData) {
+		String editType, String BeforeData, String afterData,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 
 		return getService().AddAudit(
 			teethNum, editedUserID, TreatmentDate, editType, BeforeData,
-			afterData);
+			afterData, serviceContext);
+	}
+
+	public static TreatmentAudit AddAudit(
+		long crfId, long linkId, long patientId, long teethNum,
+		long editedUserID, java.util.Date TreatmentDate, String editType,
+		String BeforeData, String afterData,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+
+		return getService().AddAudit(
+			crfId, linkId, patientId, teethNum, editedUserID, TreatmentDate,
+			editType, BeforeData, afterData, serviceContext);
 	}
 
 	/**
@@ -203,6 +215,19 @@ public class TreatmentAuditLocalServiceUtil {
 		return getService().fetchTreatmentAudit(AuditID);
 	}
 
+	/**
+	 * Returns the treatment audit matching the UUID and group.
+	 *
+	 * @param uuid the treatment audit's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching treatment audit, or <code>null</code> if a matching treatment audit could not be found
+	 */
+	public static TreatmentAudit fetchTreatmentAuditByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return getService().fetchTreatmentAuditByUuidAndGroupId(uuid, groupId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -215,6 +240,28 @@ public class TreatmentAuditLocalServiceUtil {
 
 	public static List<TreatmentAudit> getAuditByTeethNum(long teethNum) {
 		return getService().getAuditByTeethNum(teethNum);
+	}
+
+	public static List<TreatmentAudit> getAuditsByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId) {
+
+		return getService().getAuditsByG_C_P_L(
+			groupId, crfId, patientID, linkId);
+	}
+
+	public static List<TreatmentAudit> getAuditsByG_C_P_L_TN(
+		long groupId, long crfId, long patientID, long linkId, long teethNum) {
+
+		return getService().getAuditsByG_C_P_L_TN(
+			groupId, crfId, patientID, linkId, teethNum);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static
@@ -256,6 +303,21 @@ public class TreatmentAuditLocalServiceUtil {
 	}
 
 	/**
+	 * Returns the treatment audit matching the UUID and group.
+	 *
+	 * @param uuid the treatment audit's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching treatment audit
+	 * @throws PortalException if a matching treatment audit could not be found
+	 */
+	public static TreatmentAudit getTreatmentAuditByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException {
+
+		return getService().getTreatmentAuditByUuidAndGroupId(uuid, groupId);
+	}
+
+	/**
 	 * Returns a range of all the treatment audits.
 	 *
 	 * <p>
@@ -268,6 +330,38 @@ public class TreatmentAuditLocalServiceUtil {
 	 */
 	public static List<TreatmentAudit> getTreatmentAudits(int start, int end) {
 		return getService().getTreatmentAudits(start, end);
+	}
+
+	/**
+	 * Returns all the treatment audits matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the treatment audits
+	 * @param companyId the primary key of the company
+	 * @return the matching treatment audits, or an empty list if no matches were found
+	 */
+	public static List<TreatmentAudit> getTreatmentAuditsByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return getService().getTreatmentAuditsByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of treatment audits matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the treatment audits
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of treatment audits
+	 * @param end the upper bound of the range of treatment audits (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching treatment audits, or an empty list if no matches were found
+	 */
+	public static List<TreatmentAudit> getTreatmentAuditsByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<TreatmentAudit> orderByComparator) {
+
+		return getService().getTreatmentAuditsByUuidAndCompanyId(
+			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**

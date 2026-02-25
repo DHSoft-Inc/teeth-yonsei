@@ -37,11 +37,24 @@ public class TreatmentHistoryLocalServiceWrapper
 	public teeth.model.TreatmentHistory AddHistory(
 		long patientID, long teethNum, java.util.Date treatmentDate,
 		String treatment, String state, java.util.Date editedDate,
-		long editedUserID) {
+		long editedUserID,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 
 		return _treatmentHistoryLocalService.AddHistory(
 			patientID, teethNum, treatmentDate, treatment, state, editedDate,
-			editedUserID);
+			editedUserID, serviceContext);
+	}
+
+	@Override
+	public teeth.model.TreatmentHistory AddHistory(
+		long crfId, long linkId, long patientID, long teethNum,
+		java.util.Date treatmentDate, String treatment, String state,
+		java.util.Date editedDate, long editedUserID,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+
+		return _treatmentHistoryLocalService.AddHistory(
+			crfId, linkId, patientID, teethNum, treatmentDate, treatment, state,
+			editedDate, editedUserID, serviceContext);
 	}
 
 	/**
@@ -237,11 +250,36 @@ public class TreatmentHistoryLocalServiceWrapper
 		return _treatmentHistoryLocalService.fetchTreatmentHistory(treatmentID);
 	}
 
+	/**
+	 * Returns the treatment history matching the UUID and group.
+	 *
+	 * @param uuid the treatment history's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching treatment history, or <code>null</code> if a matching treatment history could not be found
+	 */
+	@Override
+	public teeth.model.TreatmentHistory fetchTreatmentHistoryByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return _treatmentHistoryLocalService.
+			fetchTreatmentHistoryByUuidAndGroupId(uuid, groupId);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
 		return _treatmentHistoryLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return _treatmentHistoryLocalService.getExportActionableDynamicQuery(
+			portletDataContext);
 	}
 
 	@Override
@@ -269,6 +307,16 @@ public class TreatmentHistoryLocalServiceWrapper
 
 		return _treatmentHistoryLocalService.getPatientTreatmentByAll(
 			patientID, teethNum, treatmentDate, treatment);
+	}
+
+	@Override
+	public teeth.model.TreatmentHistory getPatientTreatmentByAll(
+		long groupId, long crfId, long linkId, long patientID, long teethNum,
+		java.util.Date treatmentDate, String treatment) {
+
+		return _treatmentHistoryLocalService.getPatientTreatmentByAll(
+			groupId, crfId, linkId, patientID, teethNum, treatmentDate,
+			treatment);
 	}
 
 	@Override
@@ -343,6 +391,43 @@ public class TreatmentHistoryLocalServiceWrapper
 	}
 
 	/**
+	 * Returns all the treatment histories matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the treatment histories
+	 * @param companyId the primary key of the company
+	 * @return the matching treatment histories, or an empty list if no matches were found
+	 */
+	@Override
+	public java.util.List<teeth.model.TreatmentHistory>
+		getTreatmentHistoriesByUuidAndCompanyId(String uuid, long companyId) {
+
+		return _treatmentHistoryLocalService.
+			getTreatmentHistoriesByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of treatment histories matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the treatment histories
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of treatment histories
+	 * @param end the upper bound of the range of treatment histories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching treatment histories, or an empty list if no matches were found
+	 */
+	@Override
+	public java.util.List<teeth.model.TreatmentHistory>
+		getTreatmentHistoriesByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<teeth.model.TreatmentHistory> orderByComparator) {
+
+		return _treatmentHistoryLocalService.
+			getTreatmentHistoriesByUuidAndCompanyId(
+				uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
 	 * Returns the number of treatment histories.
 	 *
 	 * @return the number of treatment histories
@@ -366,13 +451,50 @@ public class TreatmentHistoryLocalServiceWrapper
 		return _treatmentHistoryLocalService.getTreatmentHistory(treatmentID);
 	}
 
+	/**
+	 * Returns the treatment history matching the UUID and group.
+	 *
+	 * @param uuid the treatment history's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching treatment history
+	 * @throws PortalException if a matching treatment history could not be found
+	 */
+	@Override
+	public teeth.model.TreatmentHistory getTreatmentHistoryByUuidAndGroupId(
+			String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _treatmentHistoryLocalService.
+			getTreatmentHistoryByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
+	public java.util.List<teeth.model.TreatmentHistory> getTreatmentsByG_C_P_L(
+		long groupId, long crfId, long patientID, long linkId) {
+
+		return _treatmentHistoryLocalService.getTreatmentsByG_C_P_L(
+			groupId, crfId, patientID, linkId);
+	}
+
+	@Override
+	public java.util.List<teeth.model.TreatmentHistory>
+		getTreatmentsByG_C_P_L_TN(
+			long groupId, long crfId, long patientID, long linkId,
+			long teethNum) {
+
+		return _treatmentHistoryLocalService.getTreatmentsByG_C_P_L_TN(
+			groupId, crfId, patientID, linkId, teethNum);
+	}
+
 	@Override
 	public teeth.model.TreatmentHistory UpdateHistory(
 		long treatmentID, String treatment, String state,
-		java.util.Date editedDate, long editedUserID) {
+		java.util.Date editedDate, long editedUserID,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 
 		return _treatmentHistoryLocalService.UpdateHistory(
-			treatmentID, treatment, state, editedDate, editedUserID);
+			treatmentID, treatment, state, editedDate, editedUserID,
+			serviceContext);
 	}
 
 	/**

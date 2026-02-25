@@ -63,10 +63,16 @@ public class TreatmentHistoryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(43);
 
-		sb.append("{treatmentID=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", treatmentID=");
 		sb.append(treatmentID);
+		sb.append(", crfId=");
+		sb.append(crfId);
+		sb.append(", linkId=");
+		sb.append(linkId);
 		sb.append(", patientID=");
 		sb.append(patientID);
 		sb.append(", editedUserID=");
@@ -81,6 +87,26 @@ public class TreatmentHistoryCacheModel
 		sb.append(treatment);
 		sb.append(", state=");
 		sb.append(state);
+		sb.append(", groupId=");
+		sb.append(groupId);
+		sb.append(", companyId=");
+		sb.append(companyId);
+		sb.append(", userId=");
+		sb.append(userId);
+		sb.append(", userName=");
+		sb.append(userName);
+		sb.append(", createDate=");
+		sb.append(createDate);
+		sb.append(", modifiedDate=");
+		sb.append(modifiedDate);
+		sb.append(", status=");
+		sb.append(status);
+		sb.append(", statusByUserId=");
+		sb.append(statusByUserId);
+		sb.append(", statusByUserName=");
+		sb.append(statusByUserName);
+		sb.append(", statusDate=");
+		sb.append(statusDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -90,7 +116,16 @@ public class TreatmentHistoryCacheModel
 	public TreatmentHistory toEntityModel() {
 		TreatmentHistoryImpl treatmentHistoryImpl = new TreatmentHistoryImpl();
 
+		if (uuid == null) {
+			treatmentHistoryImpl.setUuid("");
+		}
+		else {
+			treatmentHistoryImpl.setUuid(uuid);
+		}
+
 		treatmentHistoryImpl.setTreatmentID(treatmentID);
+		treatmentHistoryImpl.setCrfId(crfId);
+		treatmentHistoryImpl.setLinkId(linkId);
 		treatmentHistoryImpl.setPatientID(patientID);
 		treatmentHistoryImpl.setEditedUserID(editedUserID);
 		treatmentHistoryImpl.setTeethNum(teethNum);
@@ -123,6 +158,48 @@ public class TreatmentHistoryCacheModel
 			treatmentHistoryImpl.setState(state);
 		}
 
+		treatmentHistoryImpl.setGroupId(groupId);
+		treatmentHistoryImpl.setCompanyId(companyId);
+		treatmentHistoryImpl.setUserId(userId);
+
+		if (userName == null) {
+			treatmentHistoryImpl.setUserName("");
+		}
+		else {
+			treatmentHistoryImpl.setUserName(userName);
+		}
+
+		if (createDate == Long.MIN_VALUE) {
+			treatmentHistoryImpl.setCreateDate(null);
+		}
+		else {
+			treatmentHistoryImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			treatmentHistoryImpl.setModifiedDate(null);
+		}
+		else {
+			treatmentHistoryImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
+		treatmentHistoryImpl.setStatus(status);
+		treatmentHistoryImpl.setStatusByUserId(statusByUserId);
+
+		if (statusByUserName == null) {
+			treatmentHistoryImpl.setStatusByUserName("");
+		}
+		else {
+			treatmentHistoryImpl.setStatusByUserName(statusByUserName);
+		}
+
+		if (statusDate == Long.MIN_VALUE) {
+			treatmentHistoryImpl.setStatusDate(null);
+		}
+		else {
+			treatmentHistoryImpl.setStatusDate(new Date(statusDate));
+		}
+
 		treatmentHistoryImpl.resetOriginalValues();
 
 		return treatmentHistoryImpl;
@@ -130,7 +207,13 @@ public class TreatmentHistoryCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		uuid = objectInput.readUTF();
+
 		treatmentID = objectInput.readLong();
+
+		crfId = objectInput.readLong();
+
+		linkId = objectInput.readLong();
 
 		patientID = objectInput.readLong();
 
@@ -141,11 +224,37 @@ public class TreatmentHistoryCacheModel
 		editedDate = objectInput.readLong();
 		treatment = objectInput.readUTF();
 		state = objectInput.readUTF();
+
+		groupId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
+		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
+
+		status = objectInput.readInt();
+
+		statusByUserId = objectInput.readLong();
+		statusByUserName = objectInput.readUTF();
+		statusDate = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
 		objectOutput.writeLong(treatmentID);
+
+		objectOutput.writeLong(crfId);
+
+		objectOutput.writeLong(linkId);
 
 		objectOutput.writeLong(patientID);
 
@@ -168,9 +277,41 @@ public class TreatmentHistoryCacheModel
 		else {
 			objectOutput.writeUTF(state);
 		}
+
+		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
+		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
+
+		objectOutput.writeInt(status);
+
+		objectOutput.writeLong(statusByUserId);
+
+		if (statusByUserName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(statusByUserName);
+		}
+
+		objectOutput.writeLong(statusDate);
 	}
 
+	public String uuid;
 	public long treatmentID;
+	public long crfId;
+	public long linkId;
 	public long patientID;
 	public long editedUserID;
 	public long teethNum;
@@ -178,5 +319,15 @@ public class TreatmentHistoryCacheModel
 	public long editedDate;
 	public String treatment;
 	public String state;
+	public long groupId;
+	public long companyId;
+	public long userId;
+	public String userName;
+	public long createDate;
+	public long modifiedDate;
+	public int status;
+	public long statusByUserId;
+	public String statusByUserName;
+	public long statusDate;
 
 }
